@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LogicMine.Api.Cache\LogicMine.Api.Cache.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api.Data.Sqlite\LogicMine.Api.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api.Data\LogicMine.Api.Data.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api.Security\LogicMine.Api.Security.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api.Web\LogicMine.Api.Web.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api\LogicMine.Api.csproj" />
+    <ProjectReference Include="..\..\LogicMine\LogicMine.csproj" />
+    <ProjectReference Include="..\..\Sample\Sample.LogicMine.Common\Sample.LogicMine.Common.csproj" />
+  </ItemGroup>
+
+</Project>

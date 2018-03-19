@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\LogicMine.Api.Data.Sqlite.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SQLite" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LogicMine.Api.Data\LogicMine.Api.Data.csproj" />
+    <ProjectReference Include="..\LogicMine.Api\LogicMine.Api.csproj" />
+    <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
+  </ItemGroup>
+
+</Project>

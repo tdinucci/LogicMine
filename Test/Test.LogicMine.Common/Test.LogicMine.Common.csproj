@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LogicMine.Api.Data\LogicMine.Api.Data.csproj" />
+    <ProjectReference Include="..\..\LogicMine.Api\LogicMine.Api.csproj" />
+  </ItemGroup>
+
+</Project>

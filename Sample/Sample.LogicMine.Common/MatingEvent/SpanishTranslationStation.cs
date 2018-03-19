@@ -1,0 +1,35 @@
+﻿using System.Threading.Tasks;
+using LogicMine.Api.Post;
+
+namespace Sample.LogicMine.Common.MatingEvent
+{
+  /// <summary>
+  /// This station is designed to catch baskets that are ascending up a post shaft 
+  /// and change the payload within it. 
+  /// </summary>
+  public class SpanishTranslationStation : IPostStation<IPostBasket<Types.MatingEvent, string>>
+  {
+    public Task DescendToAsync(IPostBasket<Types.MatingEvent, string> basket)
+    {
+      // just let baskets pass through on the way down
+      return Task.CompletedTask;
+    }
+
+    public Task AscendFromAsync(IPostBasket<Types.MatingEvent, string> basket)
+    {
+      // grab baskets on the way up and translate their contents
+      var message = basket.AscentPayload;
+      if (!string.IsNullOrWhiteSpace(message))
+      {
+        message = message
+          .Replace("and", "y")
+          .Replace("had", "tienen")
+          .Replace("children", "niños");
+
+        basket.AscentPayload = message;
+      }
+
+      return Task.CompletedTask;
+    }
+  }
+}
