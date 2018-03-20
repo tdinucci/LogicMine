@@ -4,7 +4,7 @@
 
 ***Note** - While the code checked in should be very useable please note that it, all documentation and samples are still not yet finalised and are subject to change.  All questions and suggestions are very welcome.*
 
-At its core, a LogicMine is a data structure (.Net Standard 2.0) which can be used to organise functionality.  A *mine* is a group of *shafts* and a shaft contains one or more *waypoints* (a waypoint is a unit of work).  *Baskets* (which are containers for requests and responses) travel along shafts and can be processed (or ignored) by the waypoints it passes.
+At its core, a LogicMine is a data structure (.Net Standard 2.0) which can be used to organise functionality.  A *mine* is a group of *shafts* and a shaft contains one or more *waypoints*.  *Baskets* travel along shafts and can be processed (or ignored) by the waypoints it passes.  Basically, baskets represent requests and responses and waypoints are units of work.
 
 Each mine deals with a particular type and these types may represent anything you like, such as: 
 
@@ -31,13 +31,13 @@ While developing with LogicMine can be very productive it is not striving to all
 
 ### Digging a little deeper
 
-A mentioned in the introduction, a mine consists of shafts and a shaft consists of waypoints.  There are actually two kinds of waypoint; *stations* and *terminals*.  Every shaft has exactly one terminal and this is always at the bottom of the shaft.  Shafts may have zero or more stations above the terminal.  
+As mentioned in the introduction, a mine consists of shafts and a shaft consists of waypoints.  There are actually two kinds of waypoint; *stations* and *terminals*.  Every shaft has exactly one terminal and this is always at the bottom of the shaft.  There may be zero or more stations above the terminal.  
 
 A basket, which is effectively a container for requests and responses, travels down a shaft through all stations until it hits the terminal.  Each station has the opportunity to inspect and manipulate the contents of the basket on it's descent and if it so choses can cancel the journey (providing it's own response if it wishes).  Should the basket hit the terminal a response will be generated and added to the basket and the basket is sent back up the shaft again.  On its way up, the basket will once more go through each station and again these have the opportunity to inspect and manipulate the contents of the basket.
 
-A mine itself does next to nothing, it's primarily an organisational structure. The most important structure is shaft as this is where all processing occurs.  An entire application could be built with shafts alone however coding such an application would be very tedious and likely end up being overly complicated. 
+A mine itself does next to nothing, it's primarily an organisational structure. The most important structure is a shaft as this is where all processing occurs.  An entire application could be built with shafts alone however coding such an application would be very tedious and likely end up being overly complicated. 
 
-Since a mine is simply a grouping of shafts you may think that building an application with mines would be similarly tedious, and you would be right.  To cut down on the tedium mines can be built up in layers while still preserving the desired shaft structure.
+Since a mine is simply a grouping of shafts you may think that building an application with mines would be similarly tedious, and you would be right.  To cut down on the tedium, mines can be built up in layers while still preserving the desired shaft structure.
 
 The diagram below shows our Widget mine built using layers.  A layer is simply a cross section of the mine which contains a set of related waypoints.  Typically these layers will be general in nature e.g. a data access, a caching, a security, etc. and can therefore be used in many mines.
 
@@ -70,7 +70,7 @@ Generally speaking, message based API’s can be much more maintainable than proce
 
 Truly RESTful API’s could be considered message based API’s.  With these you have a small set of general operations; GET, POST, PUT, etc. and you then pass resources/messages around using the standard set of operations.
 
-The *LogicMine.Api* project and it's derivitives contains architecture which can help you build REST type API's ontop of mines.
+The *LogicMine.Api* project and it's derivitives contains architecture which can help you build REST type API's on top of mines.
 
 ### Class Reference
 
