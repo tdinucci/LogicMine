@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2017.12.30.0" projectFile="C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.shfbproj" started="20/03/2018 00:33:06">
+<buildStep step="Initializing">
+Finding tools...
+The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
+Searching for HTML Help 1 compiler...
+Found HTML Help 1 compiler in &#39;C:\Program Files (x86)\HTML Help Workshop\&#39;
+Locating components in the following folder(s):
+    C:\Users\adinucci\Source\Repos\LogicMine
+    C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
+    C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
+Using framework reflection data for &#39;Cross-platform (.NET Core/.NET Standard)&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework&#39;
+Using presentation style &#39;VS2013&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013&#39;
+Loading and initializing plug-ins...
+Lightweight Website Style Version 2017.12.30.0
+Copyright &#169; 2006-2017, Eric Woodruff, All Rights Reserved
+Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
+</buildStep>
+<buildStep step="ClearWorkFolder">
+Clearing working folder...
+-------------------------------
+Clearing any prior web/markdown output...
+</buildStep>
+<buildStep step="ValidatingDocumentationSources">
+Validating and copying documentation source information
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine\bin\Debug\netstandard2.0\LogicMine.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine\bin\Debug\netstandard2.0\LogicMine.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine\bin\Debug\netstandard2.0\LogicMine.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api\bin\Debug\netstandard2.0\LogicMine.Api.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api\bin\Debug\netstandard2.0\LogicMine.Api.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api\bin\Debug\netstandard2.0\LogicMine.Api.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Cache\bin\Debug\netstandard2.0\LogicMine.Api.Cache.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Cache\bin\Debug\netstandard2.0\LogicMine.Api.Cache.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Cache\bin\Debug\netstandard2.0\LogicMine.Api.Cache.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data\bin\Debug\netstandard2.0\LogicMine.Api.Data.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data\bin\Debug\netstandard2.0\LogicMine.Api.Data.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data\bin\Debug\netstandard2.0\LogicMine.Api.Data.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sql\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sql.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sql\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sql.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sql\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sql.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sqlite\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sqlite.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sqlite\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sqlite.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sqlite\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sqlite.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Security\bin\Debug\netstandard2.0\LogicMine.Api.Security.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Security\bin\Debug\netstandard2.0\LogicMine.Api.Security.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Security\bin\Debug\netstandard2.0\LogicMine.Api.Security.dll&#39;
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Web\bin\Debug\netstandard2.0\LogicMine.Api.Web.xml
+Source: C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Web\bin\Debug\netstandard2.0\LogicMine.Api.Web.dll
+    Found assembly &#39;C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Web\bin\Debug\netstandard2.0\LogicMine.Api.Web.dll&#39;
+
+References to include (excluding framework assemblies):
+    FastMember
+
+Copying XML comments files
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine\bin\Debug\netstandard2.0\LogicMine.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api\bin\Debug\netstandard2.0\LogicMine.Api.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Cache\bin\Debug\netstandard2.0\LogicMine.Api.Cache.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Cache.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data\bin\Debug\netstandard2.0\LogicMine.Api.Data.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sql\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sql.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.Sql.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Data.Sqlite\bin\Debug\netstandard2.0\LogicMine.Api.Data.Sqlite.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.Sqlite.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Security\bin\Debug\netstandard2.0\LogicMine.Api.Security.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Security.xml
+    C:\Users\adinucci\Source\Repos\LogicMine\LogicMine.Api.Web\bin\Debug\netstandard2.0\LogicMine.Api.Web.xml -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Web.xml
+</buildStep>
+<buildStep step="GenerateSharedContent">
+Generating shared content files (en-US, English (United States))...
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+</plugIn>    Last step completed in 00:00:00.0070
+</buildStep>
+<buildStep step="GenerateApiFilter">
+Generating API filter for MRefBuilder...
+    Last step completed in 00:00:00.0070
+</buildStep>
+<buildStep step="GenerateReflectionInfo">
+Generating reflection information...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - GenerateRefInfo.proj]
+Build started 20/03/2018 00:33:08.
+The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CopyMdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)&quot; does not exist in the project, and will be ignored.
+Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
+PrepareForBuild:
+  Creating directory &quot;obj\Debug\&quot;.
+GenerateRefInfo:
+  MRefBuilder (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  No source code context base path specified.  Source context information is unavailable.
+  Loaded 8 assemblies for reflection and 2 dependency assemblies.
+MRefBuilder : warning : Ignoring unresolved assembly reference: Microsoft.Extensions.Caching.Abstractions (Microsoft.Extensions.Caching.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60) required by LogicMine.Api.Cache [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+MRefBuilder : warning : Ignoring unresolved assembly reference: Microsoft.Data.Sqlite (Microsoft.Data.Sqlite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60) required by LogicMine.Api.Data.Sqlite [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+MRefBuilder : warning : Ignoring unresolved assembly reference: System.Data.SqlClient (System.Data.SqlClient, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a) required by LogicMine.Api.Data.Sql [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+  Using automatic redirect &#39;FastMember, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null&#39; in place of &#39;FastMember, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null&#39;
+MRefBuilder : warning : Ignoring unresolved assembly reference: Microsoft.AspNetCore.Mvc.Core (Microsoft.AspNetCore.Mvc.Core, Version=2.0.3.0, Culture=neutral, PublicKeyToken=adb9793829ddae60) required by LogicMine.Api.Web [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+MRefBuilder : warning : Ignoring unresolved assembly reference: Microsoft.AspNetCore.Mvc.ViewFeatures (Microsoft.AspNetCore.Mvc.ViewFeatures, Version=2.0.3.0, Culture=neutral, PublicKeyToken=adb9793829ddae60) required by LogicMine.Api.Web [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+MRefBuilder : warning : Ignoring unresolved assembly reference: Microsoft.AspNetCore.Mvc.Abstractions (Microsoft.AspNetCore.Mvc.Abstractions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=adb9793829ddae60) required by LogicMine.Api.Web [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj]
+  Wrote information on 17 namespaces, 168 types, and 447 members
+  Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
+  XslTransform (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\MergeDuplicates.xsl&#39;.
+Done Building Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateRefInfo.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:13.13
+    Last step completed in 00:00:13.3704
+</buildStep>
+<buildStep step="TransformReflectionInfo">
+Transforming reflection output...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - TransformManifest.proj]
+Build started 20/03/2018 00:33:21.
+Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
+TransformManifest:
+  XslTransform (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\ApplyVSDocModel.xsl&#39;.
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.ungrouped&quot;.
+  AddNamespaceGroups (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Eric Woodruff, All Rights Reserved
+  Added 1 namespace group entries
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
+  XslTransform (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
+  XslTransform (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\ReflectionToManifest.xsl&#39;.
+Done Building Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\TransformManifest.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.89
+    Last step completed in 00:00:01.1083
+</buildStep>
+<buildStep step="GenerateNamespaceSummaries">
+Generating namespace summary information...
+    Last step completed in 00:00:00.0460
+</buildStep>
+<buildStep step="GenerateInheritedDocumentation">
+Generating inherited documentation...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - GenerateInheritedDocs.proj]
+Sandcastle Help File Builder and Tools, version 2017.12.30.0
+Copyright &#184; 2006-2017, Eric Woodruff, All Rights Reserved
+E-Mail: Eric@EWoodruff.us
+
+Reflection information will be retrieved from &#39;reflection.xml&#39;
+Inherited documentation will be written to &#39;_InheritedDocs_.xml&#39;
+Indexing C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\*.xml
+Indexing C:\Program Files (x86)\Reference Assemblies\Microsoft\FSharp\.NETFramework\v4.0\4.4.0.0\*.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Cache.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.Sql.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Data.Sqlite.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Security.xml
+Indexing C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.Api.Web.xml
+Indexed 159939 members in 135 file(s).  8 file(s) to scan for &lt;inheritdoc /&gt; tags.
+Merging inherited documentation...
+
+SHFB: Warning GID0004: No comments found for member &#39;M:LogicMine.Api.Data.DbObjectDescriptor`1.ProjectColumnValue``1(System.Object)&#39;
+
+Documentation merged successfully
+    Last step completed in 00:00:01.7563
+</buildStep>
+<buildStep step="CopyAdditionalContent">
+Copying additional content files...
+No additional content to copy
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="MergeTablesOfContents">
+Merging conceptual and additional tables of contents...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateIntermediateTableOfContents">
+Generating intermediate table of contents file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - GenerateIntermediateTOC.proj]
+Build started 20/03/2018 00:33:24.
+Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
+GenerateIntermediateTOC:
+  XslTransform (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\CreateVSToc.xsl&#39;.
+Done Building Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\GenerateIntermediateTOC.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.29
+Generating conceptual content intermediate TOC file...
+    Last step completed in 00:00:00.5642
+</buildStep>
+<buildStep step="CreateBuildAssemblerConfigs">
+Creating Sandcastle configuration files...
+    sandcastle.config
+    Last step completed in 00:00:00.2341
+</buildStep>
+<buildStep step="MergeCustomConfigs">
+Merging custom build component configurations
+C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\sandcastle.config
+  Updating reference topic configurations.
+  No conceptual content.  Removing conceptual content components.
+    Last step completed in 00:00:00.0040
+</buildStep>
+<buildStep step="BuildTopics">
+Building help topics...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - BuildTopics.proj]
+Build started 20/03/2018 00:33:25.
+Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj&quot; on node 1 (default targets).
+BuildTopics:
+  BuildAssembler (v2017.12.30.0)
+  Copyright &#184; 2006-2017, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#184; 2006-2016, Eric Woodruff, All Rights Reserved.
+  Loading configuration...
+  Processing topics...
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Cache.ICache.Remove(System.String)] Missing &lt;param name=&quot;key&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Cache.InProcessCache.Remove(System.String)] Missing &lt;param name=&quot;key&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Cache.IObjectCache`2.StoreCollection(`1[])] Missing &lt;param name=&quot;objs&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbFilterGenerator`1.GetDbFilter(System.String,`0[])] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbLayer`3.MakeColumnNameSafe(System.String)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbLayer`3.MakeColumnNameSafe(System.String)] Missing &lt;param name=&quot;columnName&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbMapper`1.MapObject(System.Data.IDataRecord)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbMapper`1.MapObject(System.Data.IDataRecord)] Missing &lt;param name=&quot;record&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbObjectDescriptor`1.ProjectColumnValue``1(System.Object)] Missing &lt;summary&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbObjectDescriptor`1.ProjectColumnValue``1(System.Object)] Missing &lt;typeparam name=&quot;TProjected&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbObjectDescriptor`1.ProjectColumnValue``1(System.Object)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.DbObjectDescriptor`1.ProjectColumnValue``1(System.Object)] Missing &lt;param name=&quot;columnValue&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.IDbMapper`1.MapObject(System.Data.IDataRecord)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.IDbMapper`1.MapObject(System.Data.IDataRecord)] Missing &lt;param name=&quot;record&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.Sql.SqlFilterGenerator.GetDbFilter(System.String,System.Data.SqlClient.SqlParameter[])] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbFilter(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbFilter(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbFilter(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbFilter(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbFilter(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbParameter(System.String,System.Object)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteFilterGenerator.GetDbParameter(System.String,System.Object)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteInterface] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteCommand&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteInterface] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteInterface] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteCommand&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteInterface] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteInterface.GetDbCommand(LogicMine.Api.Data.IDbStatement{Microsoft.Data.Sqlite.SqliteParameter})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteInterface.GetDbCommand(LogicMine.Api.Data.IDbStatement{Microsoft.Data.Sqlite.SqliteParameter})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteCommand&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteInterface.GetDbCommand(LogicMine.Api.Data.IDbStatement{Microsoft.Data.Sqlite.SqliteParameter})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteInterface.GetDbCommand(LogicMine.Api.Data.IDbStatement{Microsoft.Data.Sqlite.SqliteParameter})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteCommand&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetDbFilter(LogicMine.Api.Filter.IFilter)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetDbFilter(LogicMine.Api.Filter.IFilter)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetDbParameter(System.String,System.Object)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetDbParameter(System.String,System.Object)] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetSelectDbStatement(LogicMine.Api.GetCollection.IGetCollectionRequest{`1})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteMappedLayer`2.GetSelectDbStatement(LogicMine.Api.GetCollection.IGetCollectionRequest{`1})] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteStatement] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Data.Sqlite.SqliteStatement] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteStatement.#ctor(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteStatement.#ctor(System.String,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteStatement.#ctor(System.String,System.Data.CommandType,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Data.Sqlite.SqliteStatement.#ctor(System.String,System.Data.CommandType,Microsoft.Data.Sqlite.SqliteParameter[])] MSDN URL not found for target &#39;T:Microsoft.Data.Sqlite.SqliteParameter&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Filter.Filter.AddTerm(LogicMine.Api.Filter.IFilterTerm)] Missing &lt;param name=&quot;term&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Filter.IFilter.AddTerm(LogicMine.Api.Filter.IFilterTerm)] Missing &lt;param name=&quot;term&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Security.SecurityLayer`2.IsOperationAllowed(`1,LogicMine.Api.Security.Operations)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.BadRequestObjectResult] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.ObjectResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.BadRequestObjectResult] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.ObjectResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.DeleteCollectionHandler`2.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.DeleteCollectionHandler`2.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.DeleteHandler`3.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.DeleteHandler`3.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.GeneralResourceController`2] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.Controller&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.GeneralResourceController`2] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.Controller&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetAsync(`0)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetSingleAsync(System.String)] Missing &lt;param name=&quot;filter&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1},System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1},System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PostAsync(`1,System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PostAsync(`1,System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PutAsync(`0,`1,System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GeneralResourceController`2.PutAsync(`0,`1,System.Boolean)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetCollectionHandler`1.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetCollectionHandler`1.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetHandler`2.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetHandler`2.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetSingleHandler`1.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.GetSingleHandler`1.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Handler.GetErrorResult(System.Exception)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Handler.GetErrorResult(System.Exception)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IDeleteCollectionHandler.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IDeleteCollectionHandler.DeleteCollectionAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IDeleteHandler`1.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IDeleteHandler`1.DeleteAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetCollectionHandler.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetCollectionHandler.GetCollectionAsync(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetHandler`1.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetHandler`1.GetAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetSingleHandler.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IGetSingleHandler.GetSingleAsync(System.String)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.InternalServerErrorObjectResult] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.ObjectResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [T:LogicMine.Api.Web.InternalServerErrorObjectResult] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.ObjectResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPatchHandler`2.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPatchHandler`2.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPostHandler`1.PostAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPostHandler`1.PostAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPutHandler`2.PutAsync(`0,`1)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.IPutHandler`2.PutAsync(`0,`1)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PatchHandler`3.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PatchHandler`3.PatchAsync(LogicMine.Api.Patch.Delta{`0,`1})] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PostHandler`2.PostAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PostHandler`2.PostAsync(`0)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PutHandler`3.PutAsync(`0,`1)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.PutHandler`3.PutAsync(`0,`1)] MSDN URL not found for target &#39;T:Microsoft.AspNetCore.Mvc.IActionResult&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:LogicMine.Api.Web.Filter.FilterParser`1] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:LogicMine.Api.Web.Filter.FilterTermParser`1] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.FilterTermParser`1.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.FilterTermParser`1.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:LogicMine.Api.Web.Filter.InFilterTermParser`1] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.InFilterTermParser`1.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.InFilterTermParser`1.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [T:LogicMine.Api.Web.Filter.RangeFilterTermParser`1] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.RangeFilterTermParser`1.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ResolveReferenceLinksComponent: [M:LogicMine.Api.Web.Filter.RangeFilterTermParser`1.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,FastMember.Member})] Unknown reference link target &#39;T:FastMember.Member&#39;. [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.Filter.StringConverter.FromString(System.String,System.Type)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.Filter.StringConverter.FromString(System.String,System.Type)] Missing &lt;param name=&quot;stringValue&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.Filter.StringConverter.FromString(System.String,System.Type)] Missing &lt;param name=&quot;toType&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.Filter.StringConverter.IsConvertable(System.Type)] Missing &lt;returns&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:LogicMine.Api.Web.Filter.StringConverter.IsConvertable(System.Type)] Missing &lt;param name=&quot;type&quot;/&gt; documentation [C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj]
+  Processed 900 topic(s)
+  126 warning(s)
+  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 7 of 15.
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 10 of 30.
+Done Building Project &quot;C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\BuildTopics.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:21.17
+    Last step completed in 00:00:21.5430
+</buildStep>
+<buildStep step="CombiningIntermediateTocFiles">
+Combining conceptual and API intermediate TOC files...
+    Last step completed in 00:00:00.0130
+</buildStep>
+<buildStep step="ExtractingHtmlInfo">
+Extracting HTML info for HTML Help 1 and/or website...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - ExtractHtmlInfo.proj]
+Sandcastle Help File Builder and Tools, version 2017.12.30.0
+Copyright &#184; 2006-2017, Eric Woodruff, All Rights Reserved
+E-Mail: Eric@EWoodruff.us
+
+Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
+
+Processing Help 1 files in C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1
+Processed 900 HTML files
+Sorting keywords and generating See Also indices
+Saving HTML Help 1 keyword index to C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.hhk
+Saving HTML Help 1 table of contents to C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\LogicMine.hhc
+
+Processing website files in C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website
+Processed 900 HTML files
+Sorting keywords and generating See Also indices
+Saving website keyword index to C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\WebKI.xml
+Saving website table of contents to C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\WebTOC.xml
+    Last step completed in 00:00:01.7421
+</buildStep>
+<buildStep step="CopyStandardHelpContent">
+Copying standard help content...
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\index.html -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\index.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\search.html -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\search.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.aspx -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\SearchHelp.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.inc.php -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\SearchHelp.inc.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.php -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\SearchHelp.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\Web.Config -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\Web.Config
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\html\GeneralError.htm -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\html\GeneralError.htm
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\html\PageNotFound.htm -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\html\PageNotFound.htm
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\Search.png -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\Search.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocClose.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\TocClose.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocCollapsed.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\TocCollapsed.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocExpanded.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\TocExpanded.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\icons\TocOpen.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\scripts\branding-Website.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\clipboard.min.js -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\scripts\clipboard.min.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
+    Last step completed in 00:00:00.5060
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating HTML Help 1 table of contents file...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateHelpFileIndex">
+Generating HTML Help 1 index file...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateHelpProject">
+Generating HTML Help 1 project file...
+    Last step completed in 00:00:00.0160
+</buildStep>
+<buildStep step="CompilingHelpFile">
+Compiling HTML Help 1 file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\amd64\MSBuild.exe - Build1xHelpFile.proj]
+  Microsoft HTML Help Compiler 4.74.8702
+  
+  
+  
+  Compiling c:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\LogicMine.chm
+  
+  
+  
+  
+  
+  Compile time: 0 minutes, 5 seconds
+  
+  902	Topics
+  
+  13,332	Local links
+  
+  2,583	Internet links
+  
+  0	Graphics
+  
+  
+  
+  
+  
+  Created c:\Users\adinucci\Source\Repos\LogicMine\Doc\Help\Working\Output\HtmlHelp1\LogicMine.chm, 1,364,181 bytes
+  
+  Compression decreased file by 7,548,296 bytes.
+  
+    Last step completed in 00:00:06.3166
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating website table of contents file...
+    Last step completed in 00:00:00.0010
+</buildStep>
+<buildStep step="GenerateFullTextIndex">
+Generating full-text index for the website...
+
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+Adding lightweight search and TOC elements to each topic...
+</plugIn>    Last step completed in 00:00:01.8562
+</buildStep>
+<buildStep step="CopyingWebsiteFiles">
+Copying website files to output folder...
+
+Copied 500 files
+Copied 1000 files
+Copied 1356 files for the website content
+    Last step completed in 00:00:05.1867
+</buildStep>
+<buildStep step="CleanIntermediates">
+Removing intermediate files...
+    Last step completed in 00:00:00.7491
+</buildStep>
+<buildStep step="Completed">
+
+Build completed successfully at 20/03/2018 00:34:03.  Total time: 00:00:57.0031
+
+</buildStep>
+</shfbBuild>
