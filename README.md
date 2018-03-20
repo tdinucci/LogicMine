@@ -21,7 +21,7 @@ As you've probably realised, a shaft is basically a processing pipeline and a mi
 
 ### Motivation
 
-Developing large systems that remain highly maintainable is hard, especially when the system is developed by a team.  There are many patterns and practices that can help achieve the goal, e.g. SOLID principles, Domain Driven Design, etc. however unless these pratices are followed properly, consistently, and by all developers it is likely just a matter of time before rot sets in and your codebase becomes fragile and expensive to maintain.
+Developing large systems that remain highly maintainable is hard, especially when the system is developed by a team.  There are many patterns and practices that can help achieve the goal, e.g. SOLID principles, Domain Driven Design, etc. however unless these practices are followed properly, consistently, and by all developers it is likely just a matter of time before rot sets in and your codebase becomes fragile and expensive to maintain.
 
 LogicMine is an attempt at giving developers a solid, easily understandable architecture on which to build well-formed software, using practices which have been demonstrated over the years to lead to highly maintainable systems. It also aims to be completely extensible so as not to become a limiting factor in any of your future design decisions.
 
@@ -33,7 +33,7 @@ While developing with LogicMine can be very productive it is not striving to all
 
 As mentioned in the introduction, a mine consists of shafts and a shaft consists of waypoints.  There are actually two kinds of waypoint; *stations* and *terminals*.  Every shaft has exactly one terminal and this is always at the bottom of the shaft.  There may be zero or more stations above the terminal.  
 
-A basket, which is effectively a container for requests and responses, travels down a shaft through all stations until it hits the terminal.  Each station has the opportunity to inspect and manipulate the contents of the basket on it's descent and if it so choses can cancel the journey (providing it's own response if it wishes).  Should the basket hit the terminal a response will be generated and added to the basket and the basket is sent back up the shaft again.  On its way up, the basket will once more go through each station and again these have the opportunity to inspect and manipulate the contents of the basket.
+A basket, which is effectively a container for requests and responses, travels down a shaft through all stations until it hits the terminal.  Each station has the opportunity to inspect and manipulate the contents of the basket on its descent and if it so choses can cancel the journey (providing its own response if it wishes).  Should the basket hit the terminal a response will be generated and added to the basket and the basket is sent back up the shaft again.  On its way up, the basket will once more go through each station and again these have the opportunity to inspect and manipulate the contents of the basket.
 
 A mine itself does next to nothing, it's primarily an organisational structure. The most important structure is a shaft as this is where all processing occurs.  An entire application could be built with shafts alone however coding such an application would be very tedious and likely end up being overly complicated. 
 
@@ -47,7 +47,7 @@ Since the shaft structure is still preserved we can still easily add shaft speci
 
 ### Coupling is evil
 
-A key concept that must be understood is that waypoints within a mine SHOULD be relitively small and as loosly coupled as possible.  What we are aiming for are shafts where you can add and remove waypoints with little fear of corrupting the shaft.  In an ideal world you'd never edit a waypoint (since each edit introduces risk) and by keeping waypoints small and to the point you reduce the likihood of needing/wanting to do this.
+A key concept that must be understood is that waypoints within a mine SHOULD be relatively small and as loosely coupled as possible.  What we are aiming for are shafts where you can add and remove waypoints with little fear of corrupting the shaft.  In an ideal world you'd never edit a waypoint (since each edit introduces risk) and by keeping waypoints small and to the point you reduce the likelihood of needing/wanting to do this.
 
 If you find you are developing one waypoint, and this is reliant on something very specific happening in another then you should take a step back and evaluate the situation.  The moment any two components (in any application) become coupled is the moment you are introducing fragility into the system, i.e. you change one and accidentally break the other.  Perhaps these two waypoints should be merged, perhaps the process needs some more thought...it'll be your call.  Similarly, if you find that you are editing the same waypoint frequently then you should ask yourself if this waypoint has too many concerns and should be broken apart.
 
@@ -70,7 +70,7 @@ Generally speaking, message based API’s can be much more maintainable than proce
 
 Truly RESTful API’s could be considered message based API’s.  With these you have a small set of general operations; GET, POST, PUT, etc. and you then pass resources/messages around using the standard set of operations.
 
-The *LogicMine.Api* project and it's derivitives contains architecture which can help you build REST type API's on top of mines.
+The *LogicMine.Api* project and its derivatives contains architecture which can help you build REST type API's on top of mines.
 
 ### Class Reference
 
