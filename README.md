@@ -76,6 +76,10 @@ The *LogicMine.Api* project and its derivatives contains architecture which can 
 
 https://rawgit.com/tdinucci/LogicMine/master/Doc/Help/index.html
 
+### Usage
+
+For now please refer to the samples that have been checked in.
+
 ### Dependencies
 
 LogicMine.Api.Data depends on Fast-Member - https://github.com/mgravell/fast-member
