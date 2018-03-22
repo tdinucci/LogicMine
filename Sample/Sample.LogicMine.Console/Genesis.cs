@@ -39,7 +39,7 @@ namespace Sample.LogicMine.Console
     {
       _day = DateTime.MinValue;
       var cache = new InProcessCache();
-      
+
       var tadpoleMine = new TadpoleMine(user, cache, connectionString, traceExporter);
 
       _pondMine = new PondMine(user, cache, connectionString, traceExporter);
@@ -78,10 +78,12 @@ namespace Sample.LogicMine.Console
     private async Task<Pond> CreatePondAsync()
     {
       var frogden = new Pond {Name = "Frogden"};
-      var basket = new PostBasket<Pond, int>(frogden);
-      await _pondMine.SendAsync(basket).ConfigureAwait(false);
 
+      // the basket that's returned is the same basket that was passed in, so if we had a reference to the original 
+      // basket we could continue to refer back to this - there are examples of this later
+      var basket = await _pondMine.SendAsync(new PostBasket<Pond, int>(frogden)).ConfigureAwait(false);
       frogden.Id = basket.AscentPayload;
+
       return frogden;
     }
 
@@ -105,13 +107,16 @@ namespace Sample.LogicMine.Console
         new FilterTerm(nameof(PairSelection.Date), FilterOperators.Equal, _day)
       }));
 
-      var getPairBasket = new GetSingleBasket<PairSelection>(request);
-      await _pairSelectionMine.SendAsync(getPairBasket).ConfigureAwait(false);
+      var getPairBasket = await _pairSelectionMine.SendAsync(new GetSingleBasket<PairSelection>(request))
+        .ConfigureAwait(false);
 
       var pair = getPairBasket.AscentPayload;
       if (pair.IsValid)
       {
         var mateBasket = new PostBasket<MatingEvent, string>(new MatingEvent(pair.Male, pair.Female, pair.Date));
+       
+        // this call returns a basket, but it's just the same basket that was passed in.  Since we already have a reference
+        // to it we don't need to assign the result to a new variable
         await _matingEventMine.SendAsync(mateBasket).ConfigureAwait(false);
 
         System.Console.WriteLine(mateBasket.AscentPayload);
