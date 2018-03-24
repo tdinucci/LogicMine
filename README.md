@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/s036pp0dfbv7jtlp?svg=true)](https://ci.appveyor.com/project/tdinucci/logicmine)
 
-***Note** - While the code checked in should be very useable please note that it, all documentation and samples are still not yet finalised and are subject to change.  All questions and suggestions are very welcome.*
+LogicMine provides an evolved implementation of the [mediator pattern](https://en.wikipedia.org/wiki/Mediator_pattern).  The aim is to help you develop systems which are highly maintainable.
 
 At its core, a LogicMine is a data structure (.Net Standard 2.0) which can be used to organise functionality.  A *mine* is a group of *shafts* and a shaft contains one or more *waypoints*.  *Baskets* travel along shafts and can be processed (or ignored) by the waypoints it passes.  Basically, baskets represent requests and responses and waypoints are units of work.
 
