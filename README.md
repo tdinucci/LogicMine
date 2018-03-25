@@ -81,6 +81,17 @@ https://rawgit.com/tdinucci/LogicMine/master/Doc/Help/index.html
 
 For now please refer to the samples that have been checked in.
 
+### NuGet
+
+https://www.nuget.org/packages/LogicMine \
+https://www.nuget.org/packages/LogicMine.Api \
+https://www.nuget.org/packages/LogicMine.Api.Cache \
+https://www.nuget.org/packages/LogicMine.Api.Data \
+https://www.nuget.org/packages/LogicMine.Api.Data.Sql \
+https://www.nuget.org/packages/LogicMine.Api.Data.Sqlite \
+https://www.nuget.org/packages/LogicMine.Api.Security \
+https://www.nuget.org/packages/LogicMine.Api.Web
+
 ### Dependencies
 
 LogicMine.Api.Data depends on Fast-Member - https://github.com/mgravell/fast-member
