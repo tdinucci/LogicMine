@@ -1,4 +1,5 @@
-# LogicMine
+# LogicMine (master)
+*See version branches for stable code*
 
 [![Build status](https://ci.appveyor.com/api/projects/status/64lxchshfdgpxccp/branch/master?svg=true)](https://ci.appveyor.com/project/tdinucci/logicmine-aed8p/branch/master)
 
