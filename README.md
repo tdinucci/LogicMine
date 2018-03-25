@@ -1,6 +1,6 @@
 # LogicMine
 
-[![Build status](https://ci.appveyor.com/api/projects/status/s036pp0dfbv7jtlp?svg=true)](https://ci.appveyor.com/project/tdinucci/logicmine)
+[![Build status](https://ci.appveyor.com/api/projects/status/64lxchshfdgpxccp/branch/master?svg=true)](https://ci.appveyor.com/project/tdinucci/logicmine-aed8p/branch/master)
 
 LogicMine provides an evolved implementation of the [mediator pattern](https://en.wikipedia.org/wiki/Mediator_pattern).  The aim is to help you develop systems which are highly maintainable.
 
