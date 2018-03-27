@@ -81,6 +81,12 @@ https://rawgit.com/tdinucci/LogicMine/master/Doc/Help/index.html
 
 For now please refer to the samples that have been checked in.
 
+###### Sample.LogicMine.Console
+This is an example of using LogicMine in a standalone application.
+
+###### Sample.LogicMine.WebApi & Sample.LogicMine.WebApi.Client
+This is does the same work as the above console application however is split between a client and server.
+
 ### NuGet
 
 https://www.nuget.org/packages/LogicMine \
