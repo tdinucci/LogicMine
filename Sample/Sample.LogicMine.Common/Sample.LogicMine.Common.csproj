@@ -11,7 +11,7 @@
     <ProjectReference Include="..\..\LogicMine.Api.Security\LogicMine.Api.Security.csproj" />
     <ProjectReference Include="..\..\LogicMine.Api\LogicMine.Api.csproj" />
     <ProjectReference Include="..\..\LogicMine\LogicMine.csproj" />
-    <ProjectReference Include="..\..\Sample.LogicMine.Types\Sample.LogicMine.Types.csproj" />
+    <ProjectReference Include="..\Sample.LogicMine.Types\Sample.LogicMine.Types.csproj" />
   </ItemGroup>
 
 </Project>
