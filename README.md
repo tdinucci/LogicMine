@@ -61,15 +61,15 @@ The diagram below shows a less than ideal shaft configuration that performs the 
 ![alt text](Doc/Images/Poor_Post-Order_Shaft.JPG)
 
 ### Building API's
-While you can use LogicMine within any type of application it is especially well suited to the development of RESTful and message based API’s.
+While you can use LogicMine within any type of application it is especially well suited to the development of RESTful and message based APIâ€™s.
 
-Generally speaking, message based API’s can be much more maintainable than procedure based API’s.  A couple of the most compelling benefits are:
+Generally speaking, message based APIâ€™s can be much more maintainable than procedure based APIâ€™s.  A couple of the most compelling benefits are:
 
-* Versioning is generally easier.  If you change a method signature then there’s a very good chance you will also have modify all callers.  If however you pass messages it is often possible to build upon the structure of these messages without impacting existing callers.
+* Versioning is generally easier.  If you change a method signature then thereâ€™s a very good chance you will also have modify all callers.  If however you pass messages it is often possible to build upon the structure of these messages without impacting existing callers.
  
-* Making system wide changes is generally simpler and safer.  With message based API’s all messages can be funnelled through a small set of entry points.  For example, there may be a general *Get(TMessage)* entry point which is called whether you are requesting Car’s, People, Widgets, or whatever other type you can imagine.  This means that a change to this single entry point (adding logging for example) is effectively applied to every call to get something.  With procedure based API’s you end up with a very high number of entry points and therefore it can be much harder to apply system wide changes.
+* Making system wide changes is generally simpler and safer.  With message based APIâ€™s all messages can be funnelled through a small set of entry points.  For example, there may be a general *Get(TMessage)* entry point which is called whether you are requesting Carâ€™s, People, Widgets, or whatever other type you can imagine.  This means that a change to this single entry point (adding logging for example) is effectively applied to every call to get something.  With procedure based APIâ€™s you end up with a very high number of entry points and therefore it can be much harder to apply system wide changes.
 
-Truly RESTful API’s could be considered message based API’s.  With these you have a small set of general operations; GET, POST, PUT, etc. and you then pass resources/messages around using the standard set of operations.
+Truly RESTful APIâ€™s could be considered message based APIâ€™s.  With these you have a small set of general operations; GET, POST, PUT, etc. and you then pass resources/messages around using the standard set of operations.
 
 The *LogicMine.Api* project and its derivatives contains architecture which can help you build REST type API's on top of mines.
 
@@ -94,6 +94,7 @@ https://www.nuget.org/packages/LogicMine.Api \
 https://www.nuget.org/packages/LogicMine.Api.Cache \
 https://www.nuget.org/packages/LogicMine.Api.Data \
 https://www.nuget.org/packages/LogicMine.Api.Data.Sql \
+https://www.nuget.org/packages/LogicMine.Api.Data.Postgres \
 https://www.nuget.org/packages/LogicMine.Api.Data.Sqlite \
 https://www.nuget.org/packages/LogicMine.Api.Security \
 https://www.nuget.org/packages/LogicMine.Api.Web
