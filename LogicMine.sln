@@ -56,6 +56,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.LogicMine.Types", "Sample\Sample.LogicMine.Types\Sample.LogicMine.Types.csproj", "{9B99A466-3AA7-44C4-B099-CF13CF121C7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Api.Data.Postgres", "LogicMine.Api.Data.Postgres\LogicMine.Api.Data.Postgres.csproj", "{9AF402C0-CF4C-4CF5-A993-17CABAFFF449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.Api.Data.Postgres", "Test\Test.LogicMine.Api.Data.Postgres\Test.LogicMine.Api.Data.Postgres.csproj", "{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +154,14 @@ Global
 		{9B99A466-3AA7-44C4-B099-CF13CF121C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B99A466-3AA7-44C4-B099-CF13CF121C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B99A466-3AA7-44C4-B099-CF13CF121C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF402C0-CF4C-4CF5-A993-17CABAFFF449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF402C0-CF4C-4CF5-A993-17CABAFFF449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF402C0-CF4C-4CF5-A993-17CABAFFF449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF402C0-CF4C-4CF5-A993-17CABAFFF449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +181,7 @@ Global
 		{4FE8F73B-2B42-4FC1-B6E7-A51F7BA62A83} = {5786F5F6-F9C8-44C0-9D20-BA6E3B178988}
 		{4AAB926C-E210-44A2-81D5-BA3C7B197C12} = {5786F5F6-F9C8-44C0-9D20-BA6E3B178988}
 		{9B99A466-3AA7-44C4-B099-CF13CF121C7C} = {5786F5F6-F9C8-44C0-9D20-BA6E3B178988}
+		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459} = {4877C576-A201-4590-88E9-D88970D1F86A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3508A97D-5D10-470F-836F-95639A910A02}

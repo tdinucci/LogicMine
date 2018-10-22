@@ -11,3 +11,4 @@ packages
 /.vs/LogicMine/v15/Server/sqlite3
 /.vs/slnx.sqlite
 /.vs/VSWorkspaceState.json
+.idea/

@@ -72,9 +72,6 @@ namespace LogicMine.Api.Security
     /// <param name="user">The user the enclosing mine is operating under</param>
     protected SecurityLayer(TUser user)
     {
-      if (user == null)
-        throw new UnauthorizedAccessException();
-
       User = user;
     }
 
@@ -256,7 +253,7 @@ namespace LogicMine.Api.Security
 
     private void EnsureOperationAllowed(Operations operation)
     {
-      if (!IsOperationAllowed(User, operation))
+      if (User == null || !IsOperationAllowed(User, operation))
         throw new UnauthorizedAccessException($"User is not allowed to perform '{operation}'");
     }
   }

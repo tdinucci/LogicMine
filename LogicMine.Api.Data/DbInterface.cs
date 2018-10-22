@@ -93,8 +93,8 @@ namespace LogicMine.Api.Data
       }
       finally
       {
-        cmd?.Dispose();
         cmd?.Connection?.Dispose();
+        cmd?.Dispose();
       }
     }
 
