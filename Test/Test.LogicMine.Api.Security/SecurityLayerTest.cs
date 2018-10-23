@@ -182,7 +182,7 @@ namespace Test.LogicMine.Api.Security
       {
       }
 
-      protected override bool IsOperationAllowed(string user, Operations operation)
+      protected override bool IsOperationAllowed(string user, Operations operation, IBasket basket, IVisit visit)
       {
         var allowed = user == "allowed" || user == operation.ToString();
         return allowed;

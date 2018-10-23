@@ -23,7 +23,7 @@ namespace Test.LogicMine.Common.Layers
     IDeleteTerminal<IDeleteBasket<int,int>>,
     IDeleteCollectionTerminal<IDeleteCollectionBasket<Frog,int>>
   {
-    public Task AddResultAsync(IGetBasket<int, Frog> basket)
+    public Task AddResultAsync(IGetBasket<int, Frog> basket, IVisit visit)
     {
       basket.AscentPayload = new Frog
       {
@@ -35,7 +35,7 @@ namespace Test.LogicMine.Common.Layers
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IGetSingleBasket<Frog> basket)
+    public Task AddResultAsync(IGetSingleBasket<Frog> basket, IVisit visit)
     {
       basket.AscentPayload = new Frog
       {
@@ -47,7 +47,7 @@ namespace Test.LogicMine.Common.Layers
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IGetCollectionBasket<Frog> basket)
+    public Task AddResultAsync(IGetCollectionBasket<Frog> basket, IVisit visit)
     {
       basket.AscentPayload = new[]
       {
@@ -59,35 +59,35 @@ namespace Test.LogicMine.Common.Layers
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPostBasket<Frog, int> basket)
+    public Task AddResultAsync(IPostBasket<Frog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 8;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPutBasket<int, Frog, int> basket)
+    public Task AddResultAsync(IPutBasket<int, Frog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 1;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPatchBasket<int, Frog, int> basket)
+    public Task AddResultAsync(IPatchBasket<int, Frog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 1;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IDeleteBasket<int, int> basket)
+    public Task AddResultAsync(IDeleteBasket<int, int> basket, IVisit visit)
     {
       basket.AscentPayload = 1;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IDeleteCollectionBasket<Frog, int> basket)
+    public Task AddResultAsync(IDeleteCollectionBasket<Frog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 5;
 

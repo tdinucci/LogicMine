@@ -158,7 +158,7 @@ namespace Test.LogicMine
 
     private class TestGetTerminal : ITerminal<IBasket<int, Frog>>
     {
-      public Task AddResultAsync(IBasket<int, Frog> basket)
+      public Task AddResultAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         basket.AscentPayload = new Frog {Id = basket.DescentPayload, Name = "Frank", DateOfBirth = DateTime.Today};
 
@@ -168,12 +168,12 @@ namespace Test.LogicMine
 
     private class TestGetStation1 : IStation<IBasket<int, Frog>>
     {
-      public Task DescendToAsync(IBasket<int, Frog> basket)
+      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         return Task.CompletedTask;
       }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket)
+      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         basket.AscentPayload.Name += "1";
 
@@ -183,12 +183,12 @@ namespace Test.LogicMine
 
     private class TestGetStation2 : IStation<IBasket<int, Frog>>
     {
-      public Task DescendToAsync(IBasket<int, Frog> basket)
+      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         return Task.CompletedTask;
       }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket)
+      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         basket.AscentPayload.Name += "2";
 
@@ -198,7 +198,7 @@ namespace Test.LogicMine
 
     private class TestGetStationReturnEarly : IStation<IBasket<int, Frog>>
     {
-      public Task DescendToAsync(IBasket<int, Frog> basket)
+      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         basket.AscentPayload = new Frog
         {
@@ -211,7 +211,7 @@ namespace Test.LogicMine
         return Task.CompletedTask;
       }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket)
+      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         return Task.CompletedTask;
       }
@@ -219,12 +219,12 @@ namespace Test.LogicMine
 
     private class TestGetStationExceptionDown : IStation<IBasket<int, Frog>>
     {
-      public Task DescendToAsync(IBasket<int, Frog> basket)
+      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         throw new InvalidOperationException("Ex on descent");
       }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket)
+      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         return Task.CompletedTask;
       }
@@ -232,12 +232,12 @@ namespace Test.LogicMine
 
     private class TestGetStationExceptionUp : IStation<IBasket<int, Frog>>
     {
-      public Task DescendToAsync(IBasket<int, Frog> basket)
+      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         return Task.CompletedTask;
       }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket)
+      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
       {
         throw new InvalidOperationException("Ex on ascent");
       }

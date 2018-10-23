@@ -36,7 +36,8 @@ namespace LogicMine
     /// Add the result to the basket
     /// </summary>
     /// <param name="basket">The basket to process and add the result to</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    Task AddResultAsync(TBasket basket);
+    Task AddResultAsync(TBasket basket, IVisit visit);
   }
 }

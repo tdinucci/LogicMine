@@ -1,4 +1,5 @@
 ﻿using System;
+using LogicMine;
 using LogicMine.Api.Security;
 
 namespace Sample.LogicMine.Common
@@ -20,7 +21,7 @@ namespace Sample.LogicMine.Common
     {
     }
 
-    protected override bool IsOperationAllowed(string user, Operations operation)
+    protected override bool IsOperationAllowed(string user, Operations operation, IBasket basket, IVisit visit)
     {
       return string.Equals(user, "kermit", StringComparison.CurrentCultureIgnoreCase);
     }

@@ -22,7 +22,7 @@ namespace Sample.LogicMine.Common.PairSelection
       _frogMine = frogMine ?? throw new ArgumentNullException(nameof(frogMine));
     }
 
-    public Task AddResultAsync(IGetSingleBasket<Types.PairSelection> basket)
+    public Task AddResultAsync(IGetSingleBasket<Types.PairSelection> basket, IVisit visit)
     {
       var date = basket?.DescentPayload?.Filter?.Terms?.FirstOrDefault(
         t => t.PropertyName == nameof(Types.PairSelection.Date))?.Value as DateTime?;

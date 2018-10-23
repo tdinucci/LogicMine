@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using LogicMine;
 using LogicMine.Api.Data;
 using LogicMine.Api.Data.Sqlite;
 using LogicMine.Api.Delete;
@@ -35,7 +36,7 @@ namespace Test.LogicMine.Api.Data.Sqlite
       {
         var frog = new Frog {Id = i, Name = $"Frank{i}", DateOfBirth = DateTime.Today.AddDays(-i)};
         var basket = new PostBasket<Frog, int>(frog);
-        tasks[i - 1] = layer.AddResultAsync(basket);
+        tasks[i - 1] = layer.AddResultAsync(basket, new Visit("something", VisitDirections.Down));
       }
 
       Task.WaitAll(tasks);
@@ -48,7 +49,7 @@ namespace Test.LogicMine.Api.Data.Sqlite
       InsertFrogs(layer, 10);
 
       var getBasket = new GetBasket<int, Frog>(5);
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       Assert.Equal(5, getBasket.AscentPayload.Id);
       Assert.Equal($"Frank{5}", getBasket.AscentPayload.Name);
@@ -62,7 +63,7 @@ namespace Test.LogicMine.Api.Data.Sqlite
       InsertFrogs(layer, 100);
 
       var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>());
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       Assert.Equal(100, getBasket.AscentPayload.Length);
     }
@@ -76,7 +77,7 @@ namespace Test.LogicMine.Api.Data.Sqlite
       var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>(new Filter<Frog>(new[]
         {new FilterTerm(nameof(Frog.DateOfBirth), FilterOperators.LessThan, DateTime.Today.AddDays(-50))})));
 
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       Assert.Equal(50, getBasket.AscentPayload.Length);
     }
@@ -90,12 +91,12 @@ namespace Test.LogicMine.Api.Data.Sqlite
       for (var i = 0; i < 16; i++)
       {
         var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>(6, i));
-        await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+        await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
         Assert.Equal(6, getBasket.AscentPayload.Length);
       }
 
       var getFinalBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>(6, 16));
-      await layer.AddResultAsync(getFinalBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getFinalBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
       Assert.Equal(4, getFinalBasket.AscentPayload.Length);
     }
 
@@ -110,14 +111,14 @@ namespace Test.LogicMine.Api.Data.Sqlite
         var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>(new Filter<Frog>(new[]
           {new FilterTerm(nameof(Frog.DateOfBirth), FilterOperators.LessThan, DateTime.Today.AddDays(-50))}), 6, i));
 
-        await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+        await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
         Assert.Equal(6, getBasket.AscentPayload.Length);
       }
 
       var getFinalBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>(new Filter<Frog>(new[]
         {new FilterTerm(nameof(Frog.DateOfBirth), FilterOperators.LessThan, DateTime.Today.AddDays(-50))}), 6, 8));
 
-      await layer.AddResultAsync(getFinalBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getFinalBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
       Assert.Equal(2, getFinalBasket.AscentPayload.Length);
     }
 
@@ -131,11 +132,11 @@ namespace Test.LogicMine.Api.Data.Sqlite
         new PatchRequest<int, Frog>(new Delta<int, Frog>(7,
           new Dictionary<string, object> {{nameof(Frog.Name), "Patched"}})));
 
-      await layer.AddResultAsync(patchBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(patchBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
       Assert.Equal(1, patchBasket.AscentPayload);
 
       var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>());
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       var seenPatched = false;
       Assert.Equal(10, getBasket.AscentPayload.Length);
@@ -161,11 +162,11 @@ namespace Test.LogicMine.Api.Data.Sqlite
 
       var deleteBasket = new DeleteBasket<int, Frog, int>(4);
 
-      await layer.AddResultAsync(deleteBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(deleteBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
       Assert.Equal(1, deleteBasket.AscentPayload);
 
       var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>());
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       Assert.Equal(9, getBasket.AscentPayload.Length);
       foreach (var frog in getBasket.AscentPayload)
@@ -182,11 +183,11 @@ namespace Test.LogicMine.Api.Data.Sqlite
         new DeleteCollectionRequest<Frog>(new Filter<Frog>(new[]
           {new InFilterTerm(nameof(Frog.Id), new object[] {2, 4, 6, 8})})));
 
-      await layer.AddResultAsync(deleteBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(deleteBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
       Assert.Equal(4, deleteBasket.AscentPayload);
 
       var getBasket = new GetCollectionBasket<Frog>(new GetCollectionRequest<Frog>());
-      await layer.AddResultAsync(getBasket).ConfigureAwait(false);
+      await layer.AddResultAsync(getBasket, new Visit("something", VisitDirections.Down)).ConfigureAwait(false);
 
       Assert.Equal(6, getBasket.AscentPayload.Length);
       foreach (var frog in getBasket.AscentPayload)

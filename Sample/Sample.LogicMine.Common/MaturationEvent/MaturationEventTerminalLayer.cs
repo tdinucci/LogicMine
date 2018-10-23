@@ -27,7 +27,7 @@ namespace Sample.LogicMine.Common.MaturationEvent
       _tadpoleMine = tadpoleMine ?? throw new ArgumentNullException(nameof(tadpoleMine));
     }
 
-    public async Task AddResultAsync(IPostBasket<Types.MaturationEvent, int> basket)
+    public async Task AddResultAsync(IPostBasket<Types.MaturationEvent, int> basket, IVisit visit)
     {
       var date = basket.DescentPayload.Date;
       var filter = new Filter<Types.Tadpole>(new[]

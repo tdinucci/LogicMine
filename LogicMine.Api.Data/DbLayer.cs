@@ -41,7 +41,7 @@ namespace LogicMine.Api.Data
   /// <typeparam name="TId">The identity type on T</typeparam>
   /// <typeparam name="T">The type which the terminals operate on</typeparam>
   /// <typeparam name="TDbParameter">The type of parameter used with the database</typeparam>
-  public abstract class DbLayer<TId, T, TDbParameter> : IDbLayer<TId,T>
+  public abstract class DbLayer<TId, T, TDbParameter> : IDbLayer<TId, T>
     where T : new()
     where TDbParameter : IDbDataParameter
   {
@@ -147,14 +147,17 @@ namespace LogicMine.Api.Data
     /// Retreives the requested T from the database and adds it to the baskets AscendPayload
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IGetBasket<TId, T> basket)
+    public async Task AddResultAsync(IGetBasket<TId, T> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      using (var rdr = await DbInterface.GetReaderAsync(GetSelectDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false))
+      var statement = GetSelectDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
       {
         if (!await rdr.ReadAsync().ConfigureAwait(false))
           throw new InvalidOperationException($"No '{typeof(T)}' record found");
@@ -167,14 +170,17 @@ namespace LogicMine.Api.Data
     /// Retrieves the requested collection of T's from the database and adds them to the baskets AscendPayload
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IGetCollectionBasket<T> basket)
+    public async Task AddResultAsync(IGetCollectionBasket<T> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      using (var rdr = await DbInterface.GetReaderAsync(GetSelectDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false))
+      var statement = GetSelectDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
       {
         var objs = new List<T>();
         while (await rdr.ReadAsync().ConfigureAwait(false))
@@ -191,14 +197,17 @@ namespace LogicMine.Api.Data
     /// Inserts the requested T into the database and sets the baskets AscentPayload to new records identity
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IPostBasket<T, TId> basket)
+    public async Task AddResultAsync(IPostBasket<T, TId> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      var id = await DbInterface.ExecuteScalarAsync(GetInsertDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false);
+      var statement = GetInsertDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      var id = await DbInterface.ExecuteScalarAsync(statement).ConfigureAwait(false);
 
       basket.AscentPayload = Descriptor.ProjectColumnValue<TId>(id);
     }
@@ -207,42 +216,51 @@ namespace LogicMine.Api.Data
     /// Performs a partial update to a T in the database and sets the baskets AscentPayload to the number of records affected
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IPatchBasket<TId, T, int> basket)
+    public async Task AddResultAsync(IPatchBasket<TId, T, int> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(GetUpdateDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false);
+      var statement = GetUpdateDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Deletes a T from the database and sets the baskets AscentPayload to the number of records affected
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IDeleteBasket<TId, int> basket)
+    public async Task AddResultAsync(IDeleteBasket<TId, int> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(GetDeleteDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false);
+      var statement = GetDeleteDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Deletes a collection of T's from the database and sets the baskets AscentPayload to the number of records affected
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public async Task AddResultAsync(IDeleteCollectionBasket<T, int> basket)
+    public async Task AddResultAsync(IDeleteCollectionBasket<T, int> basket, IVisit visit)
     {
       if (basket == null)
         throw new ArgumentNullException(nameof(basket));
 
-      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(GetDeleteDbStatement(basket.DescentPayload))
-        .ConfigureAwait(false);
+      var statement = GetDeleteDbStatement(basket.DescentPayload);
+      visit.Log(statement.ToString());
+
+      basket.AscentPayload = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
     }
   }
 }

@@ -24,6 +24,7 @@ SOFTWARE.
 */
 using System;
 using System.Data;
+using System.Linq;
 
 namespace LogicMine.Api.Data
 {
@@ -82,6 +83,27 @@ namespace LogicMine.Api.Data
     /// <param name="text">The statement text, i.e. SQL</param>
     public DbStatement(string text) : this(text, CommandType.Text, null)
     {
+    }
+
+    /// <summary>
+    /// Get a string representation of the statement
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+      return $"[{Type}] {Text} ({ParametersToString()})";
+    }
+
+    /// <summary>
+    /// Get a string representation of the parameters
+    /// </summary>
+    /// <returns></returns>
+    protected virtual string ParametersToString()
+    {
+      if (Parameters != null && Parameters.Any())
+        return Parameters.Select(p => $"{p.ParameterName} = [{p.Value}]").Aggregate((c, n) => $"{c},{n}");
+
+      return string.Empty;
     }
   }
 }

@@ -75,8 +75,9 @@ namespace LogicMine.Api.Cache
     /// down the shaft.
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetBasket<TId, T> basket)
+    public Task DescendToAsync(IGetBasket<TId, T> basket, IVisit visit)
     {
       if (basket.DescentPayload != null)
       {
@@ -95,8 +96,9 @@ namespace LogicMine.Api.Cache
     /// to here the object will be placed in the cache.
     /// </summary>
     /// <param name="basket">The response</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetBasket<TId, T> basket)
+    public Task AscendFromAsync(IGetBasket<TId, T> basket, IVisit visit)
     {
       if (basket.AscentPayload != null)
         Cache.Store(basket.DescentPayload, basket.AscentPayload);
@@ -108,8 +110,9 @@ namespace LogicMine.Api.Cache
     /// No action performed
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetSingleBasket<T> basket)
+    public Task DescendToAsync(IGetSingleBasket<T> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -118,8 +121,9 @@ namespace LogicMine.Api.Cache
     /// No action performed
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetSingleBasket<T> basket)
+    public Task AscendFromAsync(IGetSingleBasket<T> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -131,8 +135,9 @@ namespace LogicMine.Api.Cache
     /// down the shaft.
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetCollectionBasket<T> basket)
+    public Task DescendToAsync(IGetCollectionBasket<T> basket, IVisit visit)
     {
       if (basket?.DescentPayload != null && basket.DescentPayload.GetAll)
       {
@@ -151,8 +156,9 @@ namespace LogicMine.Api.Cache
     /// to here the objects will be placed in the cache.
     /// </summary>
     /// <param name="basket">The response</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetCollectionBasket<T> basket)
+    public Task AscendFromAsync(IGetCollectionBasket<T> basket, IVisit visit)
     {
       if (basket?.AscentPayload != null && basket.DescentPayload.GetAll)
         Cache.StoreCollection(basket.AscentPayload);
@@ -164,8 +170,9 @@ namespace LogicMine.Api.Cache
     /// No action is performed
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPostBasket<T, TId> basket)
+    public Task DescendToAsync(IPostBasket<T, TId> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -176,8 +183,9 @@ namespace LogicMine.Api.Cache
     /// is removed from the cache
     /// </summary>
     /// <param name="basket">The response</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPostBasket<T, TId> basket)
+    public Task AscendFromAsync(IPostBasket<T, TId> basket, IVisit visit)
     {
       // always remove items from cache on way back up, otherwise another thread 
       // may repopulate the cache before the decent is complete
@@ -190,8 +198,9 @@ namespace LogicMine.Api.Cache
     /// No action performed
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPutBasket<TId, T> basket)
+    public Task DescendToAsync(IPutBasket<TId, T> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -201,8 +210,9 @@ namespace LogicMine.Api.Cache
     /// any cached object and collection which is now invalid is removed from the cache
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPutBasket<TId, T> basket)
+    public Task AscendFromAsync(IPutBasket<TId, T> basket, IVisit visit)
     {
       // always remove items from cache on way back up, otherwise another thread 
       // may repopulate the cache before the decent is complete
@@ -219,8 +229,9 @@ namespace LogicMine.Api.Cache
     /// No action performed
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPatchBasket<TId, T> basket)
+    public Task DescendToAsync(IPatchBasket<TId, T> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -230,8 +241,9 @@ namespace LogicMine.Api.Cache
     /// any cached object and collection which is now invalid is removed from the cache
     /// </summary>
     /// <param name="basket">The response</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPatchBasket<TId, T> basket)
+    public Task AscendFromAsync(IPatchBasket<TId, T> basket, IVisit visit)
     {
       // always remove items from cache on way back up, otherwise another thread 
       // may repopulate the cache before the decent is complete
@@ -248,8 +260,9 @@ namespace LogicMine.Api.Cache
     /// No action performed
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IDeleteBasket<TId> basket)
+    public Task DescendToAsync(IDeleteBasket<TId> basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -259,8 +272,9 @@ namespace LogicMine.Api.Cache
     /// any cached object and collection which is now invalid is removed from the cache
     /// </summary>
     /// <param name="basket">The response</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IDeleteBasket<TId> basket)
+    public Task AscendFromAsync(IDeleteBasket<TId> basket, IVisit visit)
     {
       // always remote items from cache on way back up, otherwise another thread 
       // may repopulate the cache before the decent is complete

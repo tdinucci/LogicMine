@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LogicMine.Api.Delete;
 using LogicMine.Api.DeleteCollection;
@@ -33,6 +34,7 @@ using LogicMine.Api.Patch;
 using LogicMine.Api.Post;
 using LogicMine.Api.Put;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace LogicMine.Api.Web
 {
@@ -125,7 +127,7 @@ namespace LogicMine.Api.Web
     /// <param name="obj">The T to put</param>
     /// <param name="get">If true then the newly posted T should be returned</param>
     /// <returns>If get == true then the newly put T, otherwise the value will be dependant on the mine shaft</returns>
-    [HttpPatch("[controller]/{identity}")]
+    [HttpPut("[controller]/{identity}")]
     public virtual async Task<IActionResult> PutAsync([FromRoute] TId identity, [FromBody] T obj, [FromQuery] bool get)
     {
       var putResult = await new PutHandler<TId, T, int>(GetShaft<IPutShaft<TId, T, int>>()).PutAsync(identity, obj);
@@ -139,18 +141,21 @@ namespace LogicMine.Api.Web
     /// <summary>
     /// If the mine for T contains a "Patch" shaft then a patch the identified T
     /// </summary>
+    /// <param name="identity">The identity of the T to patch</param>
     /// <param name="delta">A description of a modifications to a T</param>
     /// <param name="get">If true then the newly posted T should be returned</param>
     /// <returns>If get == true then the patched T, otherwise the value will be dependant on the mine shaft</returns>
-    [HttpPatch("[controller]")]
-    public virtual async Task<IActionResult> PatchAsync([FromBody] Delta<TId, T> delta, [FromQuery] bool get)
+    [HttpPatch("[controller]/{identity}")]
+    public virtual async Task<IActionResult> PatchAsync([FromRoute] TId identity,
+      [FromBody] IDictionary<string, object> delta, [FromQuery] bool get)
     {
-      var patchResult = await new PatchHandler<TId, T, int>(GetShaft<IPatchShaft<TId, T, int>>()).PatchAsync(delta);
+      var deltaObj = new Delta<TId, T>(identity, delta);
+      var patchResult = await new PatchHandler<TId, T, int>(GetShaft<IPatchShaft<TId, T, int>>()).PatchAsync(deltaObj);
 
       if (!get || !(patchResult is OkObjectResult))
         return patchResult;
 
-      return await GetAsync(delta.Identity);
+      return await GetAsync(identity);
     }
 
     /// <summary>

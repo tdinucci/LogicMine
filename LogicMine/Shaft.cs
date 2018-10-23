@@ -52,7 +52,7 @@ namespace LogicMine
     /// The terminal waypoint within the shaft
     /// </summary>
     protected virtual ITerminal<TBasket> Terminal { get; }
-    
+
     /// <summary>
     /// The stations within the shaft
     /// </summary>
@@ -97,7 +97,7 @@ namespace LogicMine
 
       return this;
     }
-    
+
     /// <inheritdoc />
     public async Task<TBasket> SendAsync(TBasket basket)
     {
@@ -139,33 +139,51 @@ namespace LogicMine
       var stopwatch = new Stopwatch();
       foreach (var station in _stations)
       {
-        stopwatch.Start();
-
         var visit = new Visit(station.ToString(), VisitDirections.Down);
-        basket.AddVisit(visit);
 
-        await station.DescendToAsync(basket).ConfigureAwait(false);
+        try
+        {
+          stopwatch.Start();
 
-        stopwatch.Stop();
-        visit.Duration = stopwatch.Elapsed;
-        stopwatch.Reset();
+          basket.AddVisit(visit);
 
-        if (basket.Note is IInteruptNote)
-          return;
+          await station.DescendToAsync(basket, visit).ConfigureAwait(false);
+
+          stopwatch.Stop();
+          visit.Duration = stopwatch.Elapsed;
+          stopwatch.Reset();
+
+          if (basket.Note is IInteruptNote)
+            return;
+        }
+        catch (Exception ex)
+        {
+          visit.Exception = ex;
+          throw;
+        }
       }
     }
 
     private async Task VisitTerminal(TBasket basket)
     {
       var visit = new Visit(Terminal.ToString(), VisitDirections.Down);
-      basket.AddVisit(visit);
 
-      var stopwatch = Stopwatch.StartNew();
+      try
+      {
+        basket.AddVisit(visit);
 
-      await Terminal.AddResultAsync(basket).ConfigureAwait(false);
+        var stopwatch = Stopwatch.StartNew();
 
-      stopwatch.Stop();
-      visit.Duration = stopwatch.Elapsed;
+        await Terminal.AddResultAsync(basket, visit).ConfigureAwait(false);
+
+        stopwatch.Stop();
+        visit.Duration = stopwatch.Elapsed;
+      }
+      catch (Exception ex)
+      {
+        visit.Exception = ex;
+        throw;
+      }
     }
 
     private async Task AscendAsync(TBasket basket)
@@ -173,21 +191,28 @@ namespace LogicMine
       var stopwatch = new Stopwatch();
       for (var i = _stations.Count - 1; i >= 0; i--)
       {
-        stopwatch.Start();
-
         var station = _stations[i];
-
         var visit = new Visit(station.ToString(), VisitDirections.Up);
-        basket.AddVisit(visit);
 
-        await station.AscendFromAsync(basket).ConfigureAwait(false);
+        try
+        {
+          stopwatch.Start();
+          basket.AddVisit(visit);
 
-        stopwatch.Stop();
-        visit.Duration = stopwatch.Elapsed;
-        stopwatch.Reset();
+          await station.AscendFromAsync(basket, visit).ConfigureAwait(false);
 
-        if (basket.Note is IInteruptNote)
-          return;
+          stopwatch.Stop();
+          visit.Duration = stopwatch.Elapsed;
+          stopwatch.Reset();
+
+          if (basket.Note is IInteruptNote)
+            return;
+        }
+        catch (Exception ex)
+        {
+          visit.Exception = ex;
+          throw;
+        }
       }
     }
   }

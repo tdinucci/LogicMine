@@ -123,9 +123,9 @@ namespace Test.LogicMine.Api.Web
     {
       var controller = GetController(10);
 
-      var delta = new Delta<int, Frog>(7, new Dictionary<string, object> {{nameof(Frog.Name), "Patched"}});
+      var delta = new Dictionary<string, object> {{nameof(Frog.Name), "Patched"}};
 
-      var patchResponse = await controller.PatchAsync(delta, false).ConfigureAwait(false);
+      var patchResponse = await controller.PatchAsync(7, delta, false).ConfigureAwait(false);
       Assert.Equal(1, ((OkObjectResult) patchResponse).Value);
 
       var getResponse = await controller.GetCollectionAsync().ConfigureAwait(false);

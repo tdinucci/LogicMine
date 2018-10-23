@@ -80,17 +80,20 @@ namespace LogicMine.Api.Security
     /// </summary>
     /// <param name="user">The user</param>
     /// <param name="operation">The requested operation</param>
+    /// <param name="basket">The basket that is travelling</param>
+    /// <param name="visit">The visit the basket is at</param>
     /// <returns></returns>
-    protected abstract bool IsOperationAllowed(TUser user, Operations operation);
+    protected abstract bool IsOperationAllowed(TUser user, Operations operation, IBasket basket, IVisit visit);
 
     /// <summary>
     /// If the user is not allowed to "Get" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetBasket basket)
+    public Task DescendToAsync(IGetBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.Get);
+      EnsureOperationAllowed(Operations.Get, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -98,8 +101,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetBasket basket)
+    public Task AscendFromAsync(IGetBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -108,10 +112,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Get" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetSingleBasket basket)
+    public Task DescendToAsync(IGetSingleBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.GetSingle);
+      EnsureOperationAllowed(Operations.GetSingle, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -119,8 +124,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetSingleBasket basket)
+    public Task AscendFromAsync(IGetSingleBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -129,10 +135,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Get" collections of T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IGetCollectionBasket basket)
+    public Task DescendToAsync(IGetCollectionBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.GetCollection);
+      EnsureOperationAllowed(Operations.GetCollection, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -140,8 +147,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IGetCollectionBasket basket)
+    public Task AscendFromAsync(IGetCollectionBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -150,10 +158,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Post" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPostBasket basket)
+    public Task DescendToAsync(IPostBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.Post);
+      EnsureOperationAllowed(Operations.Post, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -161,8 +170,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPostBasket basket)
+    public Task AscendFromAsync(IPostBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -171,10 +181,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Put" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPutBasket basket)
+    public Task DescendToAsync(IPutBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.Put);
+      EnsureOperationAllowed(Operations.Put, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -182,8 +193,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPutBasket basket)
+    public Task AscendFromAsync(IPutBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -192,10 +204,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Patch" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IPatchBasket basket)
+    public Task DescendToAsync(IPatchBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.Patch);
+      EnsureOperationAllowed(Operations.Patch, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -203,8 +216,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IPatchBasket basket)
+    public Task AscendFromAsync(IPatchBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -213,10 +227,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Delete" T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">The request</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IDeleteBasket basket)
+    public Task DescendToAsync(IDeleteBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.Delete);
+      EnsureOperationAllowed(Operations.Delete, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -224,8 +239,9 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IDeleteBasket basket)
+    public Task AscendFromAsync(IDeleteBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
@@ -234,10 +250,11 @@ namespace LogicMine.Api.Security
     /// If the user is not allowed to "Delete Collection's" of T's then an UnauthorizedAccessException will be thrown. 
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task DescendToAsync(IDeleteCollectionBasket basket)
+    public Task DescendToAsync(IDeleteCollectionBasket basket, IVisit visit)
     {
-      EnsureOperationAllowed(Operations.DeleteCollection);
+      EnsureOperationAllowed(Operations.DeleteCollection, basket, visit);
       return Task.CompletedTask;
     }
 
@@ -245,15 +262,16 @@ namespace LogicMine.Api.Security
     /// Performs no action
     /// </summary>
     /// <param name="basket">A basket</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    public Task AscendFromAsync(IDeleteCollectionBasket basket)
+    public Task AscendFromAsync(IDeleteCollectionBasket basket, IVisit visit)
     {
       return Task.CompletedTask;
     }
 
-    private void EnsureOperationAllowed(Operations operation)
+    private void EnsureOperationAllowed(Operations operation, IBasket basket, IVisit visit)
     {
-      if (User == null || !IsOperationAllowed(User, operation))
+      if (!IsOperationAllowed(User, operation, basket, visit))
         throw new UnauthorizedAccessException($"User is not allowed to perform '{operation}'");
     }
   }

@@ -28,7 +28,7 @@ namespace Sample.LogicMine.Common.MatingEvent
       _tadpoleMine = tadpoleMine ?? throw new ArgumentNullException(nameof(tadpoleMine));
     }
 
-    public Task AddResultAsync(IPostBasket<Types.MatingEvent, string> basket)
+    public Task AddResultAsync(IPostBasket<Types.MatingEvent, string> basket, IVisit visit)
     {
       // get what we need out of the basket so that a response can be generated
       var male = basket.DescentPayload.Male;

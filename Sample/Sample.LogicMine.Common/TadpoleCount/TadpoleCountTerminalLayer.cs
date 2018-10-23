@@ -22,7 +22,7 @@ namespace Sample.LogicMine.Common.TadpoleCount
       _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
     }
 
-    public async Task AddResultAsync(IGetSingleBasket<Types.TadpoleCount> basket)
+    public async Task AddResultAsync(IGetSingleBasket<Types.TadpoleCount> basket, IVisit visit)
     {
       // since this is just a sample application and I want it to be easy to follow I'm just referencing these 
       // SQLite specific classes directly.  In a real application you may decide to introduce a level of abstraction 

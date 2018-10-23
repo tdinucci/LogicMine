@@ -37,14 +37,16 @@ namespace LogicMine
     /// Called whenever the station is encountered within a shaft when the basket is descending
     /// </summary>
     /// <param name="basket">The basket travelling down the shaft</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    Task DescendToAsync(TBasket basket);
+    Task DescendToAsync(TBasket basket, IVisit visit);
 
     /// <summary>
     /// Called whenever the station is encountered within a shaft when the basket is ascending
     /// </summary>
     /// <param name="basket">The basket travelling up the shaft</param>
+    /// <param name="visit">The visit the basket is currently making</param>
     /// <returns>A Task that may be awaited</returns>
-    Task AscendFromAsync(TBasket basket);
+    Task AscendFromAsync(TBasket basket, IVisit visit);
   }
 }

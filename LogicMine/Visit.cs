@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace LogicMine
 {
@@ -31,6 +33,8 @@ namespace LogicMine
   /// </summary>
   public class Visit : IVisit
   {
+    private readonly IList<string> _logMessages = new List<string>();
+    
     /// <inheritdoc />
     public string Description { get; }
 
@@ -39,6 +43,22 @@ namespace LogicMine
 
     /// <inheritdoc />
     public TimeSpan? Duration { get; set; }
+
+    /// <inheritdoc />
+    public IEnumerable<string> LogMessages => new ReadOnlyCollection<string>(_logMessages);
+
+    /// <inheritdoc />
+    public Exception Exception { get; set; }
+
+    /// <summary>
+    /// Log a message for the visit
+    /// </summary>
+    /// <param name="message"></param>
+    public void Log(string message)
+    {
+      if (!string.IsNullOrWhiteSpace(message))
+        _logMessages.Add($"[{DateTime.UtcNow.TimeOfDay}] {message}");
+    }
 
     /// <summary>
     /// Construct a new Visit

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using LogicMine;
 using LogicMine.Api.Post;
 
 namespace Sample.LogicMine.Common.MatingEvent
@@ -9,13 +10,13 @@ namespace Sample.LogicMine.Common.MatingEvent
   /// </summary>
   public class FrenchTranslationStation : IPostStation<IPostBasket<Types.MatingEvent, string>>
   {
-    public Task DescendToAsync(IPostBasket<Types.MatingEvent, string> basket)
+    public Task DescendToAsync(IPostBasket<Types.MatingEvent, string> basket, IVisit visit)
     {
       // just let baskets pass through on the way down
       return Task.CompletedTask;
     }
 
-    public Task AscendFromAsync(IPostBasket<Types.MatingEvent, string> basket)
+    public Task AscendFromAsync(IPostBasket<Types.MatingEvent, string> basket, IVisit visit)
     {
       // grab baskets on the way up and translate their contents
       var message = basket.AscentPayload;

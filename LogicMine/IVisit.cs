@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
 
 namespace LogicMine
 {
@@ -46,5 +47,21 @@ namespace LogicMine
     /// or is still in progress
     /// </summary>
     TimeSpan? Duration { get; }
+
+    /// <summary>
+    /// Messages that were recorded during the visit
+    /// </summary>
+    IEnumerable<string> LogMessages { get; }
+
+    /// <summary>
+    /// An exception that occurred during the visit
+    /// </summary>
+    Exception Exception { get; }
+
+    /// <summary>
+    /// Log a message related to the visit
+    /// </summary>
+    /// <param name="message">The message to log</param>
+    void Log(string message);
   }
 }

@@ -19,7 +19,7 @@ namespace Test.LogicMine.Common.Layers
     IPatchTerminal<IPatchBasket<int, AltFrog, int>>,
     IDeleteTerminal<IDeleteBasket<int, int>>
   {
-    public Task AddResultAsync(IGetBasket<int, AltFrog> basket)
+    public Task AddResultAsync(IGetBasket<int, AltFrog> basket, IVisit visit)
     {
       basket.AscentPayload = new AltFrog
       {
@@ -31,7 +31,7 @@ namespace Test.LogicMine.Common.Layers
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IGetCollectionBasket<AltFrog> basket)
+    public Task AddResultAsync(IGetCollectionBasket<AltFrog> basket, IVisit visit)
     {
       basket.AscentPayload = new[]
       {
@@ -43,28 +43,28 @@ namespace Test.LogicMine.Common.Layers
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPostBasket<AltFrog, int> basket)
+    public Task AddResultAsync(IPostBasket<AltFrog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 8;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPutBasket<int, AltFrog, int> basket)
+    public Task AddResultAsync(IPutBasket<int, AltFrog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 9;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IPatchBasket<int, AltFrog, int> basket)
+    public Task AddResultAsync(IPatchBasket<int, AltFrog, int> basket, IVisit visit)
     {
       basket.AscentPayload = 10;
 
       return Task.CompletedTask;
     }
 
-    public Task AddResultAsync(IDeleteBasket<int, int> basket)
+    public Task AddResultAsync(IDeleteBasket<int, int> basket, IVisit visit)
     {
       basket.AscentPayload = 11;
 
