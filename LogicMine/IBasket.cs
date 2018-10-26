@@ -91,11 +91,9 @@ namespace LogicMine
     INote Note { get; }
 
     /// <summary>
-    /// Will return true if Note is an OkNote.  This can be used as a quick way to determine whether a baskets journey was 
-    /// successfull.  If this returns "false" then you should take a look at the note and then decide what to do.
-    /// If you could 
+    /// Will return true if there was an error while processing the basket
     /// </summary>
-    bool IsOk { get; }
+    bool IsError { get; }
 
     /// <summary>
     /// If while a waypoint is processing one basket it creates another one and sends it down a shaft this 

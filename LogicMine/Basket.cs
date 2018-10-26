@@ -115,7 +115,7 @@ namespace LogicMine
     public INote Note { get; private set; }
 
     /// <inheritdoc />
-    public bool IsOk => Note is OkNote;
+    public bool IsError => GetIsError(); // don't cache result as basket contents may change
 
     /// <inheritdoc />
     public IBasket Parent { get; }
@@ -192,6 +192,15 @@ namespace LogicMine
         throw new ArgumentNullException(nameof(child));
 
       _children.Add(child);
+    }
+
+    private bool GetIsError()
+    {
+      if (_visits.FirstOrDefault(v => v.Exception != null) != default(IVisit))
+        return true;
+
+      return _children.FirstOrDefault(
+               c => c.Visits.FirstOrDefault(v => v.Exception != null) != default(IVisit)) != default(IBasket);
     }
   }
 }
