@@ -34,12 +34,15 @@ namespace LogicMine
   public class Visit : IVisit
   {
     private readonly IList<string> _logMessages = new List<string>();
-    
+
     /// <inheritdoc />
     public string Description { get; }
 
     /// <inheritdoc />
     public VisitDirections Direction { get; }
+
+    /// <inheritdoc />
+    public DateTime StartedAt { get; }
 
     /// <inheritdoc />
     public TimeSpan? Duration { get; set; }
@@ -51,6 +54,40 @@ namespace LogicMine
     public Exception Exception { get; set; }
 
     /// <summary>
+    /// Construct a new Visit
+    /// </summary>
+    /// <param name="description">A description of the visit</param>
+    /// <param name="startedAt">The time the visit started at, if null the DateTime.UtcNow will be used</param>
+    /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
+    public Visit(string description, VisitDirections direction, DateTime? startedAt = null)
+    {
+      if (string.IsNullOrWhiteSpace(description))
+        throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
+
+      Description = description;
+      Direction = direction;
+      StartedAt = startedAt ?? DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Construct a new Visit
+    /// </summary>
+    /// <param name="description">A description of the visit</param>
+    /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
+    /// <param name="startedAt">The time the visit started at, if null the DateTime.UtcNow will be used</param>
+    /// <param name="duration">The duration of the visit</param>
+    public Visit(string description, VisitDirections direction, DateTime? startedAt, TimeSpan duration)
+    {
+      if (string.IsNullOrWhiteSpace(description))
+        throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
+
+      Description = description;
+      Direction = direction;
+      StartedAt = startedAt ?? DateTime.UtcNow;
+      Duration = duration;
+    }
+
+    /// <summary>
     /// Log a message for the visit
     /// </summary>
     /// <param name="message"></param>
@@ -58,36 +95,6 @@ namespace LogicMine
     {
       if (!string.IsNullOrWhiteSpace(message))
         _logMessages.Add($"[{DateTime.UtcNow.TimeOfDay}] {message}");
-    }
-
-    /// <summary>
-    /// Construct a new Visit
-    /// </summary>
-    /// <param name="description">A description of the visit</param>
-    /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
-    public Visit(string description, VisitDirections direction)
-    {
-      if (string.IsNullOrWhiteSpace(description))
-        throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
-
-      Description = description;
-      Direction = direction;
-    }
-
-    /// <summary>
-    /// Construct a new Visit
-    /// </summary>
-    /// <param name="description">A description of the visit</param>
-    /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
-    /// <param name="duration">The duration of the visit</param>
-    public Visit(string description, VisitDirections direction, TimeSpan duration)
-    {
-      if (string.IsNullOrWhiteSpace(description))
-        throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
-
-      Description = description;
-      Direction = direction;
-      Duration = duration;
     }
   }
 }

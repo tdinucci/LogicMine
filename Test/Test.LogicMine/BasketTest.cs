@@ -58,12 +58,12 @@ namespace Test.LogicMine
     public void Journey()
     {
       var basket = new TestBasket<Frog>(new Frog());
-      basket.AddVisit(new Visit("one", VisitDirections.Down, TimeSpan.FromSeconds(1)));
-      basket.AddVisit(new Visit("two", VisitDirections.Down, TimeSpan.FromSeconds(2)));
-      basket.AddVisit(new Visit("three", VisitDirections.Down, TimeSpan.FromSeconds(3)));
-      basket.AddVisit(new Visit("3", VisitDirections.Up, TimeSpan.FromSeconds(3.3)));
-      basket.AddVisit(new Visit("2", VisitDirections.Up, TimeSpan.FromSeconds(2.2)));
-      basket.AddVisit(new Visit("1", VisitDirections.Up, TimeSpan.FromSeconds(1.1)));
+      basket.AddVisit(new Visit("one", VisitDirections.Down, null, TimeSpan.FromSeconds(1)));
+      basket.AddVisit(new Visit("two", VisitDirections.Down, null, TimeSpan.FromSeconds(2)));
+      basket.AddVisit(new Visit("three", VisitDirections.Down, null, TimeSpan.FromSeconds(3)));
+      basket.AddVisit(new Visit("3", VisitDirections.Up, null, TimeSpan.FromSeconds(3.3)));
+      basket.AddVisit(new Visit("2", VisitDirections.Up, null, TimeSpan.FromSeconds(2.2)));
+      basket.AddVisit(new Visit("1", VisitDirections.Up, null, TimeSpan.FromSeconds(1.1)));
 
       basket.JourneyDuration = TimeSpan.FromSeconds(12.6);
 

@@ -43,6 +43,11 @@ namespace LogicMine
     VisitDirections Direction { get; }
 
     /// <summary>
+    /// The time the visit started at
+    /// </summary>
+    DateTime StartedAt { get; }
+    
+    /// <summary>
     /// The duration of the visit.  If this value is null it means the visit failed or 
     /// or is still in progress
     /// </summary>
