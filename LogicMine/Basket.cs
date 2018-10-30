@@ -124,6 +124,9 @@ namespace LogicMine
     public IVisit ParentVisit { get; }
 
     /// <inheritdoc />
+    public DateTime StartedAt { get; }
+    
+    /// <inheritdoc />
     public TimeSpan JourneyDuration { get; set; }
 
     /// <inheritdoc />
@@ -150,6 +153,7 @@ namespace LogicMine
     /// <param name="parent">The parent of the new basket</param>
     protected Basket(object descentPayload, IBasket parent)
     {
+      StartedAt = DateTime.UtcNow;
       Note = new OkNote();
       DescentPayload = descentPayload;
 

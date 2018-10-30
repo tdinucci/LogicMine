@@ -109,6 +109,11 @@ namespace LogicMine
     IVisit ParentVisit { get; }
 
     /// <summary>
+    /// The time the basket started it's journey at
+    /// </summary>
+    DateTime StartedAt { get; }
+    
+    /// <summary>
     /// The amount of time the basket has travelled for
     /// </summary>
     TimeSpan JourneyDuration { get; set; }
