@@ -33,6 +33,11 @@ namespace LogicMine.Api.Web
   public class Handler
   {
     /// <summary>
+    /// If this is set it will effectively override the default error result processor used by GetErrorResult()
+    /// </summary>
+    public Func<Exception, IActionResult> ErrorResultProcessor { get; set; }
+
+    /// <summary>
     /// Construct a new Handler
     /// </summary>
     protected Handler()
@@ -46,6 +51,9 @@ namespace LogicMine.Api.Web
     /// <returns>An IActionResult describing the exception</returns>
     protected virtual IActionResult GetErrorResult(Exception ex)
     {
+      if (ErrorResultProcessor != null)
+        return ErrorResultProcessor(ex);
+
       var message = GetExceptionMessage(ex);
       switch (ex)
       {
