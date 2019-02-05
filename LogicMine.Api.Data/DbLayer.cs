@@ -59,7 +59,7 @@ namespace LogicMine.Api.Data
     /// <summary>
     /// Contains metadata to enable mapping T's to database tables
     /// </summary>
-    public IDbObjectDescriptor<T> Descriptor { get; }
+    public IDbObjectDescriptor Descriptor { get; }
 
     /// <summary>
     /// An object-relational mapper
@@ -72,7 +72,7 @@ namespace LogicMine.Api.Data
     /// <param name="dbInterface">An interface to an underlying database</param>
     /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
     /// <param name="mapper">An object-relational mapper</param>
-    protected DbLayer(IDbInterface<TDbParameter> dbInterface, IDbObjectDescriptor<T> descriptor, IDbMapper<T> mapper)
+    protected DbLayer(IDbInterface<TDbParameter> dbInterface, IDbObjectDescriptor descriptor, IDbMapper<T> mapper)
     {
       DbInterface = dbInterface ?? throw new ArgumentNullException(nameof(dbInterface));
       Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));

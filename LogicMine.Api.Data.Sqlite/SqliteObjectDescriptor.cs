@@ -31,7 +31,7 @@ namespace LogicMine.Api.Data.Sqlite
   /// A type which contains metadata related to objects which are stored in an SQLite database.
   /// </summary>
   /// <typeparam name="T">The type described</typeparam>
-  public class SqliteObjectDescriptor<T> : DbObjectDescriptor<T>
+  public class SqliteObjectDescriptor<T> : DbObjectDescriptor
   {
     /// <summary>
     /// Construct a new SqliteObjectDescriptor

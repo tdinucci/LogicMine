@@ -28,7 +28,7 @@ namespace LogicMine.Api.Data
   /// A type which contains metadata related to objects which are mapped to a database table.
   /// </summary>
   /// <typeparam name="T">The type described</typeparam>
-  public interface IMappedDbObjectDescriptor<T> : IDbObjectDescriptor<T>
+  public interface IMappedDbObjectDescriptor<T> : IDbObjectDescriptor
   {
     /// <summary>
     /// The schema which the mapped table is within

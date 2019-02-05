@@ -60,6 +60,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Api.Data.Postgres
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.Api.Data.Postgres", "Test\Test.LogicMine.Api.Data.Postgres\Test.LogicMine.Api.Data.Postgres.csproj", "{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Api.Data.Salesforce", "LogicMine.Api.Data.Salesforce\LogicMine.Api.Data.Salesforce.csproj", "{5765507C-3473-439A-919E-A85420C9AD60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.Api.Data.Salesforce", "Test\Test.LogicMine.Api.Data.Salesforce\Test.LogicMine.Api.Data.Salesforce.csproj", "{50149862-8F3D-4C78-A34E-9359AA7BFB0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -162,6 +166,14 @@ Global
 		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5765507C-3473-439A-919E-A85420C9AD60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5765507C-3473-439A-919E-A85420C9AD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5765507C-3473-439A-919E-A85420C9AD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5765507C-3473-439A-919E-A85420C9AD60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +194,7 @@ Global
 		{4AAB926C-E210-44A2-81D5-BA3C7B197C12} = {5786F5F6-F9C8-44C0-9D20-BA6E3B178988}
 		{9B99A466-3AA7-44C4-B099-CF13CF121C7C} = {5786F5F6-F9C8-44C0-9D20-BA6E3B178988}
 		{D6A0B4F1-6DE3-4AB4-9FF6-7CDBF0E39459} = {4877C576-A201-4590-88E9-D88970D1F86A}
+		{50149862-8F3D-4C78-A34E-9359AA7BFB0C} = {4877C576-A201-4590-88E9-D88970D1F86A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3508A97D-5D10-470F-836F-95639A910A02}

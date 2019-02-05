@@ -41,7 +41,7 @@ namespace LogicMine.Api.Filter
     Type FilteredType { get; }
 
     /// <summary>
-    /// Convert the current filter to a filter on a different (but amost certainly similar in description) type
+    /// Convert the current filter to a filter on a different (but almost certainly similar in description) type
     /// </summary>
     /// <typeparam name="U">The type to bind the converted filter to</typeparam>
     /// <param name="propertyNameConverter">A delegate to convert property names from the current filter into property names for the new filter</param>

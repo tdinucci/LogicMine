@@ -30,7 +30,7 @@ namespace LogicMine.Api.Data.Postgres
     /// A type which contains metadata related to objects which are stored in a Postgres database.
     /// </summary>
     /// <typeparam name="T">The type described</typeparam>
-    public class PostgresObjectDescriptor<T> : DbObjectDescriptor<T>
+    public class PostgresObjectDescriptor<T> : DbObjectDescriptor
     {
         /// <summary>
         /// Construct a new PostgresObjectDescriptor

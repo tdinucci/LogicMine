@@ -47,7 +47,7 @@ namespace LogicMine.Api.Patch
     IReadOnlyDictionary<string, object> ModifiedProperties { get; }
 
     /// <summary>
-    /// Convert the current delta to a delta on a different (but amost certainly similar in description) type
+    /// Convert the current delta to a delta on a different (but almost certainly similar in description) type
     /// </summary>
     /// <typeparam name="U">The type to bind the converted delta to</typeparam>
     /// <param name="propertyNameConverter">A delegate to convert property names from the current delta into property names for the new one</param>

@@ -39,13 +39,13 @@ namespace LogicMine.Api.Data
     /// <summary>
     /// Contains metadata to enable mapping T's to database tables
     /// </summary>
-    protected IDbObjectDescriptor<T> Descriptor { get; }
+    protected IDbObjectDescriptor Descriptor { get; }
 
     /// <summary>
     /// Construct a new DbMapper
     /// </summary>
     /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
-    public DbMapper(IDbObjectDescriptor<T> descriptor)
+    public DbMapper(IDbObjectDescriptor descriptor)
     {
       Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
     }

@@ -30,7 +30,7 @@ namespace LogicMine.Api.Data.Sql
   /// A type which contains metadata related to objects which are stored in an SQL Server database.
   /// </summary>
   /// <typeparam name="T">The type described</typeparam>
-  public class SqlObjectDescriptor<T> : DbObjectDescriptor<T>
+  public class SqlObjectDescriptor<T> : DbObjectDescriptor
   {
     /// <summary>
     /// Construct a new SqlObjectDescriptor

@@ -30,8 +30,7 @@ namespace LogicMine.Api.Data
   /// <summary>
   /// A type which contains metadata related to objects which are stored in a database.
   /// </summary>
-  /// <typeparam name="T">The type described</typeparam>
-  public abstract class DbObjectDescriptor<T> : IDbObjectDescriptor<T>
+  public abstract class DbObjectDescriptor : IDbObjectDescriptor
   {
     /// <summary>
     /// A collection of property names which should not be written to the database

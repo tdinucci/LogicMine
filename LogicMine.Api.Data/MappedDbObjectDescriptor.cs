@@ -31,7 +31,7 @@ namespace LogicMine.Api.Data
   /// A type which contains metadata related to objects which are mapped to a database table.
   /// </summary>
   /// <typeparam name="T">The type described</typeparam>
-  public abstract class MappedDbObjectDescriptor<T> : DbObjectDescriptor<T>, IMappedDbObjectDescriptor<T>
+  public abstract class MappedDbObjectDescriptor<T> : DbObjectDescriptor, IMappedDbObjectDescriptor<T>
   {
     /// <inheritdoc />
     public abstract string Schema { get; }
