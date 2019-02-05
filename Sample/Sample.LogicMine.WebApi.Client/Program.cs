@@ -19,7 +19,7 @@ namespace Sample.LogicMine.WebApi.Client
         using (var client = new HttpClient())
         {
           // this is URL Sample.LogicMine.WebApi is assumed to be listening at
-          client.BaseAddress = new Uri("http://localhost:2148");
+          client.BaseAddress = new Uri("http://localhost:5000");
           new Genesis("kermit", client).LetThereBeLightAsync().Wait();
         }
 

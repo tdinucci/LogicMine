@@ -10,7 +10,7 @@ namespace Sample.LogicMine.WebApi
 {
   public class Startup
   {
-    private const string TraceFilePath = @"c:\temp\LogicMine\web-trace.txt";
+    private static readonly string TraceFilePath = Path.Combine(Path.GetTempPath(), "web-trace.txt");
 
     private readonly ICache _cache = new InProcessCache();
     private readonly FileTraceExporter _traceExporter;

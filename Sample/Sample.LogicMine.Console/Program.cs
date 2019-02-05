@@ -11,7 +11,7 @@ namespace Sample.LogicMine.Console
   /// </summary>
   public class Program
   {
-    private const string TraceFilePath = @"c:\temp\LogicMine\console-trace.txt";
+    private static readonly string TraceFilePath = Path.Combine(Path.GetTempPath(), "console-trace.txt");
 
     public static void Main()
     {
