@@ -64,8 +64,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Api.Data.Salesfor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.Api.Data.Salesforce", "Test\Test.LogicMine.Api.Data.Salesforce\Test.LogicMine.Api.Data.Salesforce.csproj", "{50149862-8F3D-4C78-A34E-9359AA7BFB0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Api.Web.Messaging", "LogicMine.Api.Web.Messaging\LogicMine.Api.Web.Messaging.csproj", "{8B60F1BB-182D-4274-AF21-2351263A9C75}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,10 +174,6 @@ Global
 		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50149862-8F3D-4C78-A34E-9359AA7BFB0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B60F1BB-182D-4274-AF21-2351263A9C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B60F1BB-182D-4274-AF21-2351263A9C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B60F1BB-182D-4274-AF21-2351263A9C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B60F1BB-182D-4274-AF21-2351263A9C75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
