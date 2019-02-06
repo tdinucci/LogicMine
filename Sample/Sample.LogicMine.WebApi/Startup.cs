@@ -3,6 +3,7 @@ using LogicMine;
 using LogicMine.Api.Cache;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.LogicMine.Common;
 
@@ -41,6 +42,7 @@ namespace Sample.LogicMine.WebApi
       services
         .AddSingleton(_cache)
         .AddSingleton<ITraceExporter>(_traceExporter)
+        .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
         .AddTransient<IAuthTokenReader, AuthTokenReader>()
         .AddMvc();
     }

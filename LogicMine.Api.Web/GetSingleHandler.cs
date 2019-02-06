@@ -64,7 +64,7 @@ namespace LogicMine.Api.Web
 
         await _shaft.SendAsync(basket);
 
-        return new OkObjectResult(basket.AscentPayload);
+        return GetOkActionResult(basket.AscentPayload);
       }
       catch (Exception ex)
       {

@@ -23,7 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Api.Web
 {
@@ -45,6 +48,16 @@ namespace LogicMine.Api.Web
     }
 
     /// <summary>
+    /// Covert an object into a standard result OkObjectResult
+    /// </summary>
+    /// <param name="result">The object to wrap in the OkObjectResult</param>
+    /// <returns>An object wrapped in an OkObjectResult</returns>
+    protected virtual OkObjectResult GetOkActionResult(object result)
+    {
+      return new OkObjectResult(new JObject {{"result", JToken.FromObject(result)}});
+    }
+
+    /// <summary>
     /// Convert an exception to an IActionResult in preperation for returning to the caller
     /// </summary>
     /// <param name="ex">The exception to convert</param>
@@ -54,15 +67,15 @@ namespace LogicMine.Api.Web
       if (ErrorResultProcessor != null)
         return ErrorResultProcessor(ex);
 
-      var message = GetExceptionMessage(ex);
+      var errorObj = new JObject {{"errors", JToken.FromObject(GetExceptionMessages(ex))}};
       switch (ex)
       {
         case UnauthorizedAccessException _:
           return new UnauthorizedResult();
-        case InvalidOperationException _:
-          return new BadRequestObjectResult(message);
+        case ValidationException _:
+          return new BadRequestObjectResult(errorObj.ToString());
         default:
-          return new InternalServerErrorObjectResult(message);
+          return new InternalServerErrorObjectResult(errorObj.ToString());
       }
     }
 
@@ -70,14 +83,19 @@ namespace LogicMine.Api.Web
     /// Get an exception message from an exception (including messages from inner exceptions)
     /// </summary>
     /// <param name="ex">The exception to extract the message from</param>
-    /// <returns>A string containing the exception message(s)</returns>
-    protected virtual string GetExceptionMessage(Exception ex)
+    /// <returns>A string array containing the exception message(s)</returns>
+    protected virtual string[] GetExceptionMessages(Exception ex)
     {
       var level = 0;
-      var message = string.Empty;
+      var messages = new List<string>();
+
+      // caller won't care about this outer exception
+      if (ex is ShaftException && ex.InnerException != null)
+        ex = ex.InnerException;
+
       while (ex != null)
       {
-        message += $"{level++}: {ex.Message}.\r\n";
+        messages.Add($"{level++}: {ex.Message}.");
 
         //#if DEBUG
         //        message += $"===\n{ex.StackTrace}\n===\n";
@@ -86,7 +104,7 @@ namespace LogicMine.Api.Web
         ex = ex.InnerException;
       }
 
-      return message;
+      return messages.ToArray();
     }
   }
 }

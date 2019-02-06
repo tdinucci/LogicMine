@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using LogicMine.Api.DeleteCollection;
 using LogicMine.Api.Web.Filter;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Api.Web
 {
@@ -58,7 +59,7 @@ namespace LogicMine.Api.Web
         var basket = new DeleteCollectionBasket<T, TResult>(new DeleteCollectionRequest<T>(parsedFilter));
         await _shaft.SendAsync(basket);
 
-        return new OkObjectResult(basket.AscentPayload);
+        return GetOkActionResult(basket.AscentPayload);
       }
       catch (Exception ex)
       {

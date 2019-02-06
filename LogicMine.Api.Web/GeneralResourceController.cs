@@ -35,6 +35,7 @@ using LogicMine.Api.Post;
 using LogicMine.Api.Put;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Api.Web
 {
@@ -116,8 +117,14 @@ namespace LogicMine.Api.Web
       if (!get || !(postResult is OkObjectResult castResult))
         return postResult;
 
-      var id = (TId) castResult.Value;
-      return await GetAsync(id);
+      if (castResult.Value is JObject jobj)
+      {
+        var id = jobj["result"].Value<TId>();
+        return await GetAsync(id);
+      }
+
+      var error = new JObject {{"error", "Did not receive expected result after posting record"}};
+      return new InternalServerErrorObjectResult(error.ToString());
     }
 
     /// <summary>

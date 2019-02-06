@@ -56,7 +56,7 @@ namespace LogicMine.Api.Web
         var request = new PutRequest<TId, T>(identity, obj);
         var putBasket = await _shaft.SendAsync(new PutBasket<TId, T, TResult>(request));
 
-        return new OkObjectResult(putBasket.AscentPayload);
+        return GetOkActionResult(putBasket.AscentPayload);
       }
       catch (Exception ex)
       {

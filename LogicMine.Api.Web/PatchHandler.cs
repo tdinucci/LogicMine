@@ -55,7 +55,7 @@ namespace LogicMine.Api.Web
       {
         var patchBasket = await _shaft.SendAsync(new PatchBasket<TId, T, TResult>(new PatchRequest<TId, T>(delta)));
 
-        return new OkObjectResult(patchBasket.AscentPayload);
+        return GetOkActionResult(patchBasket.AscentPayload);
       }
       catch (Exception ex)
       {
