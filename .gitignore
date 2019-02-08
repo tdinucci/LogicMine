@@ -1,14 +1,4 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-*.suo
-*.user
-_ReSharper.*
-bin
-obj
-packages
-/.vs/LogicMine/v15/Server/sqlite3
-/.vs/slnx.sqlite
-/.vs/VSWorkspaceState.json
+obj/
+bin/
 .idea/
+.vscode/
