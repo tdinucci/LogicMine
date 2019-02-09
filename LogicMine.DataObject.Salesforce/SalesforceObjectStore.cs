@@ -13,13 +13,13 @@ namespace LogicMine.DataObject.Salesforce
     public class SalesforceObjectStore<T> : IDataObjectStore<T, string>
         where T : new()
     {
-        protected SalesforceConnectionConfig ConnectionConfig { get; }
+        protected SalesforceCredentials Credentials { get; }
         protected SalesforceObjectDescriptor<T> Descriptor { get; }
 
-        public SalesforceObjectStore(SalesforceConnectionConfig connectionConfig,
+        public SalesforceObjectStore(SalesforceCredentials credentials,
             SalesforceObjectDescriptor<T> descriptor)
         {
-            ConnectionConfig = connectionConfig ?? throw new ArgumentNullException(nameof(connectionConfig));
+            Credentials = credentials ?? throw new ArgumentNullException(nameof(credentials));
             Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
             if (Descriptor.DataType != typeof(T))
             {
@@ -83,7 +83,7 @@ namespace LogicMine.DataObject.Salesforce
 
         public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
         {
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var properties = Descriptor.GetReadableProperties();
 
             var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(filter)}";
@@ -118,7 +118,7 @@ namespace LogicMine.DataObject.Salesforce
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var properties = Descriptor.GetReadableProperties();
 
             var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(id)}";
@@ -135,7 +135,7 @@ namespace LogicMine.DataObject.Salesforce
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var properties = typeof(T).GetProperties()
                 .Where(p => Descriptor.CanWrite(p.Name));
 
@@ -166,7 +166,7 @@ namespace LogicMine.DataObject.Salesforce
             if (modifiedProperties == null || !modifiedProperties.Any())
                 throw new ArgumentException("Value contains no elements.", nameof(modifiedProperties));
 
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var jobj = new JObject();
             foreach (var modifiedProperty in modifiedProperties)
             {
@@ -186,7 +186,7 @@ namespace LogicMine.DataObject.Salesforce
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var isSuccess = await sfClient.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
 
             if (!isSuccess)

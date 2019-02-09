@@ -5,21 +5,21 @@ namespace LogicMine.DataObject.Salesforce
     public abstract class SalesforceDataObjectShaftRegistrar<T> : DataObjectShaftRegistrar<T, string>
         where T : class, new()
     {
-        protected SalesforceConnectionConfig SalesforceConnectionConfig { get; }
+        protected SalesforceCredentials SalesforceCredentials { get; }
         protected SalesforceObjectDescriptor<T> Descriptor { get; }
 
-        protected SalesforceDataObjectShaftRegistrar(SalesforceConnectionConfig connectionConfig,
+        protected SalesforceDataObjectShaftRegistrar(SalesforceCredentials credentials,
             IDataObjectDescriptorRegistry descriptorRegistry)
         {
             if (descriptorRegistry == null) throw new ArgumentNullException(nameof(descriptorRegistry));
 
-            SalesforceConnectionConfig = connectionConfig ?? throw new ArgumentNullException(nameof(connectionConfig));
+            SalesforceCredentials = credentials ?? throw new ArgumentNullException(nameof(credentials));
             Descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
         }
 
         protected override IDataObjectStore<T, string> GetDataObjectStore()
         {
-            return new SalesforceObjectStore<T>(SalesforceConnectionConfig, Descriptor);
+            return new SalesforceObjectStore<T>(SalesforceCredentials, Descriptor);
         }
     }
 }

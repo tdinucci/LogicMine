@@ -34,7 +34,7 @@ namespace Test.LogicMine.DataObject.Salesforce
             where T : new()
         {
             var sfConfig =
-                new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+                new SalesforceCredentials(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
             var descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
             
             var objectStore = new SalesforceObjectStore<T>(sfConfig, descriptor);

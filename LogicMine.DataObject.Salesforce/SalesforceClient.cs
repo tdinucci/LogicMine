@@ -8,11 +8,11 @@ namespace LogicMine.DataObject.Salesforce
 {
     public class SalesforceClient
     {
-        private readonly SalesforceConnectionConfig _connectionConfig;
+        private readonly SalesforceCredentials _credentials;
 
-        public SalesforceClient(SalesforceConnectionConfig connectionConfig)
+        public SalesforceClient(SalesforceCredentials credentials)
         {
-            _connectionConfig = connectionConfig ?? throw new ArgumentNullException(nameof(connectionConfig));
+            _credentials = credentials ?? throw new ArgumentNullException(nameof(credentials));
         }
 
         public async Task<QueryResult<JObject>> QueryAsync(string query)
@@ -59,7 +59,7 @@ namespace LogicMine.DataObject.Salesforce
 
         private Task<IForceClient> GetForceClientAsync()
         {
-            return ForceClientFactory.CreateAsync(_connectionConfig);
+            return ForceClientFactory.CreateAsync(_credentials);
         }
     }
 }

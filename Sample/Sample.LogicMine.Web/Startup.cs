@@ -40,17 +40,12 @@ namespace Sample.LogicMine.Web
                 services.AddSingleton(descriptorType);
 
             services
-                .AddSingleton(GetSalesforceConnectionConfig())
+                .AddSingleton(new SalesforceCredentials(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint))
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddSingleton<ITraceExporter>(new DefaultTraceExporter())
-                .AddSingleton(BuildDataObjectDescriptorRegistry(services.BuildServiceProvider(), descriptorTypes));
-
-            // need to build the provider again after the IDataObjectDescriptorRegistry has been added
-            var provider = services.BuildServiceProvider();
-
-            services
-                .AddSingleton(CreateRequestParserRegistry(provider.GetService<IDataObjectDescriptorRegistry>()))
-                .AddSingleton(new MineFactory(BuildShaftRegistrars(provider, shaftRegistrarTypes)).Create())
+                .AddSingleton(p => BuildDataObjectDescriptorRegistry(p, descriptorTypes))
+                .AddSingleton(p => BuildRequestParserRegistry(p.GetService<IDataObjectDescriptorRegistry>()))
+                .AddSingleton(p => new MineFactory(BuildShaftRegistrars(p, shaftRegistrarTypes)).Create())
                 .AddMvc();
         }
 
@@ -59,7 +54,7 @@ namespace Sample.LogicMine.Web
             app.UseMvc();
         }
 
-        private IRequestParserRegistry<JObject> CreateRequestParserRegistry(
+        private IRequestParserRegistry<JObject> BuildRequestParserRegistry(
             IDataObjectDescriptorRegistry descriptorRegistry)
         {
             return new JsonRequestParserRegistry()
@@ -69,11 +64,6 @@ namespace Sample.LogicMine.Web
                 .Register(new CreateObjectRequestJsonParser(descriptorRegistry))
                 .Register(new UpdateObjectRequestJsonParser(descriptorRegistry))
                 .Register(new DeleteObjectRequestJsonParser(descriptorRegistry));
-        }
-
-        private SalesforceConnectionConfig GetSalesforceConnectionConfig()
-        {
-            return new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
         }
 
         private IDataObjectDescriptorRegistry BuildDataObjectDescriptorRegistry(IServiceProvider provider,

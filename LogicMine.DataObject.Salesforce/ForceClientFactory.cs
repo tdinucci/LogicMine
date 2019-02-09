@@ -35,12 +35,12 @@ namespace LogicMine.DataObject.Salesforce
         private static readonly Dictionary<string, KeyValuePair<string, ForceClient>> ForceClients =
             new Dictionary<string, KeyValuePair<string, ForceClient>>();
 
-        public static async Task<IForceClient> CreateAsync(SalesforceConnectionConfig connectionConfig)
+        public static async Task<IForceClient> CreateAsync(SalesforceCredentials credentials)
         {
-            var authClient = await GetAuthClientAsync(connectionConfig)
+            var authClient = await GetAuthClientAsync(credentials)
                 .ConfigureAwait(false);
 
-            var connectionKey = GetConnectionKey(connectionConfig);
+            var connectionKey = GetConnectionKey(credentials);
             if (ForceClients.TryGetValue(connectionKey, out var forceClient) &&
                 forceClient.Key == authClient.AccessToken)
             {
@@ -66,9 +66,9 @@ namespace LogicMine.DataObject.Salesforce
             }
         }
 
-        private static async Task<AuthenticationClient> GetAuthClientAsync(SalesforceConnectionConfig connectionConfig)
+        private static async Task<AuthenticationClient> GetAuthClientAsync(SalesforceCredentials credentials)
         {
-            var authClientKey = GetConnectionKey(connectionConfig);
+            var authClientKey = GetConnectionKey(credentials);
             var cacheableAuthClient = GetCacheableAuthClient(authClientKey);
 
             if (!IsAuthRequired(cacheableAuthClient.LastAuthenticated))
@@ -92,8 +92,8 @@ namespace LogicMine.DataObject.Salesforce
                 {
                     try
                     {
-                        await authClient.TokenRefreshAsync(connectionConfig.ClientId, authClient.RefreshToken,
-                            connectionConfig.ClientSecret, connectionConfig.AuthEndpoint).ConfigureAwait(false);
+                        await authClient.TokenRefreshAsync(credentials.ClientId, authClient.RefreshToken,
+                            credentials.ClientSecret, credentials.AuthEndpoint).ConfigureAwait(false);
 
                         cacheableAuthClient.LastAuthenticated = DateTime.Now;
                         return authClient;
@@ -104,8 +104,8 @@ namespace LogicMine.DataObject.Salesforce
                     }
                 }
 
-                await authClient.UsernamePasswordAsync(connectionConfig.ClientId, connectionConfig.ClientSecret,
-                        connectionConfig.Username, connectionConfig.Password, connectionConfig.AuthEndpoint)
+                await authClient.UsernamePasswordAsync(credentials.ClientId, credentials.ClientSecret,
+                        credentials.Username, credentials.Password, credentials.AuthEndpoint)
                     .ConfigureAwait(false);
 
                 cacheableAuthClient.LastAuthenticated = DateTime.Now;
@@ -138,10 +138,10 @@ namespace LogicMine.DataObject.Salesforce
             return new CacheableAuthenticationClient(authClient);
         }
 
-        private static string GetConnectionKey(SalesforceConnectionConfig connectionConfig)
+        private static string GetConnectionKey(SalesforceCredentials credentials)
         {
             return
-                $"{connectionConfig.ClientId}{connectionConfig.ClientSecret}{connectionConfig.Username}{connectionConfig.Password}";
+                $"{credentials.ClientId}{credentials.ClientSecret}{credentials.Username}{credentials.Password}";
         }
     }
 }

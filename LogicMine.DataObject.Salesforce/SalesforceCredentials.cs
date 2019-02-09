@@ -2,7 +2,7 @@ using System;
 
 namespace LogicMine.DataObject.Salesforce
 {
-    public class SalesforceConnectionConfig
+    public class SalesforceCredentials
     {
         public string ClientId { get; }
         public string ClientSecret { get; }
@@ -10,7 +10,7 @@ namespace LogicMine.DataObject.Salesforce
         public string Password { get; }
         public string AuthEndpoint { get; }
 
-        public SalesforceConnectionConfig(string clientId, string clientSecret, string username, string password,
+        public SalesforceCredentials(string clientId, string clientSecret, string username, string password,
             string authEndpoint)
         {
             if (string.IsNullOrWhiteSpace(clientId))

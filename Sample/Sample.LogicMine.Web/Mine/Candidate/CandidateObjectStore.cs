@@ -6,8 +6,8 @@ namespace Sample.LogicMine.Web.Mine.Candidate
     {
         protected override string SalesforceContactType { get; } = "Candidate";
 
-        public CandidateObjectStore(SalesforceConnectionConfig connectionConfig,
-            SalesforceObjectDescriptor<Candidate> descriptor) : base(connectionConfig, descriptor)
+        public CandidateObjectStore(SalesforceCredentials credentials,
+            SalesforceObjectDescriptor<Candidate> descriptor) : base(credentials, descriptor)
         {
         }
     }

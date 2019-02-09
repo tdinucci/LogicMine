@@ -6,15 +6,15 @@ namespace Sample.LogicMine.Web.Mine.Candidate
 {
     public class CandidateShaftRegistrar : SampleDataObjectShaftRegistrar<Candidate>
     {
-        public CandidateShaftRegistrar(SalesforceConnectionConfig connectionConfig,
+        public CandidateShaftRegistrar(SalesforceCredentials credentials,
             IDataObjectDescriptorRegistry descriptorRegistry, ITraceExporter traceExporter) :
-            base(connectionConfig, descriptorRegistry, traceExporter)
+            base(credentials, descriptorRegistry, traceExporter)
         {
         }
 
         protected override IDataObjectStore<Candidate, string> GetDataObjectStore()
         {
-            return new CandidateObjectStore(SalesforceConnectionConfig, Descriptor);
+            return new CandidateObjectStore(SalesforceCredentials, Descriptor);
         }
     }
 }

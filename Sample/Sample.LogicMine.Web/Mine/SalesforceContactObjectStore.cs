@@ -10,9 +10,9 @@ namespace Sample.LogicMine.Web.Mine
         protected abstract string SalesforceContactType { get; }
         
         protected string ContactTypeId { get; private set; }
-        
-        public SalesforceContactObjectStore(SalesforceConnectionConfig connectionConfig,
-            SalesforceObjectDescriptor<T> descriptor) : base(connectionConfig, descriptor)
+
+        public SalesforceContactObjectStore(SalesforceCredentials credentials, SalesforceObjectDescriptor<T> descriptor)
+            : base(credentials, descriptor)
         {
             InitialiseRecordTypeIds();
         }
@@ -29,7 +29,7 @@ namespace Sample.LogicMine.Web.Mine
                         $"WHERE SObjectType = 'Contact' AND Name = '{SalesforceContactType}' " +
                         "AND IsActive = true";
 
-            var sfClient = new SalesforceClient(ConnectionConfig);
+            var sfClient = new SalesforceClient(Credentials);
             var result = sfClient.QueryAsync(query).GetAwaiter().GetResult();
 
             if (result.Done && result.Records.Count == 1)

@@ -6,15 +6,15 @@ namespace Sample.LogicMine.Web.Mine.Manager
 {
     public class ManagerShaftRegistrar : SampleDataObjectShaftRegistrar<Manager>
     {
-        public ManagerShaftRegistrar(SalesforceConnectionConfig connectionConfig,
+        public ManagerShaftRegistrar(SalesforceCredentials credentials,
             IDataObjectDescriptorRegistry descriptorRegistry, ITraceExporter traceExporter) :
-            base(connectionConfig, descriptorRegistry, traceExporter)
+            base(credentials, descriptorRegistry, traceExporter)
         {
         }
 
         protected override IDataObjectStore<Manager, string> GetDataObjectStore()
         {
-            return new ManagerObjectStore(SalesforceConnectionConfig, Descriptor);
+            return new ManagerObjectStore(SalesforceCredentials, Descriptor);
         }
     }
 }

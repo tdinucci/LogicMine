@@ -9,9 +9,9 @@ namespace Sample.LogicMine.Web.Mine
     {
         protected ITraceExporter TraceExporter { get; }
 
-        protected SampleDataObjectShaftRegistrar(SalesforceConnectionConfig connectionConfig,
+        protected SampleDataObjectShaftRegistrar(SalesforceCredentials credentials,
             IDataObjectDescriptorRegistry descriptorRegistry, ITraceExporter traceExporter) :
-            base(connectionConfig, descriptorRegistry)
+            base(credentials, descriptorRegistry)
         {
             TraceExporter = traceExporter;
         }

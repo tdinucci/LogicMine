@@ -6,8 +6,8 @@ namespace Sample.LogicMine.Web.Mine.Manager
     {
         protected override string SalesforceContactType { get; } = "Manager";
 
-        public ManagerObjectStore(SalesforceConnectionConfig connectionConfig,
-            SalesforceObjectDescriptor<Manager> descriptor) : base(connectionConfig, descriptor)
+        public ManagerObjectStore(SalesforceCredentials credentials,
+            SalesforceObjectDescriptor<Manager> descriptor) : base(credentials, descriptor)
         {
         }
     }
