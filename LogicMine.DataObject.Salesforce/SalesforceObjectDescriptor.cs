@@ -24,13 +24,5 @@ namespace LogicMine.DataObject.Salesforce
         {
             return string.Equals(potentialPropertyName, propertyName, StringComparison.CurrentCultureIgnoreCase);
         }
-
-        /// <summary>
-        /// Override if there is anything that needs to be done to an object before it's posted to Salesforce
-        /// </summary>
-        /// <param name="objToPost">The object which is about to be posted</param>
-        public virtual void PrepareForPost(JObject objToPost)
-        {
-        }
     }
 }
