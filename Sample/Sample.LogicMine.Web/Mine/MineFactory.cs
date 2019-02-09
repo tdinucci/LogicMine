@@ -1,8 +1,12 @@
 using LogicMine;
 using LogicMine.DataObject;
+using LogicMine.DataObject.CreateObject;
+using LogicMine.DataObject.DeleteObject;
 using LogicMine.DataObject.GetCollection;
 using LogicMine.DataObject.GetObject;
 using LogicMine.DataObject.Salesforce;
+using LogicMine.DataObject.UpdateObject;
+using Sample.LogicMine.Web.Mine.GetTime;
 
 namespace Sample.LogicMine.Web.Mine
 {
@@ -24,35 +28,35 @@ namespace Sample.LogicMine.Web.Mine
                 new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
         }
 
-        public static IMine Create(IDataObjectDescriptorRegistry descriptorRegistry)
+        public static IMine Create(IDataObjectDescriptorRegistry descriptorRegistry, ITraceExporter traceExporter)
         {
-            return Generate<MyContact.MyContact>(new DefaultTraceExporter(), descriptorRegistry);
+            return new global::LogicMine.Mine()
+                .AddStandardDataShafts<MyContact.MyContact>(traceExporter, descriptorRegistry)
+
+                .AddShaft(GetBasicShaft(traceExporter, new GetTimeTerminal()));
         }
 
-        private static IMine Generate<T>(ITraceExporter traceExporter, IDataObjectDescriptorRegistry descriptorRegistry)
-            where T : new()
-        {
-            var mine = new global::LogicMine.Mine();
-            AddStandardDataShafts<T>(mine, traceExporter, descriptorRegistry);
-
-            return mine;
-        }
-
-        private static void AddStandardDataShafts<T>(IMine mine, ITraceExporter traceExporter,
+        private static IMine AddStandardDataShafts<T>(this IMine mine, ITraceExporter traceExporter,
             IDataObjectDescriptorRegistry descriptorRegistry)
-            where T : new()
+            where T : class, new()
         {
             var descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
             var objectStore = new SalesforceObjectStore<T>(SfConfig, descriptor);
 
-            mine
-                .AddShaft(new Shaft<GetObjectRequest<T, string>, GetObjectResponse<T>>(traceExporter,
-                    new GetObjectTerminal<T, string>(objectStore),
-                    new SecurityStation()))
+            return mine
+                .AddShaft(GetBasicShaft(traceExporter, new GetObjectTerminal<T, string>(objectStore)))
+                .AddShaft(GetBasicShaft(traceExporter, new GetCollectionTerminal<T>(objectStore)))
+                .AddShaft(GetBasicShaft(traceExporter, new CreateObjectTerminal<T, string>(objectStore)))
+                .AddShaft(GetBasicShaft(traceExporter, new UpdateObjectTerminal<T, string>(objectStore)))
+                .AddShaft(GetBasicShaft(traceExporter, new DeleteObjectTerminal<T, string>(objectStore)));
+        }
 
-                .AddShaft(new Shaft<GetCollectionRequest<T>, GetCollectionResponse<T>>(traceExporter,
-                    new GetCollectionTerminal<T>(objectStore),
-                    new SecurityStation()));
+        private static IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(ITraceExporter traceExporter,
+            ITerminal<TRequest, TResponse> terminal)
+            where TRequest : class, IRequest
+            where TResponse : IResponse, new()
+        {
+            return new Shaft<TRequest, TResponse>(traceExporter, terminal, new SecurityStation());
         }
     }
 }

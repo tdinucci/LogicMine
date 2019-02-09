@@ -20,6 +20,11 @@ namespace LogicMine.DataObject.Salesforce
             ReadOnlyPropertyNames.Add("Id");
         }
 
+        protected bool IsPropertyNameMatch(string potentialPropertyName, string propertyName)
+        {
+            return string.Equals(potentialPropertyName, propertyName, StringComparison.CurrentCultureIgnoreCase);
+        }
+
         /// <summary>
         /// Override if there is anything that needs to be done to an object before it's posted to Salesforce
         /// </summary>

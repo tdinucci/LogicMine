@@ -31,7 +31,17 @@ namespace LogicMine
             AddToBottom(stations.ToArray());
         }
 
-        public void AddToTop(params IStation[] stations)
+        IShaft IShaft.AddToTop(params IStation[] stations)
+        {
+            return AddToTop(stations);
+        }
+        
+        IShaft IShaft.AddToBottom(params IStation[] stations)
+        {
+            return AddToBottom(stations);
+        }
+        
+        public IShaft<TRequest, TResponse> AddToTop(params IStation[] stations)
         {
             if (stations != null)
             {
@@ -41,9 +51,11 @@ namespace LogicMine
                     _stations.Insert(0, station);
                 }
             }
-        }
 
-        public void AddToBottom(params IStation[] stations)
+            return this;
+        }
+        
+        public IShaft<TRequest, TResponse> AddToBottom(params IStation[] stations)
         {
             if (stations != null)
             {
@@ -53,6 +65,8 @@ namespace LogicMine
                     _stations.Add(station);
                 }
             }
+
+            return this;
         }
 
         async Task<IResponse> IShaft.SendAsync(IRequest request)
@@ -73,7 +87,7 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new TResponse {Error = ex.Message};
+                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
             }
         }
 
@@ -109,8 +123,8 @@ namespace LogicMine
                 }
                 else
                     _traceExporter.ExportError(ex);
-                
-                return new TResponse {Error = ex.Message};
+
+                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
             }
             finally
             {
@@ -143,8 +157,6 @@ namespace LogicMine
 
                     if (basket.IsFlagForRetrieval)
                         return;
-
-
                 }
                 catch (Exception ex)
                 {

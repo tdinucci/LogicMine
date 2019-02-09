@@ -1,16 +1,18 @@
+using System;
+
 namespace LogicMine.DataObject.CreateObject
 {
     public class CreateObjectResponse<TId> : Response
     {
-        public TId Id { get; }
+        public TId ObjectId { get; }
 
-        public CreateObjectResponse(TId id)
+        public CreateObjectResponse()
         {
-            Id = id;
         }
 
-        public CreateObjectResponse(string error) : base(error)
+        public CreateObjectResponse(Guid requestId, TId objectId) : base(requestId)
         {
+            ObjectId = objectId;
         }
     }
 }

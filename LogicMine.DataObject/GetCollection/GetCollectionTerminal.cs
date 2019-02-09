@@ -29,7 +29,7 @@ namespace LogicMine.DataObject.GetCollection
                     .ConfigureAwait(false);
             }
 
-            basket.Payload.Response = new GetCollectionResponse<T>(collection);
+            basket.Payload.Response = new GetCollectionResponse<T>(request.Id, collection);
         }
     }
 }

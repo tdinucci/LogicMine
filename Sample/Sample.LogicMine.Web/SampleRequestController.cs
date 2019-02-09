@@ -11,8 +11,8 @@ namespace Sample.LogicMine.Web
     public class SampleRequestController : RequestController
     {
         public SampleRequestController(IHttpContextAccessor httpContextAccessor, IMine mine,
-            IRequestParserRegistry<JObject> parserRegistry) :
-            base(httpContextAccessor, mine, parserRegistry)
+            IRequestParserRegistry<JObject> parserRegistry, ITraceExporter traceExporter) :
+            base(httpContextAccessor, mine, parserRegistry, traceExporter)
         {
         }
     }

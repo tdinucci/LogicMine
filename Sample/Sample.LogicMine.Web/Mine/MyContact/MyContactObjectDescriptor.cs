@@ -1,4 +1,6 @@
+using System;
 using LogicMine.DataObject.Salesforce;
+using Newtonsoft.Json.Linq;
 
 namespace Sample.LogicMine.Web.Mine.MyContact
 {
@@ -10,19 +12,25 @@ namespace Sample.LogicMine.Web.Mine.MyContact
 
         public override string GetMappedColumnName(string propertyName)
         {
-            switch (propertyName)
-            {
-                case nameof(MyContact.Forename):
-                    return "FirstName";
-                case nameof(MyContact.Surname):
-                    return "LastName";
-                case nameof(MyContact.Country):
-                    return "MailingCountry";
-                case nameof(MyContact.PostalCode):
-                    return "MailingPostalCode";
-                default:
-                    return base.GetMappedColumnName(propertyName);
-            }
+            if (IsPropertyNameMatch(propertyName, nameof(MyContact.Forename)))
+                return "FirstName";
+
+            if (IsPropertyNameMatch(propertyName, nameof(MyContact.Surname)))
+                return "LastName";
+
+            if (IsPropertyNameMatch(propertyName, nameof(MyContact.Country)))
+                return "MailingCountry";
+
+            if (IsPropertyNameMatch(propertyName, nameof(MyContact.PostalCode)))
+                return "MailingPostalCode";
+
+            return base.GetMappedColumnName(propertyName);
+        }
+
+        public override void PrepareForPost(JObject objToPost)
+        {
+            objToPost["Salutation"] = ".";
+            base.PrepareForPost(objToPost);
         }
     }
 }

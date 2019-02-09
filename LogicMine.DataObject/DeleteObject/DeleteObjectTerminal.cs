@@ -15,8 +15,8 @@ namespace LogicMine.DataObject.DeleteObject
         public override async Task AddResponseAsync(IBasket<DeleteObjectRequest<T, TId>, DeleteObjectResponse> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            await _dataObjectStore.DeleteAsync(basket.Payload.Request.Id).ConfigureAwait(false);
-            basket.Payload.Response = new DeleteObjectResponse(true);
+            await _dataObjectStore.DeleteAsync(basket.Payload.Request.ObjectId).ConfigureAwait(false);
+            basket.Payload.Response = new DeleteObjectResponse(basket.Payload.Request.Id, true);
         }
     }
 }

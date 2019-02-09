@@ -48,7 +48,7 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new Response {Error = ex.Message};
+                return new Response(request?.Id ?? Guid.Empty) {Error = ex.Message};
             }
         }
 
@@ -71,7 +71,7 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new TResponse {Error = ex.Message};
+                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
             }
         }
     }

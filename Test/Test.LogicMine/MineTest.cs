@@ -94,12 +94,12 @@ namespace Test.LogicMine
 
         private class GetObjectRequest<T, TId> : Request
         {
-            public TId Id { get; }
+            public TId ObjectId { get; }
 
-            public GetObjectRequest(string accessToken, TId id)
+            public GetObjectRequest(string accessToken, TId objectId)
             {
                 Options.Add(AccessTokenKey, accessToken);
-                Id = id;
+                ObjectId = objectId;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Test.LogicMine
             {
             }
 
-            public GetObjectResponse(T obj)
+            public GetObjectResponse(Guid requestId, T obj) :base(requestId)
             {
                 Object = obj;
             }
@@ -121,7 +121,7 @@ namespace Test.LogicMine
         {
             public override Task AddResponseAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
             {
-                var id = basket.Payload.Request.Id;
+                var id = basket.Payload.Request.ObjectId;
                 var db = new Database();
 
                 T result;
@@ -132,7 +132,7 @@ namespace Test.LogicMine
                 else
                     throw new InvalidCastException("Unexpected data type requested");
 
-                basket.Payload.Response = new GetObjectResponse<T>(result);
+                basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request.Id, result);
 
                 return Task.CompletedTask;
             }

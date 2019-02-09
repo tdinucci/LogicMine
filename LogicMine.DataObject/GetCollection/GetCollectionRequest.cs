@@ -5,6 +5,8 @@ namespace LogicMine.DataObject.GetCollection
 {
     public class GetCollectionRequest<T> : Request
     {
+        public Type ObjectType { get; } = typeof(T);
+        
         public IFilter<T> Filter { get; }
 
         public int? Max { get; }

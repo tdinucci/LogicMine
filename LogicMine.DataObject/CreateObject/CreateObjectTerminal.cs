@@ -16,8 +16,8 @@ namespace LogicMine.DataObject.CreateObject
         public override async Task AddResponseAsync(IBasket<CreateObjectRequest<T>, CreateObjectResponse<TId>> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            var id = await _dataObjectStore.CreateAsync(basket.Payload.Request.Object).ConfigureAwait(false);
-            basket.Payload.Response = new CreateObjectResponse<TId>(id);
+            var objectId = await _dataObjectStore.CreateAsync(basket.Payload.Request.Object).ConfigureAwait(false);
+            basket.Payload.Response = new CreateObjectResponse<TId>(basket.Payload.Request.Id, objectId);
         }
     }
 }

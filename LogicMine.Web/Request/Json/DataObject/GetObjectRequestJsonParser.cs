@@ -3,26 +3,29 @@ using LogicMine.DataObject;
 using LogicMine.DataObject.GetObject;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request
+namespace LogicMine.Web.Request.Json.DataObject
 {
     public class GetObjectRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
-        public override string HandledRequestType { get; } = "getObject";
 
         public GetObjectRequestJsonParser(IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
         {
             _dataObjectDescriptor =
                 dataObjectDescriptorRegistry ?? throw new ArgumentNullException(nameof(dataObjectDescriptorRegistry));
+
+            AddHandledRequestType("getObject");
         }
 
         public override IRequest Parse(JObject rawRequest)
         {
-            if (!CanHandleRequest(rawRequest))
-            {
-                throw new InvalidOperationException(
-                    $"This parser handles '{HandledRequestType}' not '{GetRequestType(rawRequest)}'");
-            }
+            EnsureCanHandleRequest(rawRequest);
+
+            if (!rawRequest.ContainsKey("type"))
+                throw new InvalidOperationException("Request does not specify a data type");
+            
+            if (!rawRequest.ContainsKey("id"))
+                throw new InvalidOperationException("Request does not specify an Id");
 
             var dataTypeName = rawRequest["type"].Value<string>();
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);

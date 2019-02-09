@@ -7,19 +7,39 @@ namespace LogicMine.DataObject
 {
     public class DataObjectDescriptor<T, TId> : DataObjectDescriptor
     {
+        private static IEnumerable<PropertyInfo> _readablePropertyNames;
+        private static HashSet<string> _propertyNames;
+        
         protected DataObjectDescriptor(params string[] readOnlyPropertyNames) :
             base(typeof(T), typeof(TId), readOnlyPropertyNames)
         {
+        }
+        
+        public override IEnumerable<PropertyInfo> GetReadableProperties()
+        {
+            if (_readablePropertyNames == null)
+                _readablePropertyNames = DataType.GetProperties().Where(p => CanRead(p.Name));
+
+            return _readablePropertyNames;
+        }
+
+        protected override bool IsPropertyWithName(string propertyName)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(propertyName));
+
+            if (_propertyNames == null)
+                _propertyNames = DataType.GetProperties().Select(p => p.Name.ToLower()).ToHashSet();
+
+            return _propertyNames.Contains(propertyName.ToLower());
         }
     }
 
     /// <summary>
     /// A type which contains metadata related to objects which are stored in a database.
     /// </summary>
-    public class DataObjectDescriptor : IDataObjectDescriptor
+    public abstract class DataObjectDescriptor : IDataObjectDescriptor
     {
-        private static IEnumerable<PropertyInfo> _readablePropertyNames;
-
         /// <inheritdoc />
         public Type DataType { get; }
 
@@ -45,6 +65,11 @@ namespace LogicMine.DataObject
         }
 
         /// <inheritdoc />
+        public abstract IEnumerable<PropertyInfo> GetReadableProperties();
+
+        protected abstract bool IsPropertyWithName(string propertyName);
+        
+        /// <inheritdoc />
         public virtual bool CanWrite(string propertyName)
         {
             if (ReadOnlyPropertyNames != null)
@@ -62,6 +87,12 @@ namespace LogicMine.DataObject
         /// <inheritdoc />
         public virtual string GetMappedColumnName(string propertyName)
         {
+            if (!IsPropertyWithName(propertyName))
+            {
+                throw new InvalidOperationException(
+                    $"There is no property called '{propertyName}' on '{DataType}' - case insensitive search");
+            }
+
             return propertyName;
         }
 
@@ -81,14 +112,6 @@ namespace LogicMine.DataObject
         public virtual object ProjectPropertyValue(object propertyValue, string propertyName)
         {
             return propertyValue;
-        }
-
-        public IEnumerable<PropertyInfo> GetReadableProperties()
-        {
-            if (_readablePropertyNames == null)
-                _readablePropertyNames = DataType.GetProperties().Where(p => CanRead(p.Name));
-
-            return _readablePropertyNames;
         }
     }
 }

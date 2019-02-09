@@ -19,30 +19,33 @@ namespace LogicMine.Web
         private readonly IMine _mine;
         private readonly IRequestParserRegistry<JObject> _parserRegistry;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITraceExporter _traceExporter;
 
         public RequestController(IHttpContextAccessor httpContextAccessor, IMine mine,
-            IRequestParserRegistry<JObject> parserRegistry)
+            IRequestParserRegistry<JObject> parserRegistry, ITraceExporter traceExporter)
         {
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
             _mine = mine ?? throw new ArgumentNullException(nameof(mine));
             _parserRegistry = parserRegistry ?? throw new ArgumentNullException(nameof(parserRegistry));
+            _traceExporter = traceExporter;
         }
 
         [HttpPost]
         public async Task<IActionResult> PostRequest([FromBody] JObject request)
         {
+            IRequest parsedRequest = null;
             try
             {
-                if(request == null)
+                if (request == null)
                     throw new ArgumentException("Request body was not provided or could not be parsed");
-                
-                var parsedRequest = _parserRegistry.Get(request).Parse(request);
+
+                parsedRequest = _parserRegistry.Get(request).Parse(request);
                 parsedRequest.Options.Add("AccessToken", GetAccessToken());
 
-                var response = await _mine.SendAsync(parsedRequest);
+                var response = await _mine.SendAsync(parsedRequest).ConfigureAwait(false);
 
                 if (!string.IsNullOrWhiteSpace(response.Error))
-                    return new InternalServerErrorObjectResult(new Response(response.Error));
+                    return new InternalServerErrorObjectResult(new Response(parsedRequest.Id, response.Error));
 
                 var jsonResponse = JObject.FromObject(response, JsonSerializer.Create(new JsonSerializerSettings
                 {
@@ -54,10 +57,12 @@ namespace LogicMine.Web
             }
             catch (Exception ex)
             {
+                _traceExporter?.ExportError(ex);
+
                 if (ex.InnerException != null)
                     ex = ex.InnerException;
-                
-                return new InternalServerErrorObjectResult(new Response(ex.Message));
+
+                return new InternalServerErrorObjectResult(new Response(parsedRequest?.Id ?? Guid.Empty, ex.Message));
             }
         }
 

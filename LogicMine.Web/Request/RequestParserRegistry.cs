@@ -15,14 +15,17 @@ namespace LogicMine.Web.Request
         {
             if (parser == null) throw new ArgumentNullException(nameof(parser));
 
-            if (Parsers.ContainsKey(parser.HandledRequestType))
+            foreach (var handledRequestType in parser.HandledRequestTypes)
             {
-                throw new InvalidOperationException(
-                    $"There is already a parser registered for '{parser.HandledRequestType}' requests");
+                if (Parsers.ContainsKey(handledRequestType))
+                {
+                    throw new InvalidOperationException(
+                        $"There is already a parser registered for '{handledRequestType}' requests");
+                }
+                
+                Parsers.Add(handledRequestType, parser);
             }
-
-            Parsers.Add(parser.HandledRequestType, parser);
-
+            
             return this;
         }
 

@@ -4,16 +4,18 @@ namespace LogicMine
 {
     public class Response : IResponse
     {
+        public Guid RequestId { get; set; }
         public DateTime Date { get; }
         public string Error { get; set; }
 
-        public Response()
+        protected Response()
         {
             Date = DateTime.Now;
         }
 
-        public Response(string error = null) : this()
+        public Response(Guid requestId, string error = null) : this()
         {
+            RequestId = requestId;
             Error = error;
         }
     }

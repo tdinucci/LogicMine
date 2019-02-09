@@ -4,12 +4,12 @@ namespace LogicMine.DataObject.DeleteObject
 {
     public class DeleteObjectRequest<T, TId> : Request
     {
-        public Type DataType { get; } = typeof(T);
-        public TId Id { get; }
+        public Type ObjectType { get; } = typeof(T);
+        public TId ObjectId { get; }
 
-        public DeleteObjectRequest(TId id)
+        public DeleteObjectRequest(TId objectId)
         {
-            Id = id;
+            ObjectId = objectId;
         }
     }
 }

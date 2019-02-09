@@ -15,10 +15,11 @@ namespace LogicMine.DataObject.UpdateObject
         public override async Task AddResponseAsync(IBasket<UpdateObjectRequest<T, TId>, UpdateObjectResponse> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            await _dataObjectStore.UpdateAsync(basket.Payload.Request.Id, basket.Payload.Request.ModifiedProperties)
+            await _dataObjectStore
+                .UpdateAsync(basket.Payload.Request.ObjectId, basket.Payload.Request.ModifiedProperties)
                 .ConfigureAwait(false);
 
-            basket.Payload.Response = new UpdateObjectResponse(true);
+            basket.Payload.Response = new UpdateObjectResponse(basket.Payload.Request.Id, true);
         }
     }
 }

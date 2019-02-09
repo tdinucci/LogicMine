@@ -7,6 +7,9 @@ namespace LogicMine
         where TRequest : class, IRequest
         where TResponse : IResponse
     {
+        new IShaft<TRequest, TResponse> AddToTop(params IStation[] stations);
+        new IShaft<TRequest, TResponse> AddToBottom(params IStation[] stations);
+        
         Task<TResponse> SendAsync(TRequest request);
     }
 
@@ -15,8 +18,8 @@ namespace LogicMine
         Type RequestType { get; }
         Type ResponseType { get; }
 
-        void AddToTop(params IStation[] stations);
-        void AddToBottom(params IStation[] stations);
+        IShaft AddToTop(params IStation[] stations);
+        IShaft AddToBottom(params IStation[] stations);
 
         Task<IResponse> SendAsync(IRequest request);
     }
