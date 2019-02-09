@@ -6,6 +6,7 @@ using LogicMine;
 using LogicMine.DataObject;
 using LogicMine.DataObject.GetObject;
 using LogicMine.DataObject.Salesforce;
+using Salesforce.Force;
 using Xunit;
 
 namespace Test.LogicMine.DataObject.Salesforce
@@ -18,6 +19,7 @@ namespace Test.LogicMine.DataObject.Salesforce
         private const string SfClientSecret = "8204173310639812200";
         private const string SfUsername = "";
         private const string SfPassword = "";
+        private const string SfAuthEndpoint = "https://test.salesforce.com/services/oauth2/token";
 
         private const string AccessTokenKey = "AccessToken";
         private const string ValidAccessToken = "987654";
@@ -31,13 +33,15 @@ namespace Test.LogicMine.DataObject.Salesforce
         private IMine CreateMine<T>(ITraceExporter traceExporter, IDataObjectDescriptorRegistry descriptorRegistry)
             where T : new()
         {
-            var forceClient = ForceClientFactory.CreateAsync(SfClientId, SfClientSecret, SfUsername, SfPassword, false)
-                .GetAwaiter().GetResult();
-
+            var sfConfig =
+                new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+            var descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
+            
+            var objectStore = new SalesforceObjectStore<T>(sfConfig, descriptor);
+        
             return new Mine()
                 .AddShaft(new Shaft<GetObjectRequest<T, string>, GetObjectResponse<T>>(traceExporter,
-                    new SalesforceGetObjectTerminal<T>(forceClient,
-                        descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>()),
+                    new GetObjectTerminal<T, string>(objectStore),
                     new SecurityStation()))
                 .AddShaft(new Shaft<ReverseStringRequest, RevereStringResponse>(traceExporter,
                     new ReverseStringTerminal(),

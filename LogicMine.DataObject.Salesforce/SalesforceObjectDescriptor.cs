@@ -6,7 +6,7 @@ namespace LogicMine.DataObject.Salesforce
     /// <summary>
     /// A basic descriptor for Salesforce types
     /// </summary>
-    public class SalesforceObjectDescriptor<T> : DataObjectDescriptor<T>
+    public class SalesforceObjectDescriptor<T> : DataObjectDescriptor<T, string>
     {
         public string SalesforceTypeName { get; }
 

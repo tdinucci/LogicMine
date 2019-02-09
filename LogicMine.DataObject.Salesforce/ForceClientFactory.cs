@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Salesforce.Common;
@@ -10,7 +11,7 @@ namespace LogicMine.DataObject.Salesforce
     /// <summary>
     /// A factory for IForceClients - https://github.com/developerforce/Force.com-Toolkit-for-NET
     /// </summary>
-    public static class ForceClientFactory
+    internal static class ForceClientFactory
     {
         private class CacheableAuthenticationClient
         {
@@ -24,53 +25,50 @@ namespace LogicMine.DataObject.Salesforce
             }
         }
 
-        private const string SalesforceAuthEndpoint = "https://login.salesforce.com/services/oauth2/token";
-        private const string SalesforceTestAuthEndpoint = "https://test.salesforce.com/services/oauth2/token";
         private static readonly TimeSpan ReauthenticateFrequency = TimeSpan.FromMinutes(2);
-
         private static readonly SemaphoreSlim AuthSemaphore = new SemaphoreSlim(1, 1);
+        private static readonly object CreateClientLocker = new object();
 
         private static readonly Dictionary<string, CacheableAuthenticationClient> AuthClients =
             new Dictionary<string, CacheableAuthenticationClient>();
 
-        /// <summary>
-        /// Create an IForceClient
-        /// </summary>
-        /// <param name="clientId">The Salesforce clientId for the app to connect as</param>
-        /// <param name="clientSecret">The Salesforce clientSecret for the app to connect as</param>
-        /// <param name="username">The Salesforce user to connect as</param>
-        /// <param name="password">The password of the Salesforce user to connect as</param>
-        /// <param name="isProduction">True if connecting to a production environment, otherwise false for a Sandbox</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static async Task<IForceClient> CreateAsync(string clientId, string clientSecret, string username,
-            string password, bool isProduction)
-        {
-            if (string.IsNullOrWhiteSpace(clientId))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(clientId));
-            if (string.IsNullOrWhiteSpace(clientSecret))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(clientSecret));
-            if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(username));
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(password));
+        private static readonly Dictionary<string, KeyValuePair<string, ForceClient>> ForceClients =
+            new Dictionary<string, KeyValuePair<string, ForceClient>>();
 
-            var authClient = await GetAuthClientAsync(clientId, clientSecret, username, password, isProduction)
+        public static async Task<IForceClient> CreateAsync(SalesforceConnectionConfig connectionConfig)
+        {
+            var authClient = await GetAuthClientAsync(connectionConfig)
                 .ConfigureAwait(false);
 
-            // I would much prefer to use the overload which accepts HttpClients so that new instances 
-            // don't have to be created each time however this type blindly disposes of HttpClients even 
-            // if they're injected so this isn't safe.
-            // It's also not possible to safely cache ForceClients because the access token can only be set 
-            // during construction, meaning that once an access token changes a new client is needed.
-            // I've raised a ticket on the Github page for this and may submit a PR
-            return new ForceClient(authClient.InstanceUrl, authClient.AccessToken, authClient.ApiVersion);
+            var connectionKey = GetConnectionKey(connectionConfig);
+            if (ForceClients.TryGetValue(connectionKey, out var forceClient) &&
+                forceClient.Key == authClient.AccessToken)
+            {
+                return forceClient.Value;
+            }
+
+            lock (CreateClientLocker)
+            {
+                // another thread may have created client while current thread was blocked
+                if (ForceClients.TryGetValue(connectionKey, out forceClient))
+                {
+                    if (forceClient.Key == authClient.AccessToken)
+                        return forceClient.Value;
+
+                    forceClient.Value.Dispose();
+                    ForceClients.Remove(connectionKey);
+                }
+
+                var client = new ForceClient(authClient.InstanceUrl, authClient.AccessToken, authClient.ApiVersion);
+                ForceClients.Add(connectionKey, new KeyValuePair<string, ForceClient>(authClient.AccessToken, client));
+
+                return client;
+            }
         }
 
-        private static async Task<AuthenticationClient> GetAuthClientAsync(string clientId, string clientSecret,
-            string username, string password, bool isProduction)
+        private static async Task<AuthenticationClient> GetAuthClientAsync(SalesforceConnectionConfig connectionConfig)
         {
-            var authClientKey = $"{clientId}{clientSecret}{username}{password}";
+            var authClientKey = GetConnectionKey(connectionConfig);
             var cacheableAuthClient = GetCacheableAuthClient(authClientKey);
 
             if (!IsAuthRequired(cacheableAuthClient.LastAuthenticated))
@@ -88,15 +86,14 @@ namespace LogicMine.DataObject.Salesforce
                         return cacheableAuthClient.Client;
                 }
 
-                var authEndpoint = isProduction ? SalesforceAuthEndpoint : SalesforceTestAuthEndpoint;
                 var authClient = cacheableAuthClient.Client;
 
                 if (!string.IsNullOrWhiteSpace(authClient.RefreshToken))
                 {
                     try
                     {
-                        await authClient.TokenRefreshAsync(clientId, authClient.RefreshToken, clientId, authEndpoint)
-                            .ConfigureAwait(false);
+                        await authClient.TokenRefreshAsync(connectionConfig.ClientId, authClient.RefreshToken,
+                            connectionConfig.ClientSecret, connectionConfig.AuthEndpoint).ConfigureAwait(false);
 
                         cacheableAuthClient.LastAuthenticated = DateTime.Now;
                         return authClient;
@@ -107,7 +104,8 @@ namespace LogicMine.DataObject.Salesforce
                     }
                 }
 
-                await authClient.UsernamePasswordAsync(clientId, clientSecret, username, password, authEndpoint)
+                await authClient.UsernamePasswordAsync(connectionConfig.ClientId, connectionConfig.ClientSecret,
+                        connectionConfig.Username, connectionConfig.Password, connectionConfig.AuthEndpoint)
                     .ConfigureAwait(false);
 
                 cacheableAuthClient.LastAuthenticated = DateTime.Now;
@@ -138,6 +136,12 @@ namespace LogicMine.DataObject.Salesforce
             // Having said this, there will typically only be a single AuthenticationClient per process
             var authClient = new AuthenticationClient();
             return new CacheableAuthenticationClient(authClient);
+        }
+
+        private static string GetConnectionKey(SalesforceConnectionConfig connectionConfig)
+        {
+            return
+                $"{connectionConfig.ClientId}{connectionConfig.ClientSecret}{connectionConfig.Username}{connectionConfig.Password}";
         }
     }
 }

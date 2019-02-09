@@ -31,7 +31,7 @@ namespace LogicMine.DataObject.GetCollection
         /// </summary>
         /// <param name="max">The maximum number of results to return</param>
         /// <param name="page">The page within the results</param>
-        public GetCollectionRequest(int max, int page) : this(null, (int?) max, page)
+        public GetCollectionRequest(int max, int page) : this(null, max, page)
         {
         }
 
@@ -41,16 +41,12 @@ namespace LogicMine.DataObject.GetCollection
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of results to return</param>
         /// <param name="page">The page within the results</param>
-        public GetCollectionRequest(IFilter<T> filter, int max, int page) : this(filter, (int?) max, page)
-        {
-        }
-
-        internal GetCollectionRequest(IFilter<T> filter, int? max, int? page)
+        public GetCollectionRequest(IFilter<T> filter, int? max, int? page)
         {
             if (max.GetValueOrDefault(1) <= 0)
-                throw new ArgumentOutOfRangeException(nameof(max));
+                throw new ArgumentException($"The value for '{nameof(max)}' must be greater than 0");
             if (page.GetValueOrDefault(1) < 0)
-                throw new ArgumentOutOfRangeException(nameof(page));
+                throw new ArgumentException($"The value for '{nameof(page)}' must be 0 or greater");
 
             Filter = filter;
             Max = max;

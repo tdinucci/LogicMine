@@ -5,11 +5,11 @@ namespace LogicMine.DataObject.GetCollection
 {
     public class GetCollectionTerminal<T> : Terminal<GetCollectionRequest<T>, GetCollectionResponse<T>>
     {
-        private readonly IObjectStore<T> _objectStore;
+        private readonly IDataObjectStore<T> _dataObjectStore;
 
-        public GetCollectionTerminal(IObjectStore<T> objectStore)
+        public GetCollectionTerminal(IDataObjectStore<T> dataObjectStore)
         {
-            _objectStore = objectStore ?? throw new ArgumentNullException(nameof(objectStore));
+            _dataObjectStore = dataObjectStore ?? throw new ArgumentNullException(nameof(dataObjectStore));
         }
 
         public override async Task AddResponseAsync(IBasket<GetCollectionRequest<T>, GetCollectionResponse<T>> basket)
@@ -20,12 +20,12 @@ namespace LogicMine.DataObject.GetCollection
 
             if (request.Filter != null)
             {
-                collection = await _objectStore.GetCollectionAsync(request.Filter, request.Max, request.Page)
+                collection = await _dataObjectStore.GetCollectionAsync(request.Filter, request.Max, request.Page)
                     .ConfigureAwait(false);
             }
             else
             {
-                collection = await _objectStore.GetCollectionAsync(request.Max, request.Page)
+                collection = await _dataObjectStore.GetCollectionAsync(request.Max, request.Page)
                     .ConfigureAwait(false);
             }
 

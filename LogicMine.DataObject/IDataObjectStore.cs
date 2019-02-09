@@ -4,7 +4,7 @@ using LogicMine.DataObject.Filter;
 
 namespace LogicMine.DataObject
 {
-    public interface IObjectStore<T, TId> : IObjectStore<T>
+    public interface IDataObjectStore<T, TId> : IDataObjectStore<T>
     {
         Task<T> GetByIdAsync(TId id);
         Task<TId> CreateAsync(T obj);
@@ -12,7 +12,7 @@ namespace LogicMine.DataObject
         Task DeleteAsync(TId id);
     }
 
-    public interface IObjectStore<T>
+    public interface IDataObjectStore<T>
     {
         Task<T[]> GetCollectionAsync(int? max = null, int? page = null);
         Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null);

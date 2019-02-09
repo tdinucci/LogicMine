@@ -5,17 +5,17 @@ namespace LogicMine.DataObject.GetObject
 {
     public class GetObjectTerminal<T, TId> : Terminal<GetObjectRequest<T, TId>, GetObjectResponse<T>>
     {
-        private readonly IObjectStore<T, TId> _objectStore;
+        private readonly IDataObjectStore<T, TId> _dataObjectStore;
 
-        public GetObjectTerminal(IObjectStore<T, TId> objectStore)
+        public GetObjectTerminal(IDataObjectStore<T, TId> dataObjectStore)
         {
-            _objectStore = objectStore ?? throw new ArgumentNullException(nameof(objectStore));
+            _dataObjectStore = dataObjectStore ?? throw new ArgumentNullException(nameof(dataObjectStore));
         }
 
         public override async Task AddResponseAsync(IBasket<GetObjectRequest<T, TId>, GetObjectResponse<T>> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            var obj = await _objectStore.GetByIdAsync(basket.Payload.Request.Id).ConfigureAwait(false);
+            var obj = await _dataObjectStore.GetByIdAsync(basket.Payload.Request.Id).ConfigureAwait(false);
             basket.Payload.Response = new GetObjectResponse<T>(obj);
         }
     }

@@ -5,9 +5,10 @@ using System.Reflection;
 
 namespace LogicMine.DataObject
 {
-    public class DataObjectDescriptor<T> : DataObjectDescriptor
+    public class DataObjectDescriptor<T, TId> : DataObjectDescriptor
     {
-        protected DataObjectDescriptor(params string[] readOnlyPropertyNames) : base(typeof(T), readOnlyPropertyNames)
+        protected DataObjectDescriptor(params string[] readOnlyPropertyNames) :
+            base(typeof(T), typeof(TId), readOnlyPropertyNames)
         {
         }
     }
@@ -22,6 +23,9 @@ namespace LogicMine.DataObject
         /// <inheritdoc />
         public Type DataType { get; }
 
+        /// <inheritdoc />
+        public Type IdType { get; }
+
         /// <summary>
         /// A collection of property names which should not be written to the database
         /// </summary>
@@ -31,10 +35,12 @@ namespace LogicMine.DataObject
         /// Construct a new DbObjectDescriptor
         /// </summary>
         /// <param name="dataType"></param>
+        /// <param name="idType"></param>
         /// <param name="readOnlyPropertyNames">A collection of property names on T which should not be written to the database</param>
-        protected DataObjectDescriptor(Type dataType, params string[] readOnlyPropertyNames)
+        protected DataObjectDescriptor(Type dataType, Type idType, params string[] readOnlyPropertyNames)
         {
             DataType = dataType ?? throw new ArgumentNullException(nameof(dataType));
+            IdType = idType ?? throw new ArgumentNullException(nameof(idType));
             ReadOnlyPropertyNames = new HashSet<string>(readOnlyPropertyNames ?? new string[0]);
         }
 

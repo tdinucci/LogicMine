@@ -118,13 +118,13 @@ namespace LogicMine.DataObject.Salesforce
                     clause += $">= {paramValue}";
                     break;
                 case FilterOperators.StartsWith:
-                    clause += $"LIKE {paramValue} + '%'";
+                    clause += $"LIKE '{paramValue.Trim('\'')}%'";
                     break;
                 case FilterOperators.EndsWith:
-                    clause += $"LIKE '%' + {paramValue}";
+                    clause += $"LIKE '%{paramValue.Trim('\'')}'";
                     break;
                 case FilterOperators.Contains:
-                    clause += $"LIKE '%' + {paramValue} + '%'";
+                    clause += $"LIKE '%{paramValue.Trim('\'')}%'";
                     break;
             }
 

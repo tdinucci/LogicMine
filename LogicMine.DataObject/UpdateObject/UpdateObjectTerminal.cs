@@ -5,17 +5,17 @@ namespace LogicMine.DataObject.UpdateObject
 {
     public class UpdateObjectTerminal<T, TId> : Terminal<UpdateObjectRequest<T, TId>, UpdateObjectResponse>
     {
-        private readonly IObjectStore<T, TId> _objectStore;
+        private readonly IDataObjectStore<T, TId> _dataObjectStore;
 
-        public UpdateObjectTerminal(IObjectStore<T, TId> objectStore)
+        public UpdateObjectTerminal(IDataObjectStore<T, TId> dataObjectStore)
         {
-            _objectStore = objectStore ?? throw new ArgumentNullException(nameof(objectStore));
+            _dataObjectStore = dataObjectStore ?? throw new ArgumentNullException(nameof(dataObjectStore));
         }
 
         public override async Task AddResponseAsync(IBasket<UpdateObjectRequest<T, TId>, UpdateObjectResponse> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            await _objectStore.UpdateAsync(basket.Payload.Request.Id, basket.Payload.Request.ModifiedProperties)
+            await _dataObjectStore.UpdateAsync(basket.Payload.Request.Id, basket.Payload.Request.ModifiedProperties)
                 .ConfigureAwait(false);
 
             basket.Payload.Response = new UpdateObjectResponse(true);

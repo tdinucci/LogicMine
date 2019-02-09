@@ -1,10 +1,8 @@
-using System;
-using System.Text;
 using LogicMine;
 using LogicMine.DataObject;
+using LogicMine.DataObject.GetCollection;
 using LogicMine.DataObject.GetObject;
 using LogicMine.DataObject.Salesforce;
-using Sample.LogicMine.Web.Mine.MyContact;
 
 namespace Sample.LogicMine.Web.Mine
 {
@@ -16,59 +14,45 @@ namespace Sample.LogicMine.Web.Mine
         private const string SfClientSecret = "8204173310639812200";
         private const string SfUsername = "";
         private const string SfPassword = "";
+        private const string SfAuthEndpoint = "https://test.salesforce.com/services/oauth2/token";
 
-        private static readonly Type[] StandardDataTypes =
-        {
-            typeof(MyContact.MyContact)
-        };
+        private static readonly SalesforceConnectionConfig SfConfig;
 
-        public static IMine Create()
+        static MineFactory()
         {
-            return Generate<MyContact.MyContact>(new MyTraceExporter(), GetDescriptorRegistry());
+            SfConfig =
+                new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+        }
+
+        public static IMine Create(IDataObjectDescriptorRegistry descriptorRegistry)
+        {
+            return Generate<MyContact.MyContact>(new DefaultTraceExporter(), descriptorRegistry);
         }
 
         private static IMine Generate<T>(ITraceExporter traceExporter, IDataObjectDescriptorRegistry descriptorRegistry)
             where T : new()
         {
-            var forceClient = ForceClientFactory.CreateAsync(SfClientId, SfClientSecret, SfUsername, SfPassword, false)
-                .GetAwaiter().GetResult();
+            var mine = new global::LogicMine.Mine();
+            AddStandardDataShafts<T>(mine, traceExporter, descriptorRegistry);
 
-            return new global::LogicMine.Mine()
+            return mine;
+        }
+
+        private static void AddStandardDataShafts<T>(IMine mine, ITraceExporter traceExporter,
+            IDataObjectDescriptorRegistry descriptorRegistry)
+            where T : new()
+        {
+            var descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
+            var objectStore = new SalesforceObjectStore<T>(SfConfig, descriptor);
+
+            mine
                 .AddShaft(new Shaft<GetObjectRequest<T, string>, GetObjectResponse<T>>(traceExporter,
-                    new SalesforceGetObjectTerminal<T>(forceClient,
-                        descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>()),
+                    new GetObjectTerminal<T, string>(objectStore),
+                    new SecurityStation()))
+
+                .AddShaft(new Shaft<GetCollectionRequest<T>, GetCollectionResponse<T>>(traceExporter,
+                    new GetCollectionTerminal<T>(objectStore),
                     new SecurityStation()));
-        }
-        
-        private static IDataObjectDescriptorRegistry GetDescriptorRegistry()
-        {
-            return new DataObjectDescriptorRegistry()
-                .Register(new MyContactObjectDescriptor());
-        }
-        
-        private class MyTraceExporter : ITraceExporter
-        {
-            public string Trace { get; private set; }
-            public string Error { get; private set; }
-
-            public void Export(IBasket basket)
-            {
-                var sb = new StringBuilder();
-                foreach (var visit in basket.Visits)
-                    sb.AppendLine($"{visit.Description} {visit.Direction}");
-
-                Trace = sb.ToString();
-            }
-
-            public void ExportError(Exception exception)
-            {
-                Error = exception.Message;
-            }
-
-            public void ExportError(string error)
-            {
-                Error = error;
-            }
         }
     }
 }

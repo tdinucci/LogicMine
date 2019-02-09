@@ -13,6 +13,11 @@ namespace LogicMine.DataObject
         /// The type that is described
         /// </summary>
         Type DataType { get; }
+        
+        /// <summary>
+        /// The type of identifier on the type that is described
+        /// </summary>
+        Type IdType { get; }
 
         /// <summary>
         /// Check whether a particular property can be written to the database
