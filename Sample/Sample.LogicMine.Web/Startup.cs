@@ -30,16 +30,27 @@ namespace Sample.LogicMine.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var sfConnConfig = GetSalesforceConnectionConfig();
-            var descriptorRegistry = GetDescriptorRegistry();
-            var traceExporter = new DefaultTraceExporter();
-            var shaftRegistrars = GetShaftRegistrars(sfConnConfig, descriptorRegistry, traceExporter);
+            var descriptorTypes = GetDataObjectDescriptorTypes();
+            var shaftRegistrarTypes = GetShaftRegistrarTypes();
+
+            foreach (var shaftRegistrarType in shaftRegistrarTypes)
+                services.AddSingleton(shaftRegistrarType);
+
+            foreach (var descriptorType in descriptorTypes)
+                services.AddSingleton(descriptorType);
 
             services
+                .AddSingleton(GetSalesforceConnectionConfig())
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddSingleton<ITraceExporter>(traceExporter)
-                .AddSingleton(new MineFactory().Create(shaftRegistrars))
-                .AddSingleton(CreateRequestParserRegistry(descriptorRegistry))
+                .AddSingleton<ITraceExporter>(new DefaultTraceExporter())
+                .AddSingleton(BuildDataObjectDescriptorRegistry(services.BuildServiceProvider(), descriptorTypes));
+
+            // need to build the provider again after the IDataObjectDescriptorRegistry has been added
+            var provider = services.BuildServiceProvider();
+
+            services
+                .AddSingleton(CreateRequestParserRegistry(provider.GetService<IDataObjectDescriptorRegistry>()))
+                .AddSingleton(new MineFactory(BuildShaftRegistrars(provider, shaftRegistrarTypes)).Create())
                 .AddMvc();
         }
 
@@ -60,52 +71,43 @@ namespace Sample.LogicMine.Web
                 .Register(new DeleteObjectRequestJsonParser(descriptorRegistry));
         }
 
-        private IDataObjectDescriptorRegistry GetDescriptorRegistry()
+        private SalesforceConnectionConfig GetSalesforceConnectionConfig()
+        {
+            return new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+        }
+
+        private IDataObjectDescriptorRegistry BuildDataObjectDescriptorRegistry(IServiceProvider provider,
+            IEnumerable<Type> dataObjectDescriptorTypes)
         {
             var registry = new DataObjectDescriptorRegistry();
-            var descriptorTypes = Assembly.GetCallingAssembly().GetTypes()
-                .Where(t => typeof(IDataObjectDescriptor).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
-
-            foreach (var descriptorType in descriptorTypes)
+            foreach (var dataObjectDescriptorType in dataObjectDescriptorTypes)
             {
-                var descriptor = (IDataObjectDescriptor) Activator.CreateInstance(descriptorType);
+                var descriptor = (IDataObjectDescriptor) provider.GetService(dataObjectDescriptorType);
                 registry.Register(descriptor);
             }
 
             return registry;
         }
 
-        private SalesforceConnectionConfig GetSalesforceConnectionConfig()
+        private IEnumerable<IShaftRegistrar> BuildShaftRegistrars(IServiceProvider provider,
+            IEnumerable<Type> shaftRegistrarTypes)
         {
-            return new SalesforceConnectionConfig(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+            return shaftRegistrarTypes.Select(t => (IShaftRegistrar) provider.GetService(t));
         }
 
-        private IEnumerable<IShaftRegistrar> GetShaftRegistrars(SalesforceConnectionConfig salesforceConnectionConfig,
-            IDataObjectDescriptorRegistry descriptorRegistry, ITraceExporter traceExporter)
+        private Type[] GetDataObjectDescriptorTypes()
         {
-            var registrars = new List<IShaftRegistrar>();
-            var registrarTypes = Assembly.GetCallingAssembly().GetTypes()
+            return Assembly.GetCallingAssembly().GetTypes()
+                .Where(t => typeof(IDataObjectDescriptor).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+                .ToArray();
+        }
+
+        private Type[] GetShaftRegistrarTypes()
+        {
+            return Assembly.GetCallingAssembly().GetTypes()
                 .Where(t => typeof(IShaftRegistrar).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract &&
-                            t.GetConstructors().Length > 0);
-
-            foreach (var registrarType in registrarTypes)
-            {
-                IShaftRegistrar registrar = null;
-                if (typeof(SampleShaftRegistrar).IsAssignableFrom(registrarType))
-                    registrar = (IShaftRegistrar) Activator.CreateInstance(registrarType, traceExporter);
-                else if (registrarType.BaseType?.GetGenericTypeDefinition() == typeof(SampleDataObjectShaftRegistrar<>))
-                {
-                    registrar = (IShaftRegistrar) Activator.CreateInstance(registrarType, salesforceConnectionConfig,
-                        descriptorRegistry, traceExporter);
-                }
-
-                if (registrar == null)
-                    throw new InvalidOperationException($"Unexpected registrar type of '{registrarType}'");
-
-                registrars.Add(registrar);
-            }
-
-            return registrars.ToArray();
+                            t.GetConstructors().Length > 0)
+                .ToArray();
         }
     }
 }
