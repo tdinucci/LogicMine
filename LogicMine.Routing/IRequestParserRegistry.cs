@@ -1,4 +1,4 @@
-namespace LogicMine.Web.Request
+namespace LogicMine.Routing
 {
     public interface IRequestParserRegistry<TRawRequest>
     {

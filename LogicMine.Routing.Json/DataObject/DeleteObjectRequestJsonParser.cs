@@ -1,20 +1,21 @@
 using System;
 using LogicMine.DataObject;
-using LogicMine.DataObject.GetObject;
+using LogicMine.DataObject.DeleteObject;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json.DataObject
+namespace LogicMine.Routing.Json.DataObject
 {
-    public class GetObjectRequestJsonParser : JsonRequestParser
+    public class DeleteObjectRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
 
-        public GetObjectRequestJsonParser(IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
+        public DeleteObjectRequestJsonParser(
+            IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
         {
             _dataObjectDescriptor =
                 dataObjectDescriptorRegistry ?? throw new ArgumentNullException(nameof(dataObjectDescriptorRegistry));
 
-            AddHandledRequestType("getObject");
+            AddHandledRequestType("deleteObject");
         }
 
         public override IRequest Parse(JObject rawRequest)
@@ -23,7 +24,6 @@ namespace LogicMine.Web.Request.Json.DataObject
 
             if (!rawRequest.ContainsKey("type"))
                 throw new InvalidOperationException("Request does not specify a data type");
-            
             if (!rawRequest.ContainsKey("id"))
                 throw new InvalidOperationException("Request does not specify an Id");
 
@@ -31,7 +31,7 @@ namespace LogicMine.Web.Request.Json.DataObject
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);
             var id = rawRequest["id"].ToObject(descriptor.IdType);
 
-            var requestType = typeof(GetObjectRequest<,>).MakeGenericType(descriptor.DataType, id.GetType());
+            var requestType = typeof(DeleteObjectRequest<,>).MakeGenericType(descriptor.DataType, descriptor.IdType);
             return (IRequest) Activator.CreateInstance(requestType, id);
         }
     }

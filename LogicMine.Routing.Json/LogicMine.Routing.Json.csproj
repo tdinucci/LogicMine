@@ -5,15 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Filter\Parse" />
+      <ProjectReference Include="..\LogicMine.Routing\LogicMine.Routing.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FastMember" Version="1.4.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
 </Project>

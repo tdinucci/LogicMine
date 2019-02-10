@@ -5,15 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Filter\Parse" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
       <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FastMember" Version="1.4.1" />
     </ItemGroup>
 
 </Project>

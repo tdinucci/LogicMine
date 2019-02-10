@@ -1,11 +1,11 @@
 using System;
 using LogicMine.DataObject;
 using LogicMine.DataObject.Filter;
+using LogicMine.DataObject.Filter.Parse;
 using LogicMine.DataObject.GetCollection;
-using LogicMine.Web.Filter;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json.DataObject
+namespace LogicMine.Routing.Json.DataObject
 {
     public class GetCollectionRequestJsonParser : JsonRequestParser
     {

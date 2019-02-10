@@ -1,18 +1,16 @@
 using LogicMine;
+using LogicMine.Routing;
 using LogicMine.Web;
-using LogicMine.Web.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
 namespace Sample.LogicMine.Web
 {
     [Route("api")]
-    public class SampleRequestController : RequestController
+    public class SampleRequestController : JsonRequestController
     {
-        public SampleRequestController(IHttpContextAccessor httpContextAccessor, IMine mine,
-            IRequestParserRegistry<JObject> parserRegistry, ITraceExporter traceExporter) :
-            base(httpContextAccessor, mine, parserRegistry, traceExporter)
+        public SampleRequestController(IRequestRouter<JObject> requestRouter, IErrorExporter errorExporter) :
+            base(requestRouter, errorExporter)
         {
         }
     }

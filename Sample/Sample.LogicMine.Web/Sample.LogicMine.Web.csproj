@@ -13,6 +13,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\LogicMine.DataObject.Salesforce\LogicMine.DataObject.Salesforce.csproj" />
       <ProjectReference Include="..\..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
+      <ProjectReference Include="..\..\LogicMine.Routing.Json\LogicMine.Routing.Json.csproj" />
+      <ProjectReference Include="..\..\LogicMine.Routing\LogicMine.Routing.csproj" />
       <ProjectReference Include="..\..\LogicMine.Web\LogicMine.Web.csproj" />
     </ItemGroup>
 

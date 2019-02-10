@@ -12,11 +12,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.DataObject.Salesf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.DataObject.Salesforce", "Test\Test.LogicMine.DataObject.Salesforce\Test.LogicMine.DataObject.Salesforce.csproj", "{671B5006-266F-4581-AD8F-06DE8C43288D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Web", "LogicMine.Web\LogicMine.Web.csproj", "{75C1C9EB-D647-42FB-B904-FD8E75528C58}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{FBD291FA-5152-4A53-8A56-9F08CBC7B5D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.LogicMine.Web", "Sample\Sample.LogicMine.Web\Sample.LogicMine.Web.csproj", "{DC7FBB52-889A-4F15-A08A-B7B9F491E468}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Routing", "LogicMine.Routing\LogicMine.Routing.csproj", "{9C19F38A-97AA-4D96-8382-C79F4457EE0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Routing.Json", "LogicMine.Routing.Json\LogicMine.Routing.Json.csproj", "{D98819C0-CFFA-4D16-A250-BB5CB36E14F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.Web", "LogicMine.Web\LogicMine.Web.csproj", "{928BA578-5163-4397-841B-5AF8D0207125}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,14 +48,22 @@ Global
 		{671B5006-266F-4581-AD8F-06DE8C43288D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{671B5006-266F-4581-AD8F-06DE8C43288D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{671B5006-266F-4581-AD8F-06DE8C43288D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75C1C9EB-D647-42FB-B904-FD8E75528C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75C1C9EB-D647-42FB-B904-FD8E75528C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75C1C9EB-D647-42FB-B904-FD8E75528C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75C1C9EB-D647-42FB-B904-FD8E75528C58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC7FBB52-889A-4F15-A08A-B7B9F491E468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC7FBB52-889A-4F15-A08A-B7B9F491E468}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC7FBB52-889A-4F15-A08A-B7B9F491E468}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC7FBB52-889A-4F15-A08A-B7B9F491E468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C19F38A-97AA-4D96-8382-C79F4457EE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C19F38A-97AA-4D96-8382-C79F4457EE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C19F38A-97AA-4D96-8382-C79F4457EE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C19F38A-97AA-4D96-8382-C79F4457EE0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D98819C0-CFFA-4D16-A250-BB5CB36E14F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D98819C0-CFFA-4D16-A250-BB5CB36E14F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D98819C0-CFFA-4D16-A250-BB5CB36E14F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D98819C0-CFFA-4D16-A250-BB5CB36E14F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928BA578-5163-4397-841B-5AF8D0207125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928BA578-5163-4397-841B-5AF8D0207125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928BA578-5163-4397-841B-5AF8D0207125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928BA578-5163-4397-841B-5AF8D0207125}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{43FBC8AA-9772-4DDC-9ECF-CAEF12BAE2FF} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}

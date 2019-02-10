@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json
+namespace LogicMine.Routing.Json
 {
     public class JsonRequestParserRegistry : RequestParserRegistry<JObject>
     {

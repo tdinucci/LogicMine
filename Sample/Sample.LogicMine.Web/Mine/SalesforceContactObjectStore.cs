@@ -11,7 +11,7 @@ namespace Sample.LogicMine.Web.Mine
         
         protected string ContactTypeId { get; private set; }
 
-        public SalesforceContactObjectStore(SalesforceCredentials credentials, SalesforceObjectDescriptor<T> descriptor)
+        protected SalesforceContactObjectStore(SalesforceCredentials credentials, SalesforceObjectDescriptor<T> descriptor)
             : base(credentials, descriptor)
         {
             InitialiseRecordTypeIds();

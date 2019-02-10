@@ -1,5 +1,4 @@
 using LogicMine.DataObject.Salesforce;
-using Newtonsoft.Json.Linq;
 
 namespace Sample.LogicMine.Web.Mine.Manager
 {

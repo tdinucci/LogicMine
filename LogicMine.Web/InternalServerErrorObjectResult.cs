@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogicMine.Web
@@ -8,14 +8,6 @@ namespace LogicMine.Web
     /// </summary>
     public class InternalServerErrorObjectResult : ObjectResult
     {
-        /// <summary>
-        /// Construct a new InternalServerErrorObjectResult
-        /// </summary>
-        public InternalServerErrorObjectResult() : base(null)
-        {
-            StatusCode = (int) HttpStatusCode.InternalServerError;
-        }
-
         /// <summary>
         /// Construct a new InternalServerErrorObjectResult
         /// </summary>

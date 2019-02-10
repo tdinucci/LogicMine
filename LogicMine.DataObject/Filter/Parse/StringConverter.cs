@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LogicMine.Web.Filter
+namespace LogicMine.DataObject.Filter.Parse
 {
     /// <summary>
     /// Contains general utility methods for string conversion

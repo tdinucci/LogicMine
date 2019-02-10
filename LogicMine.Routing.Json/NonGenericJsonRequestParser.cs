@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json
+namespace LogicMine.Routing.Json
 {
     public class NonGenericJsonRequestParser : JsonRequestParser
     {

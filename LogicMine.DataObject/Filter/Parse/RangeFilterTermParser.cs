@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using FastMember;
-using LogicMine.DataObject.Filter;
 
-namespace LogicMine.Web.Filter
+namespace LogicMine.DataObject.Filter.Parse
 {
     /// <summary>
     /// Used for parsing a string which is expected to contain "range" term and produces InFilterTerm objects which are bound to T

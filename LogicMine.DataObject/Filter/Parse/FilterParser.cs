@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FastMember;
-using LogicMine.DataObject.Filter;
 
-namespace LogicMine.Web.Filter
+namespace LogicMine.DataObject.Filter.Parse
 {
     /// <summary>
     /// <para>

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace LogicMine.Web.Request
+namespace LogicMine.Routing
 {
     public abstract class RequestParser<TRawRequest> : IRequestParser<TRawRequest>
     {
         private readonly HashSet<string> _handledRequestTypes = new HashSet<string>();
 
         public ImmutableHashSet<string> HandledRequestTypes => _handledRequestTypes.ToImmutableHashSet();
-        
+
         protected abstract string GetRequestType(TRawRequest rawRequest);
         public abstract IRequest Parse(TRawRequest rawRequest);
 

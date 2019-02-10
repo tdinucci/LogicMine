@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace LogicMine.Web.Request
+namespace LogicMine.Routing
 {
-    public abstract class RequestParserRegistry<TRawRequest> :
-        IRequestParserRegistry<TRawRequest>
+    public abstract class RequestParserRegistry<TRawRequest> : IRequestParserRegistry<TRawRequest>
     {
         private IDictionary<string, IRequestParser<TRawRequest>> Parsers { get; } =
             new Dictionary<string, IRequestParser<TRawRequest>>();

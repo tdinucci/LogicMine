@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json
+namespace LogicMine.Routing.Json
 {
     public abstract class JsonRequestParser : RequestParser<JObject>
     {

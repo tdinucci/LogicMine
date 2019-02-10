@@ -1,6 +1,4 @@
-﻿using LogicMine.DataObject.Filter;
-
-namespace LogicMine.Web.Filter
+﻿namespace LogicMine.DataObject.Filter.Parse
 {
     /// <summary>
     /// <para>Parses string terms and produces instances of IFilterTerm.</para>

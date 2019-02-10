@@ -5,13 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FastMember" Version="1.4.1" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
-      <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
+      <ProjectReference Include="..\LogicMine.Routing\LogicMine.Routing.csproj" />
     </ItemGroup>
 
 </Project>

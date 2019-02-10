@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FastMember;
-using LogicMine.DataObject.Filter;
 
-namespace LogicMine.Web.Filter
+namespace LogicMine.DataObject.Filter.Parse
 {
     /// <summary>
     /// Used for parsing a string which is expected to contain "in" terms and produces InFilterTerm objects which are bound to T

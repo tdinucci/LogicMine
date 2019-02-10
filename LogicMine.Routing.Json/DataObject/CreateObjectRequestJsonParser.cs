@@ -3,7 +3,7 @@ using LogicMine.DataObject;
 using LogicMine.DataObject.CreateObject;
 using Newtonsoft.Json.Linq;
 
-namespace LogicMine.Web.Request.Json.DataObject
+namespace LogicMine.Routing.Json.DataObject
 {
     public class CreateObjectRequestJsonParser : JsonRequestParser
     {
