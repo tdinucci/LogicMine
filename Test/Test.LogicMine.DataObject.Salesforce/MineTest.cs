@@ -178,11 +178,11 @@ namespace Test.LogicMine.DataObject.Salesforce
         {
             public string Reversed { get; }
 
-            public RevereStringResponse()
+            public RevereStringResponse(IRequest request) : base(request)
             {
             }
-            
-            public RevereStringResponse(string reversed)
+
+            public RevereStringResponse(IRequest request, string reversed) : this(request)
             {
                 Reversed = reversed;
             }
@@ -193,7 +193,7 @@ namespace Test.LogicMine.DataObject.Salesforce
             public override Task AddResponseAsync(IBasket<ReverseStringRequest, RevereStringResponse> basket)
             {
                 var reversed = new string(basket.Payload.Request.ToReverse.Reverse().ToArray());
-                basket.Payload.Response = new RevereStringResponse(reversed);
+                basket.Payload.Response = new RevereStringResponse(basket.Payload.Request, reversed);
 
                 return Task.CompletedTask;
             }
@@ -201,7 +201,7 @@ namespace Test.LogicMine.DataObject.Salesforce
         
         private class SecurityStation : Station<IRequest, IResponse>
         {
-            public override Task DescendToAsync(IBasket basket)
+            public override Task DescendToAsync(IBasket basket,IBasketPayload<IRequest, IResponse> payload)
             {
                 if (basket.Payload.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
                 {
@@ -212,7 +212,7 @@ namespace Test.LogicMine.DataObject.Salesforce
                 throw new InvalidOperationException("Invalid access token");
             }
 
-            public override Task AscendFromAsync(IBasket basket)
+            public override Task AscendFromAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
             {
                 return Task.CompletedTask;
             }

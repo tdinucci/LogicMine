@@ -16,7 +16,7 @@ namespace LogicMine.DataObject.GetObject
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
             var obj = await _dataObjectStore.GetByIdAsync(basket.Payload.Request.ObjectId).ConfigureAwait(false);
-            basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request.Id, obj);
+            basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request, obj);
         }
     }
 }

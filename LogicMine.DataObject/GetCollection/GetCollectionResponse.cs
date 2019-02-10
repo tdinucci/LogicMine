@@ -7,11 +7,11 @@ namespace LogicMine.DataObject.GetCollection
         public string ObjectType { get; }
         public T[] Objects { get; }
 
-        public GetCollectionResponse()
+        public GetCollectionResponse(IRequest request) : base(request)
         {
         }
 
-        public GetCollectionResponse(Guid requestId, T[] objects) : base(requestId)
+        public GetCollectionResponse(IRequest request, T[] objects) : base(request)
         {
             ObjectType = typeof(T).Name;
             Objects = objects;

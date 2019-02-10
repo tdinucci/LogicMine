@@ -1,5 +1,3 @@
-using System;
-
 namespace LogicMine.DataObject.GetObject
 {
     public class GetObjectResponse<T> : Response
@@ -7,11 +5,11 @@ namespace LogicMine.DataObject.GetObject
         public string ObjectType { get; }
         public T Object { get; }
 
-        public GetObjectResponse()
+        public GetObjectResponse(IRequest request) : base(request)
         {
         }
 
-        public GetObjectResponse(Guid requestId, T obj) : base(requestId)
+        public GetObjectResponse(IRequest request, T obj) : base(request)
         {
             ObjectType = typeof(T).Name;
             Object = obj;

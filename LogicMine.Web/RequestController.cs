@@ -45,7 +45,7 @@ namespace LogicMine.Web
                 var response = await _mine.SendAsync(parsedRequest).ConfigureAwait(false);
 
                 if (!string.IsNullOrWhiteSpace(response.Error))
-                    return new InternalServerErrorObjectResult(new Response(parsedRequest.Id, response.Error));
+                    return new InternalServerErrorObjectResult(new Response(parsedRequest, response.Error));
 
                 var jsonResponse = JObject.FromObject(response, JsonSerializer.Create(new JsonSerializerSettings
                 {
@@ -62,7 +62,7 @@ namespace LogicMine.Web
                 if (ex.InnerException != null)
                     ex = ex.InnerException;
 
-                return new InternalServerErrorObjectResult(new Response(parsedRequest?.Id ?? Guid.Empty, ex.Message));
+                return new InternalServerErrorObjectResult(new Response(parsedRequest, ex.Message));
             }
         }
 

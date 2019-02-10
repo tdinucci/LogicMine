@@ -7,6 +7,6 @@ namespace LogicMine
         protected abstract IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
             ITerminal<TRequest, TResponse> terminal)
             where TRequest : class, IRequest
-            where TResponse : IResponse, new();
+            where TResponse : IResponse;
     }
 }

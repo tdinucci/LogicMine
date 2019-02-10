@@ -6,11 +6,11 @@ namespace LogicMine.DataObject.UpdateObject
     {
         public bool Success { get; }
 
-        public UpdateObjectResponse()
+        public UpdateObjectResponse(IRequest request) : base(request)
         {
         }
 
-        public UpdateObjectResponse(Guid requestId, bool success, string error = null) : base(requestId, error)
+        public UpdateObjectResponse(IRequest request, bool success, string error = null) : base(request, error)
         {
             Success = success;
         }

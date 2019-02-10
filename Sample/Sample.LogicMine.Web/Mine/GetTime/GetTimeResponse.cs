@@ -7,11 +7,11 @@ namespace Sample.LogicMine.Web.Mine.GetTime
     {
         public string Time { get; }
 
-        public GetTimeResponse()
+        public GetTimeResponse(IRequest request) : base(request)
         {
         }
 
-        public GetTimeResponse(Guid requestId, DateTime time) : base(requestId)
+        public GetTimeResponse(IRequest request, DateTime time) : base(request)
         {
             Time = time.ToLongTimeString();
         }

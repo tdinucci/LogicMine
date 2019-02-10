@@ -7,10 +7,8 @@ namespace LogicMine
         where TRequest : class, IRequest
         where TResponse : IResponse
     {
-//        Task DescendToAsync(IBasket<TRequest, TResponse> basket);
-//        Task AscendFromAsync(IBasket<TRequest, TResponse> basket);
-
-        IBasketPayload<TRequest, TResponse> UnwrapBasketPayload(IBasket basket);
+        Task DescendToAsync(IBasket basket, IBasketPayload<TRequest, TResponse> payload);
+        Task AscendFromAsync(IBasket basket, IBasketPayload<TRequest, TResponse> payload);
     }
 
     public interface IStation

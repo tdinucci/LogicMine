@@ -16,7 +16,7 @@ namespace LogicMine.DataObject.DeleteObject
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
             await _dataObjectStore.DeleteAsync(basket.Payload.Request.ObjectId).ConfigureAwait(false);
-            basket.Payload.Response = new DeleteObjectResponse(basket.Payload.Request.Id, true);
+            basket.Payload.Response = new DeleteObjectResponse(basket.Payload.Request, true);
         }
     }
 }

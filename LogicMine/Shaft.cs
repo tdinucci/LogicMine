@@ -8,7 +8,7 @@ namespace LogicMine
 {
     public class Shaft<TRequest, TResponse> : IShaft<TRequest, TResponse>
         where TRequest : class, IRequest
-        where TResponse : IResponse, new()
+        where TResponse : IResponse
     {
         private readonly IList<IStation> _stations = new List<IStation>();
         private readonly ITerminal _terminal;
@@ -87,7 +87,7 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
+                return ResponseFactory.Create<TResponse>(request, ex.Message);
             }
         }
 
@@ -124,7 +124,7 @@ namespace LogicMine
                 else
                     _traceExporter.ExportError(ex);
 
-                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
+                return ResponseFactory.Create<TResponse>(request, ex.Message);
             }
             finally
             {

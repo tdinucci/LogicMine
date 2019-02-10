@@ -8,14 +8,14 @@ namespace LogicMine
         public DateTime Date { get; }
         public string Error { get; set; }
 
-        protected Response()
+        public Response(IRequest request)
         {
+            RequestId = request?.Id ?? Guid.Empty;
             Date = DateTime.Now;
         }
 
-        public Response(Guid requestId, string error = null) : this()
+        public Response(IRequest request, string error) : this(request)
         {
-            RequestId = requestId;
             Error = error;
         }
     }

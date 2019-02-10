@@ -10,6 +10,6 @@ namespace LogicMine
 
         Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IRequest
-            where TResponse : IResponse, new();
+            where TResponse : IResponse;
     }
 }

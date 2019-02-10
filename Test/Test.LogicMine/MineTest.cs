@@ -83,7 +83,7 @@ namespace Test.LogicMine
 
         private class DefaultShaft<TRequest, TResponse> : Shaft<TRequest, TResponse>
             where TRequest : class, IRequest
-            where TResponse : IResponse, new()
+            where TResponse : IResponse
         {
             public DefaultShaft(ITraceExporter traceExporter, ITerminal<TRequest, TResponse> terminal,
                 params IStation<TRequest, TResponse>[] stations) : base(traceExporter, terminal, stations)
@@ -107,11 +107,11 @@ namespace Test.LogicMine
         {
             public T Object { get; }
 
-            public GetObjectResponse()
+            public GetObjectResponse(IRequest request) : base(request)
             {
             }
-
-            public GetObjectResponse(Guid requestId, T obj) :base(requestId)
+            
+            public GetObjectResponse(IRequest request, T obj) :base(request)
             {
                 Object = obj;
             }
@@ -132,7 +132,7 @@ namespace Test.LogicMine
                 else
                     throw new InvalidCastException("Unexpected data type requested");
 
-                basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request.Id, result);
+                basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request, result);
 
                 return Task.CompletedTask;
             }
@@ -141,12 +141,12 @@ namespace Test.LogicMine
         private class MakeNameUppercaseStation<T> : Station<GetObjectRequest<T, int>, GetObjectResponse<T>>
             where T : class, INamed
         {
-            public override Task DescendToAsync(IBasket basket)
+            public override Task DescendToAsync(IBasket basket, IBasketPayload<GetObjectRequest<T, int>, GetObjectResponse<T>> payload)
             {
                 return Task.CompletedTask;
             }
 
-            public override Task AscendFromAsync(IBasket basket)
+            public override Task AscendFromAsync(IBasket basket, IBasketPayload<GetObjectRequest<T, int>, GetObjectResponse<T>> payload)
             {
                 var unwrapped = UnwrapBasketPayload(basket);
                 unwrapped.Response.Object.Name = unwrapped.Response.Object.Name.ToUpper();
@@ -157,7 +157,7 @@ namespace Test.LogicMine
 
         private class SecurityStation : Station<IRequest, IResponse>
         {
-            public override Task DescendToAsync(IBasket basket)
+            public override Task DescendToAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
             {
                 if (basket.Payload.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
                 {
@@ -168,7 +168,7 @@ namespace Test.LogicMine
                 throw new InvalidOperationException("Invalid access token");
             }
 
-            public override Task AscendFromAsync(IBasket basket)
+            public override Task AscendFromAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
             {
                 return Task.CompletedTask;
             }

@@ -48,13 +48,13 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new Response(request?.Id ?? Guid.Empty) {Error = ex.Message};
+                return new Response(request, ex.Message);
             }
         }
 
         public async Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IRequest
-            where TResponse : IResponse, new()
+            where TResponse : IResponse
         {
             try
             {
@@ -71,7 +71,7 @@ namespace LogicMine
             {
                 _traceExporter?.ExportError(ex);
 
-                return new TResponse {RequestId = request?.Id ?? Guid.Empty, Error = ex.Message};
+                return ResponseFactory.Create<TResponse>(request, ex.Message);
             }
         }
     }

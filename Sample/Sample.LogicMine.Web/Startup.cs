@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using Sample.LogicMine.Web.Mine;
+using Sample.LogicMine.Web.Mine.Candidate.UploadCv;
 using Sample.LogicMine.Web.Mine.GetTime;
 
 namespace Sample.LogicMine.Web
@@ -58,7 +59,7 @@ namespace Sample.LogicMine.Web
             IDataObjectDescriptorRegistry descriptorRegistry)
         {
             return new JsonRequestParserRegistry()
-                .Register(new NonGenericJsonRequestParser(typeof(GetTimeRequest)))
+                .Register(new NonGenericJsonRequestParser(GetCustomRequestTypes()))
                 .Register(new GetObjectRequestJsonParser(descriptorRegistry))
                 .Register(new GetCollectionRequestJsonParser(descriptorRegistry))
                 .Register(new CreateObjectRequestJsonParser(descriptorRegistry))
@@ -83,6 +84,13 @@ namespace Sample.LogicMine.Web
             IEnumerable<Type> shaftRegistrarTypes)
         {
             return shaftRegistrarTypes.Select(t => (IShaftRegistrar) provider.GetService(t));
+        }
+
+        private Type[] GetCustomRequestTypes()
+        {
+            return Assembly.GetCallingAssembly().GetTypes()
+                .Where(t => typeof(IRequest).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+                .ToArray();
         }
 
         private Type[] GetDataObjectDescriptorTypes()

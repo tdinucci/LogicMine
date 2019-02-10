@@ -19,7 +19,7 @@ namespace LogicMine.DataObject.UpdateObject
                 .UpdateAsync(basket.Payload.Request.ObjectId, basket.Payload.Request.ModifiedProperties)
                 .ConfigureAwait(false);
 
-            basket.Payload.Response = new UpdateObjectResponse(basket.Payload.Request.Id, true);
+            basket.Payload.Response = new UpdateObjectResponse(basket.Payload.Request, true);
         }
     }
 }
