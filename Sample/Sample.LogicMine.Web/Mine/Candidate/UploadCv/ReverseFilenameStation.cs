@@ -5,18 +5,18 @@ namespace Sample.LogicMine.Web.Mine.Candidate.UploadCv
 {
     public class ReverseFilenameStation : Station<UploadCvRequest, UploadCvResponse>
     {
-        public override Task DescendToAsync(IBasket basket, IBasketPayload<UploadCvRequest, UploadCvResponse> payload)
+        public override Task DescendToAsync(IBasket<UploadCvRequest, UploadCvResponse> basket)
         {
-            if (payload?.Request?.Filename != null)
-                payload.Request.Filename += "[down-station]";
+            if (basket?.Request?.Filename != null)
+                basket.Request.Filename += "[down-station]";
 
             return Task.CompletedTask;
         }
 
-        public override Task AscendFromAsync(IBasket basket, IBasketPayload<UploadCvRequest, UploadCvResponse> payload)
+        public override Task AscendFromAsync(IBasket<UploadCvRequest, UploadCvResponse> basket)
         {
-            if (payload?.Response?.Filename != null)
-                payload.Response.Filename += "[up-station]";
+            if (basket?.Response?.Filename != null)
+                basket.Response.Filename += "[up-station]";
 
             return Task.CompletedTask;
         }

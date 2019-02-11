@@ -3,12 +3,15 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
+    /// <inheritdoc />
     public abstract class Terminal<TRequest, TResponse> : ITerminal<TRequest, TResponse>
         where TRequest : class, IRequest
         where TResponse : IResponse
     {
+        /// <inheritdoc />
         public abstract Task AddResponseAsync(IBasket<TRequest, TResponse> basket);
 
+        /// <inheritdoc />
         Task ITerminal.AddResponseAsync(IBasket basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));

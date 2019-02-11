@@ -2,6 +2,9 @@ using System;
 
 namespace LogicMine
 {
+    /// <summary>
+    /// A type that can export errors somewhere, e.g. to a log
+    /// </summary>
     public interface IErrorExporter
     {
         /// <summary>

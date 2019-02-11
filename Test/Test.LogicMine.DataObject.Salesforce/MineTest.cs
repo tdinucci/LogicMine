@@ -36,9 +36,9 @@ namespace Test.LogicMine.DataObject.Salesforce
             var sfConfig =
                 new SalesforceCredentials(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
             var descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
-            
+
             var objectStore = new SalesforceObjectStore<T>(sfConfig, descriptor);
-        
+
             return new Mine()
                 .AddShaft(new Shaft<GetObjectRequest<T, string>, GetObjectResponse<T>>(traceExporter,
                     new GetObjectTerminal<T, string>(objectStore),
@@ -99,7 +99,7 @@ namespace Test.LogicMine.DataObject.Salesforce
 
             var request = new ReverseStringRequest(forward);
             request.Options.Add(AccessTokenKey, ValidAccessToken);
-            
+
             var response = await mine.SendAsync<ReverseStringRequest, RevereStringResponse>(request)
                 .ConfigureAwait(false);
 
@@ -192,18 +192,18 @@ namespace Test.LogicMine.DataObject.Salesforce
         {
             public override Task AddResponseAsync(IBasket<ReverseStringRequest, RevereStringResponse> basket)
             {
-                var reversed = new string(basket.Payload.Request.ToReverse.Reverse().ToArray());
-                basket.Payload.Response = new RevereStringResponse(basket.Payload.Request, reversed);
+                var reversed = new string(basket.Request.ToReverse.Reverse().ToArray());
+                basket.Response = new RevereStringResponse(basket.Request, reversed);
 
                 return Task.CompletedTask;
             }
         }
-        
+
         private class SecurityStation : Station<IRequest, IResponse>
         {
-            public override Task DescendToAsync(IBasket basket,IBasketPayload<IRequest, IResponse> payload)
+            public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
             {
-                if (basket.Payload.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
+                if (basket.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
                 {
                     if ((string) accessToken == ValidAccessToken)
                         return Task.CompletedTask;
@@ -212,7 +212,7 @@ namespace Test.LogicMine.DataObject.Salesforce
                 throw new InvalidOperationException("Invalid access token");
             }
 
-            public override Task AscendFromAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
+            public override Task AscendFromAsync(IBasket<IRequest, IResponse> basket)
             {
                 return Task.CompletedTask;
             }

@@ -9,9 +9,9 @@ namespace Sample.LogicMine.Web.Mine
         private const string AccessTokenKey = "AccessToken";
         private const string ValidAccessToken = "123";
 
-        public override Task DescendToAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
+        public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
         {
-            if (payload.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
+            if (basket.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
             {
                 if ((string) accessToken == ValidAccessToken)
                     return Task.CompletedTask;
@@ -20,7 +20,7 @@ namespace Sample.LogicMine.Web.Mine
             throw new InvalidOperationException("Invalid access token");
         }
 
-        public override Task AscendFromAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
+        public override Task AscendFromAsync(IBasket<IRequest, IResponse> basket)
         {
             return Task.CompletedTask;
         }

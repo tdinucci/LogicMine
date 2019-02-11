@@ -4,9 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace LogicMine
 {
-    /// <summary>
-    /// Represents a visit to a waypoint within a shaft
-    /// </summary>
+    /// <inheritdoc />
     public class Visit : IVisit
     {
         private readonly IList<string> _logMessages = new List<string>();
@@ -33,44 +31,22 @@ namespace LogicMine
         /// Construct a new Visit
         /// </summary>
         /// <param name="description">A description of the visit</param>
-        /// <param name="startedAt">The time the visit started at, if null the DateTime.UtcNow will be used</param>
         /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
-        public Visit(string description, VisitDirection direction, DateTime? startedAt = null)
+        public Visit(string description, VisitDirection direction)
         {
             if (string.IsNullOrWhiteSpace(description))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
 
             Description = description;
             Direction = direction;
-            StartedAt = startedAt ?? DateTime.UtcNow;
+            StartedAt = DateTime.Now;
         }
 
-        /// <summary>
-        /// Construct a new Visit
-        /// </summary>
-        /// <param name="description">A description of the visit</param>
-        /// <param name="direction">The direction that was being moved within the shaft at the time of the visit</param>
-        /// <param name="startedAt">The time the visit started at, if null the DateTime.UtcNow will be used</param>
-        /// <param name="duration">The duration of the visit</param>
-        public Visit(string description, VisitDirection direction, DateTime? startedAt, TimeSpan duration)
-        {
-            if (string.IsNullOrWhiteSpace(description))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(description));
-
-            Description = description;
-            Direction = direction;
-            StartedAt = startedAt ?? DateTime.UtcNow;
-            Duration = duration;
-        }
-
-        /// <summary>
-        /// Log a message for the visit
-        /// </summary>
-        /// <param name="message"></param>
+        /// <inheritdoc />
         public void Log(string message)
         {
             if (!string.IsNullOrWhiteSpace(message))
-                _logMessages.Add($"[{DateTime.UtcNow.TimeOfDay}] {message}");
+                _logMessages.Add($"[{DateTime.Now.TimeOfDay}] {message}");
         }
     }
 }

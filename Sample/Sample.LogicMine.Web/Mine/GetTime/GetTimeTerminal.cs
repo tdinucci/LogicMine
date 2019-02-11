@@ -8,7 +8,7 @@ namespace Sample.LogicMine.Web.Mine.GetTime
     {
         public override Task AddResponseAsync(IBasket<GetTimeRequest, GetTimeResponse> basket)
         {
-            basket.Payload.Response = new GetTimeResponse(basket.Payload.Request, DateTime.Now);
+            basket.Response = new GetTimeResponse(basket.Request, DateTime.Now);
             return Task.CompletedTask;
         }
     }

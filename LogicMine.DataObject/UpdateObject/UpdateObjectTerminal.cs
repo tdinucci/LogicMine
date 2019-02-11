@@ -16,10 +16,10 @@ namespace LogicMine.DataObject.UpdateObject
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
             await _dataObjectStore
-                .UpdateAsync(basket.Payload.Request.ObjectId, basket.Payload.Request.ModifiedProperties)
+                .UpdateAsync(basket.Request.ObjectId, basket.Request.ModifiedProperties)
                 .ConfigureAwait(false);
 
-            basket.Payload.Response = new UpdateObjectResponse(basket.Payload.Request, true);
+            basket.Response = new UpdateObjectResponse(basket.Request, true);
         }
     }
 }

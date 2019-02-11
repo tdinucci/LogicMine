@@ -4,16 +4,22 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
+    /// <inheritdoc />
     public class Mine : IMine
     {
         private readonly ITraceExporter _traceExporter;
         private readonly Dictionary<Type, IShaft> _requestTypeShafts = new Dictionary<Type, IShaft>();
 
+        /// <summary>
+        /// Constructs a mine
+        /// </summary>
+        /// <param name="traceExporter">A trace exporter</param>
         public Mine(ITraceExporter traceExporter = null)
         {
             _traceExporter = traceExporter;
         }
 
+        /// <inheritdoc />
         public IMine AddShaft(IShaft shaft)
         {
             if (shaft == null) throw new ArgumentNullException(nameof(shaft));
@@ -29,6 +35,7 @@ namespace LogicMine
             return this;
         }
 
+        /// <inheritdoc />
         public async Task<IResponse> SendAsync(IRequest request)
         {
             try
@@ -52,6 +59,7 @@ namespace LogicMine
             }
         }
 
+        /// <inheritdoc />
         public async Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IRequest
             where TResponse : IResponse

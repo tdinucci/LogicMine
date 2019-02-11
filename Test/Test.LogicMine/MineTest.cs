@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using LogicMine;
+using Test.Common.LogicMine;
 using Xunit;
 
 namespace Test.LogicMine
@@ -121,7 +121,7 @@ namespace Test.LogicMine
         {
             public override Task AddResponseAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
             {
-                var id = basket.Payload.Request.ObjectId;
+                var id = basket.Request.ObjectId;
                 var db = new Database();
 
                 T result;
@@ -132,7 +132,7 @@ namespace Test.LogicMine
                 else
                     throw new InvalidCastException("Unexpected data type requested");
 
-                basket.Payload.Response = new GetObjectResponse<T>(basket.Payload.Request, result);
+                basket.Response = new GetObjectResponse<T>(basket.Request, result);
 
                 return Task.CompletedTask;
             }
@@ -141,15 +141,14 @@ namespace Test.LogicMine
         private class MakeNameUppercaseStation<T> : Station<GetObjectRequest<T, int>, GetObjectResponse<T>>
             where T : class, INamed
         {
-            public override Task DescendToAsync(IBasket basket, IBasketPayload<GetObjectRequest<T, int>, GetObjectResponse<T>> payload)
+            public override Task DescendToAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
             {
                 return Task.CompletedTask;
             }
 
-            public override Task AscendFromAsync(IBasket basket, IBasketPayload<GetObjectRequest<T, int>, GetObjectResponse<T>> payload)
+            public override Task AscendFromAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
             {
-                var unwrapped = UnwrapBasketPayload(basket);
-                unwrapped.Response.Object.Name = unwrapped.Response.Object.Name.ToUpper();
+                basket.Response.Object.Name = basket.Response.Object.Name.ToUpper();
 
                 return Task.CompletedTask;
             }
@@ -157,9 +156,9 @@ namespace Test.LogicMine
 
         private class SecurityStation : Station<IRequest, IResponse>
         {
-            public override Task DescendToAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
+            public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
             {
-                if (basket.Payload.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
+                if (basket.Request.Options.TryGetValue(AccessTokenKey, out var accessToken))
                 {
                     if ((string) accessToken == ValidAccessToken)
                         return Task.CompletedTask;
@@ -168,7 +167,7 @@ namespace Test.LogicMine
                 throw new InvalidOperationException("Invalid access token");
             }
 
-            public override Task AscendFromAsync(IBasket basket, IBasketPayload<IRequest, IResponse> payload)
+            public override Task AscendFromAsync(IBasket<IRequest, IResponse> basket)
             {
                 return Task.CompletedTask;
             }
@@ -240,31 +239,6 @@ namespace Test.LogicMine
         private interface INamed
         {
             string Name { get; set; }
-        }
-
-        private class TestTraceExporter : ITraceExporter
-        {
-            public string Trace { get; private set; }
-            public string Error { get; private set; }
-
-            public void Export(IBasket basket)
-            {
-                var sb = new StringBuilder();
-                foreach (var visit in basket.Visits)
-                    sb.AppendLine($"{visit.Description} {visit.Direction}");
-
-                Trace = sb.ToString();
-            }
-
-            public void ExportError(Exception exception)
-            {
-                Error = exception.Message;
-            }
-
-            public void ExportError(string error)
-            {
-                Error = error;
-            }
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Sample.LogicMine.Web.Mine.Candidate.UploadCv
     {
         public override Task AddResponseAsync(IBasket<UploadCvRequest, UploadCvResponse> basket)
         {
-            basket.Payload.Response = new UploadCvResponse(basket.Payload.Request)
+            basket.Response = new UploadCvResponse(basket.Request)
             {
-                Filename = basket.Payload.Request?.Filename?.ToUpper()
+                Filename = basket.Request?.Filename?.ToUpper()
             };
             return Task.CompletedTask;
         }

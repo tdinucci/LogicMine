@@ -15,7 +15,7 @@ namespace LogicMine.DataObject.GetCollection
         public override async Task AddResponseAsync(IBasket<GetCollectionRequest<T>, GetCollectionResponse<T>> basket)
         {
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            var request = basket.Payload.Request;
+            var request = basket.Request;
             T[] collection;
 
             if (request.Filter != null)
@@ -29,7 +29,7 @@ namespace LogicMine.DataObject.GetCollection
                     .ConfigureAwait(false);
             }
 
-            basket.Payload.Response = new GetCollectionResponse<T>(request, collection);
+            basket.Response = new GetCollectionResponse<T>(request, collection);
         }
     }
 }
