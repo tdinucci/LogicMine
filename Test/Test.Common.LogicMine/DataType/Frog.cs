@@ -13,7 +13,7 @@ namespace Test.Common.LogicMine.DataType
             return obj is Frog<TId> frog &&
                    Id.Equals(frog.Id) &&
                    Name == frog.Name &&
-                   DateOfBirth == frog.DateOfBirth;
+                   DateOfBirth.Date == frog.DateOfBirth.Date;
         }
     }
 }

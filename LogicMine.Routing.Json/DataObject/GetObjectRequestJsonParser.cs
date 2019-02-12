@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json.DataObject
 {
+    /// <summary>
+    /// A parser which specialises in parsing GetObjectRequests from JObjects
+    /// </summary>
     public class GetObjectRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
@@ -17,6 +20,7 @@ namespace LogicMine.Routing.Json.DataObject
             AddHandledRequestType("getObject");
         }
 
+        /// <inheritdoc />
         public override IRequest Parse(JObject rawRequest)
         {
             EnsureCanHandleRequest(rawRequest);

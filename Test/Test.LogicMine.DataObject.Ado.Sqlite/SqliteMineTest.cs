@@ -9,7 +9,7 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
 {
     public class SqliteMineTest : MineTest<Frog<int>, int>, IDisposable
     {
-        private static readonly string DbFilename = $"{Path.GetTempPath()}\\testmine.db";
+        private readonly string DbFilename = $"{Path.GetTempPath()}\\{Guid.NewGuid()}.db";
         private DbGenerator _dbGenerator;
 
         protected override IDataObjectDescriptor GetDescriptor()

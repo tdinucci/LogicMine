@@ -5,6 +5,7 @@ using LogicMine.DataObject;
 
 namespace LogicMine.Routing
 {
+    /// <inheritdoc />
     public abstract class RequestRouter<TRawRequest> : IRequestRouter<TRawRequest>
     {
         private bool _isInitialised;
@@ -55,6 +56,7 @@ namespace LogicMine.Routing
                 shaftRegistrar.RegisterShafts(mine);
         }
 
+        /// <inheritdoc />
         public async Task<IResponse> RouteAsync(TRawRequest rawRequest)
         {
             if (!_isInitialised)

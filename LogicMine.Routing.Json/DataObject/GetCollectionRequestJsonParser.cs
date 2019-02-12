@@ -7,6 +7,9 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json.DataObject
 {
+    /// <summary>
+    /// A parser which specialises in parsing GetCollectionRequests from JObjects
+    /// </summary>
     public class GetCollectionRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
@@ -19,6 +22,7 @@ namespace LogicMine.Routing.Json.DataObject
             AddHandledRequestType("getCollection");
         }
 
+        /// <inheritdoc />
         public override IRequest Parse(JObject rawRequest)
         {
             EnsureCanHandleRequest(rawRequest);

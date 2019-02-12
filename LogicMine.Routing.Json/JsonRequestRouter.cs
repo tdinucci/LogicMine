@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json
 {
+    /// <summary>
+    /// A <see cref="RequestRouter{TRawRequest}"/> that specialises in routing JObject requests
+    /// </summary>
     public abstract class JsonRequestRouter : RequestRouter<JObject>
     {
         protected JsonRequestRouter(IMine mine, IErrorExporter errorExporter) : base(mine, errorExporter)
@@ -13,7 +16,7 @@ namespace LogicMine.Routing.Json
         }
 
         protected abstract IEnumerable<Type> GetCustomRequestTypes();
-        
+
         protected override IRequestParserRegistry<JObject> GetParserRegistry()
         {
             var customRequestTypes = GetCustomRequestTypes()?.ToArray() ?? new Type[0];

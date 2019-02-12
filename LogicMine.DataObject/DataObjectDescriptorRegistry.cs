@@ -4,11 +4,13 @@ using System.Linq;
 
 namespace LogicMine.DataObject
 {
+    /// <inheritdoc />
     public class DataObjectDescriptorRegistry : IDataObjectDescriptorRegistry
     {
         private readonly Dictionary<string, IDataObjectDescriptor> _descriptors =
             new Dictionary<string, IDataObjectDescriptor>();
 
+        /// <inheritdoc />
         public IDataObjectDescriptorRegistry Register(IDataObjectDescriptor descriptor)
         {
             if (descriptor == null) throw new ArgumentNullException(nameof(descriptor));
@@ -22,6 +24,7 @@ namespace LogicMine.DataObject
             return this;
         }
 
+        /// <inheritdoc />
         public IDataObjectDescriptor GetDescriptor(Type dataType)
         {
             if (dataType == null) throw new ArgumentNullException(nameof(dataType));
@@ -29,6 +32,7 @@ namespace LogicMine.DataObject
             return GetDescriptor(dataType.Name);
         }
 
+        /// <inheritdoc />
         public IDataObjectDescriptor GetDescriptor(string dataTypeName)
         {
             if (string.IsNullOrWhiteSpace(dataTypeName))
@@ -40,6 +44,7 @@ namespace LogicMine.DataObject
             return descriptor;
         }
 
+        /// <inheritdoc />
         public TDescriptor GetDescriptor<T, TDescriptor>() where TDescriptor : IDataObjectDescriptor
         {
             var descriptor = GetDescriptor(typeof(T));
@@ -52,6 +57,7 @@ namespace LogicMine.DataObject
             return castDescriptor;
         }
 
+        /// <inheritdoc />
         public IEnumerable<Type> GetKnownDataTypes()
         {
             return _descriptors.Values.Select(d => d.DataType);

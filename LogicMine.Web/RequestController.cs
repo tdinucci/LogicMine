@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LogicMine.Web
 {
+    /// <summary>
+    /// A Web API controller which accepts raw requests.  These raw requests will then
+    /// be dispatched to the injected IRequestRouter and this will in turn ensure they are parsed and
+    /// passed to the appropriate mine and shaft so that a response may be obtained.
+    /// </summary>
     public abstract class RequestController<TRawRequest> : Controller
     {
         private readonly IRequestRouter<TRawRequest> _requestRouter;

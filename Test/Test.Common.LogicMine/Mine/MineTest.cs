@@ -306,7 +306,7 @@ namespace Test.Common.LogicMine.Mine
                     Assert.NotEqual(id, frog.Id);
             }
         }
-
+        
         [Fact]
         public void Create()
         {
@@ -315,39 +315,29 @@ namespace Test.Common.LogicMine.Mine
                 var traceExporter = new TestTraceExporter();
                 var mine = CreateMine(traceExporter, 0);
 
-                var getCollectionRequest = new GetCollectionRequest<TFrog>();
-                getCollectionRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
-
-                var getCollectionResponse = mine
-                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getCollectionRequest)
-                    .GetAwaiter().GetResult();
-
-                Assert.Null(getCollectionResponse.Error);
-                Assert.True(getCollectionResponse.Objects.Length == 0);
-
-                var frogName = "Frogert";
-                var dob = DateTime.Now;
-                var createRequest = new CreateObjectRequest<TFrog>(CreateFrog(1, frogName, dob));
+                var name = Guid.NewGuid().ToString();
+                var frog = CreateFrog(1, name, DateTime.Today.AddDays(-150));
+                
+                var createRequest = new CreateObjectRequest<TFrog>(frog);
                 createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
                 var createResponse =
                     mine.SendAsync<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(createRequest)
                         .GetAwaiter().GetResult();
 
                 Assert.Null(createResponse.Error);
-                Assert.False(string.IsNullOrWhiteSpace(createRequest.Id.ToString()));
+                Assert.False(string.IsNullOrWhiteSpace(createResponse.ObjectId.ToString()));
 
-                getCollectionRequest = new GetCollectionRequest<TFrog>();
-                getCollectionRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                frog.Id = createResponse.ObjectId;
+                
+                var getRequest = new GetObjectRequest<TFrog, TId>(createResponse.ObjectId);
+                getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
-                getCollectionResponse = mine
-                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getCollectionRequest)
+                var getResponse = mine
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
                     .GetAwaiter().GetResult();
 
-                Assert.Null(getCollectionResponse.Error);
-                Assert.True(getCollectionResponse.Objects.Length == 1);
-
-                Assert.Equal(frogName, getCollectionResponse.Objects[0].Name);
-                Assert.Equal(dob.Date, getCollectionResponse.Objects[0].DateOfBirth.Date);
+                Assert.Null(getResponse.Error);
+                Assert.Equal(frog, getResponse.Object);
             }
         }
 

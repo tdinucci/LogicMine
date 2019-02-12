@@ -3,14 +3,30 @@ using LogicMine.DataObject.Filter;
 
 namespace LogicMine.DataObject.GetCollection
 {
+    /// <summary>
+    /// A request to get a collection of T
+    /// </summary>
+    /// <typeparam name="T">The type to retrieve</typeparam>
     public class GetCollectionRequest<T> : Request
     {
+        /// <summary>
+        /// The type to retrieve
+        /// </summary>
         public Type ObjectType { get; } = typeof(T);
         
+        /// <summary>
+        /// A filter to apply to the set of T
+        /// </summary>
         public IFilter<T> Filter { get; }
 
+        /// <summary>
+        /// The maximum number of results to retrieve 
+        /// </summary>
         public int? Max { get; }
 
+        /// <summary>
+        /// The page of results to retrieve 
+        /// </summary>
         public int? Page { get; }
 
         /// <summary>

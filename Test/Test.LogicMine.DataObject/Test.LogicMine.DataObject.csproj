@@ -17,8 +17,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\LogicMine.DataObject.Ado.Sqlite\LogicMine.DataObject.Ado.Sqlite.csproj" />
       <ProjectReference Include="..\..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
       <ProjectReference Include="..\Test.Common.LogicMine\Test.Common.LogicMine.csproj" />
+      <ProjectReference Include="..\Test.LogicMine.DataObject.Ado.Sqlite\Test.LogicMine.DataObject.Ado.Sqlite.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace LogicMine.Routing
 {
+    /// <inheritdoc />
     public abstract class RequestParserRegistry<TRawRequest> : IRequestParserRegistry<TRawRequest>
     {
         private IDictionary<string, IRequestParser<TRawRequest>> Parsers { get; } =
@@ -10,6 +11,7 @@ namespace LogicMine.Routing
 
         protected abstract string GetRequestType(TRawRequest request);
 
+        /// <inheritdoc />
         public IRequestParserRegistry<TRawRequest> Register(IRequestParser<TRawRequest> parser)
         {
             if (parser == null) throw new ArgumentNullException(nameof(parser));
@@ -28,6 +30,7 @@ namespace LogicMine.Routing
             return this;
         }
 
+        /// <inheritdoc />
         public IRequestParser<TRawRequest> Get(TRawRequest request)
         {
             var requestType = GetRequestType(request);

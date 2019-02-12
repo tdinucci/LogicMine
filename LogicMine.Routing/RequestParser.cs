@@ -5,13 +5,17 @@ using System.Linq;
 
 namespace LogicMine.Routing
 {
+    /// <inheritdoc />
     public abstract class RequestParser<TRawRequest> : IRequestParser<TRawRequest>
     {
         private readonly HashSet<string> _handledRequestTypes = new HashSet<string>();
 
+        /// <inheritdoc />
         public ImmutableHashSet<string> HandledRequestTypes => _handledRequestTypes.ToImmutableHashSet();
 
         protected abstract string GetRequestType(TRawRequest rawRequest);
+
+        /// <inheritdoc />
         public abstract IRequest Parse(TRawRequest rawRequest);
 
         protected void AddHandledRequestType(params string[] requestTypeNames)
@@ -23,12 +27,14 @@ namespace LogicMine.Routing
             }
         }
 
+        /// <inheritdoc />
         public bool CanHandleRequest(TRawRequest rawRequest)
         {
             var requestType = GetRequestType(rawRequest);
             return requestType != null && _handledRequestTypes.Contains(requestType.ToLower());
         }
 
+        /// <inheritdoc />
         public void EnsureCanHandleRequest(TRawRequest rawRequest)
         {
             if (!CanHandleRequest(rawRequest))
@@ -43,6 +49,7 @@ namespace LogicMine.Routing
             return _handledRequestTypes.Aggregate((c, n) => $"{c},{n}");
         }
 
+        /// <inheritdoc />
         public TRequest Parse<TRequest>(TRawRequest rawRequest)
         {
             var request = Parse(rawRequest);

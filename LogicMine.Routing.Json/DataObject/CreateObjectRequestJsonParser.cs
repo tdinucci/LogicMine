@@ -5,10 +5,17 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json.DataObject
 {
+    /// <summary>
+    /// A parser which specialises in parsing CreateObjectRequests from JObjects
+    /// </summary>
     public class CreateObjectRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
 
+        /// <summary>
+        /// Construct a CreateObjectRequestJsonParser
+        /// </summary>
+        /// <param name="dataObjectDescriptorRegistry">The registry of data object descriptors</param>
         public CreateObjectRequestJsonParser(
             IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
         {
@@ -18,6 +25,7 @@ namespace LogicMine.Routing.Json.DataObject
             AddHandledRequestType("createObject");
         }
 
+        /// <inheritdoc />
         public override IRequest Parse(JObject rawRequest)
         {
             EnsureCanHandleRequest(rawRequest);

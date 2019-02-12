@@ -6,10 +6,17 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json
 {
+    /// <summary>
+    /// A JsonRequestParser that specialises in handling general, non-generic requests
+    /// </summary>
     public class NonGenericJsonRequestParser : JsonRequestParser
     {
         private readonly Dictionary<string, Type> _handledRequestTypes = new Dictionary<string, Type>();
 
+        /// <summary>
+        /// Construct a NonGenericJsonRequestParser
+        /// </summary>
+        /// <param name="requestTypes">The types which this parser can handle</param>
         public NonGenericJsonRequestParser(params Type[] requestTypes)
         {
             InitialiseHandledRequestTypes(requestTypes);
@@ -44,6 +51,7 @@ namespace LogicMine.Routing.Json
             }
         }
 
+        /// <inheritdoc />
         public override IRequest Parse(JObject rawRequest)
         {
             if (rawRequest == null) throw new ArgumentNullException(nameof(rawRequest));
@@ -76,7 +84,10 @@ namespace LogicMine.Routing.Json
                         string.Equals(p.Name, rawProperty.Name, StringComparison.CurrentCultureIgnoreCase));
 
                     if (prop == null)
-                        throw new InvalidOperationException($"Raw request contains the unexpected field '{prop.Name}'");
+                    {
+                        throw new InvalidOperationException(
+                            $"Raw request contains the unexpected field '{rawProperty.Name}'");
+                    }
 
                     prop.SetValue(request, rawProperty.ToObject(prop.PropertyType));
                 }

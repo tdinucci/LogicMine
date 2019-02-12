@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json.DataObject
 {
+    /// <summary>
+    /// A parser which specialises in parsing DeleteObjectRequests from JObjects
+    /// </summary>
     public class DeleteObjectRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
@@ -18,6 +21,7 @@ namespace LogicMine.Routing.Json.DataObject
             AddHandledRequestType("deleteObject");
         }
 
+        /// <inheritdoc />
         public override IRequest Parse(JObject rawRequest)
         {
             EnsureCanHandleRequest(rawRequest);

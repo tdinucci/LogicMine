@@ -11,7 +11,7 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
 {
   public class SqliteInterfaceTest
   {
-    private static readonly string DbFilename = $"{Path.GetTempPath()}\\test.db";
+    private readonly string DbFilename = $"{Path.GetTempPath()}\\{Guid.NewGuid()}.db";
 
     [Fact]
     public async Task General()

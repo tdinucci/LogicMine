@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace LogicMine.DataObject
 {
+    /// <inheritdoc />
     public class DataObjectDescriptor<T, TId> : DataObjectDescriptor
     {
         private static IEnumerable<PropertyInfo> _readablePropertyNames;
@@ -14,7 +15,8 @@ namespace LogicMine.DataObject
             base(typeof(T), typeof(TId), readOnlyPropertyNames)
         {
         }
-        
+
+        /// <inheritdoc />
         public override IEnumerable<PropertyInfo> GetReadableProperties()
         {
             if (_readablePropertyNames == null)
@@ -23,6 +25,7 @@ namespace LogicMine.DataObject
             return _readablePropertyNames;
         }
 
+        /// <inheritdoc />
         protected override bool IsPropertyWithName(string propertyName)
         {
             if (string.IsNullOrWhiteSpace(propertyName))

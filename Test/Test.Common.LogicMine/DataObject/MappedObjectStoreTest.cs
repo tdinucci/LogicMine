@@ -182,5 +182,24 @@ namespace Test.Common.LogicMine.DataObject
                     Assert.NotEqual(id, frog.Id);
             }
         }
+
+        [Fact]
+        public void Create()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var store = GetStore();
+                InsertFrogs(store, 0);
+
+                var name = Guid.NewGuid().ToString();
+                var frog = CreateFrog(1, name, DateTime.Today.AddDays(-150));
+                
+                frog.Id = store.CreateAsync(frog).GetAwaiter().GetResult();
+                
+                var readFrog = store.GetByIdAsync(frog.Id).GetAwaiter().GetResult();
+
+                Assert.Equal(frog, readFrog);
+            }
+        }
     }
 }
