@@ -6,8 +6,8 @@ namespace Test.Common.LogicMine.Mine
 {
     public class SecurityStation : Station<IRequest, IResponse>
     {
-        public static string AccessTokenOption = "AccessToken";
-        public static string ValidAccessToken = "abc123";
+        public const string AccessTokenOption = "AccessToken";
+        public const string ValidAccessToken = "abc123";
 
         public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
         {

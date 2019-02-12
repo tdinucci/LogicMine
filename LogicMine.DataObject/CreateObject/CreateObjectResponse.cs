@@ -1,6 +1,6 @@
 namespace LogicMine.DataObject.CreateObject
 {
-    public class CreateObjectResponse<TId> : Response
+    public class CreateObjectResponse<T, TId> : Response where T : class
     {
         public TId ObjectId { get; }
 

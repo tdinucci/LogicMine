@@ -35,23 +35,23 @@ namespace Test.LogicMine.DataObject.Filter
     [Fact]
     public void ConstructGeneric()
     {
-      var filter = new Filter<Frog>(new[]
+      var filter = new Filter<Frog<int>>(new[]
       {
-        new FilterTerm(nameof(Frog.Id), FilterOperators.LessThan, 88),
-        new InFilterTerm(nameof(Frog.Name), new object[] {"kermit", "frank", "freddy"}),
-        new RangeFilterTerm(nameof(Frog.DateOfBirth), DateTime.Today.AddDays(-7), DateTime.Today.AddDays(8))
+        new FilterTerm(nameof(Frog<int>.Id), FilterOperators.LessThan, 88),
+        new InFilterTerm(nameof(Frog<int>.Name), new object[] {"kermit", "frank", "freddy"}),
+        new RangeFilterTerm(nameof(Frog<int>.DateOfBirth), DateTime.Today.AddDays(-7), DateTime.Today.AddDays(8))
       });
       Assert.Equal(3, filter.Terms.Count());
 
       Assert.Contains(filter.Terms,
-        p => p.PropertyName == nameof(Frog.Id) && p.Operator == FilterOperators.LessThan && (int) p.Value == 88);
+        p => p.PropertyName == nameof(Frog<int>.Id) && p.Operator == FilterOperators.LessThan && (int) p.Value == 88);
 
       Assert.Contains(filter.Terms,
-        p => p.PropertyName == nameof(Frog.Name) && p.Operator == FilterOperators.In
+        p => p.PropertyName == nameof(Frog<int>.Name) && p.Operator == FilterOperators.In
                                                  && ((InFilterTerm) p).Value.ToArray().Length == 3);
 
       Assert.Contains(filter.Terms,
-        p => p.PropertyName == nameof(Frog.DateOfBirth) && p.Operator == FilterOperators.Range
+        p => p.PropertyName == nameof(Frog<int>.DateOfBirth) && p.Operator == FilterOperators.Range
                                                         && (DateTime) ((RangeFilterTerm) p).From ==
                                                         DateTime.Today.AddDays(-7) &&
                                                         (DateTime) ((RangeFilterTerm) p).To ==
@@ -91,20 +91,20 @@ namespace Test.LogicMine.DataObject.Filter
     [Fact]
     public void Convert()
     {
-      var frogFilter = new Filter<Frog>(new[]
+      var frogFilter = new Filter<Frog<int>>(new[]
       {
-        new FilterTerm(nameof(Frog.Id), FilterOperators.LessThan, 88),
-        new InFilterTerm(nameof(Frog.Name), new object[] {"kermit", "frank", "freddy"}),
-        new RangeFilterTerm(nameof(Frog.DateOfBirth), DateTime.Today.AddDays(-7), DateTime.Today.AddDays(8))
+        new FilterTerm(nameof(Frog<int>.Id), FilterOperators.LessThan, 88),
+        new InFilterTerm(nameof(Frog<int>.Name), new object[] {"kermit", "frank", "freddy"}),
+        new RangeFilterTerm(nameof(Frog<int>.DateOfBirth), DateTime.Today.AddDays(-7), DateTime.Today.AddDays(8))
       });
 
       var altFrogFilter = frogFilter.Convert<AltFrog>((pn) =>
       {
-        if (pn == nameof(Frog.Id))
+        if (pn == nameof(Frog<int>.Id))
           return nameof(AltFrog.FrogId);
-        if (pn == nameof(Frog.Name))
+        if (pn == nameof(Frog<int>.Name))
           return nameof(AltFrog.FrogName);
-        if (pn == nameof(Frog.DateOfBirth))
+        if (pn == nameof(Frog<int>.DateOfBirth))
           return nameof(AltFrog.FrogDateOfBirth);
 
         return pn;

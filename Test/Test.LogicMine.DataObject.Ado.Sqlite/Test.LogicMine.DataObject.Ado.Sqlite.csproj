@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\LogicMine.DataObject.Salesforce\LogicMine.DataObject.Salesforce.csproj" />
+      <ProjectReference Include="..\..\LogicMine.DataObject.Ado.Sqlite\LogicMine.DataObject.Ado.Sqlite.csproj" />
       <ProjectReference Include="..\Test.Common.LogicMine\Test.Common.LogicMine.csproj" />
     </ItemGroup>
 

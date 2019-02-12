@@ -26,6 +26,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Common.LogicMine", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.DataObject", "Test\Test.LogicMine.DataObject\Test.LogicMine.DataObject.csproj", "{39CA257B-D29A-444B-A491-41C55F8D2246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.DataObject.Ado", "LogicMine.DataObject.Ado\LogicMine.DataObject.Ado.csproj", "{9630D062-2978-42FB-862D-3A0608F38B97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.DataObject.Ado.Sqlite", "LogicMine.DataObject.Ado.Sqlite\LogicMine.DataObject.Ado.Sqlite.csproj", "{EF4BC6F7-DC2D-4C3F-9330-5CC44417C3BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.DataObject.Ado.Sqlite", "Test\Test.LogicMine.DataObject.Ado.Sqlite\Test.LogicMine.DataObject.Ado.Sqlite.csproj", "{5E76C485-C923-4E4A-A455-4A9D6A837617}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +82,18 @@ Global
 		{39CA257B-D29A-444B-A491-41C55F8D2246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39CA257B-D29A-444B-A491-41C55F8D2246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39CA257B-D29A-444B-A491-41C55F8D2246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9630D062-2978-42FB-862D-3A0608F38B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9630D062-2978-42FB-862D-3A0608F38B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9630D062-2978-42FB-862D-3A0608F38B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9630D062-2978-42FB-862D-3A0608F38B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF4BC6F7-DC2D-4C3F-9330-5CC44417C3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF4BC6F7-DC2D-4C3F-9330-5CC44417C3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF4BC6F7-DC2D-4C3F-9330-5CC44417C3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF4BC6F7-DC2D-4C3F-9330-5CC44417C3BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E76C485-C923-4E4A-A455-4A9D6A837617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E76C485-C923-4E4A-A455-4A9D6A837617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E76C485-C923-4E4A-A455-4A9D6A837617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E76C485-C923-4E4A-A455-4A9D6A837617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{43FBC8AA-9772-4DDC-9ECF-CAEF12BAE2FF} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
@@ -83,5 +101,6 @@ Global
 		{DC7FBB52-889A-4F15-A08A-B7B9F491E468} = {FBD291FA-5152-4A53-8A56-9F08CBC7B5D2}
 		{10D8F6BA-6D43-4664-8939-E7D3584F49C3} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
 		{39CA257B-D29A-444B-A491-41C55F8D2246} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
+		{5E76C485-C923-4E4A-A455-4A9D6A837617} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
 	EndGlobalSection
 EndGlobal

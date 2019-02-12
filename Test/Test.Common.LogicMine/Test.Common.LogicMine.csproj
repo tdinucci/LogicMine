@@ -5,7 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
       <ProjectReference Include="..\..\LogicMine\LogicMine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="xunit" Version="2.4.0" />
     </ItemGroup>
 
 </Project>
