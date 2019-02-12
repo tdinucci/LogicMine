@@ -1,18 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    
-    <Version>1.3.0.0</Version>
-    <Authors>Tony Di Nucci</Authors>
-    <AssemblyTitle>LogicMine</AssemblyTitle>
-    <Description>Core LogicMine structures</Description>
-    <Copyright>Tony Di Nucci 2018</Copyright>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\LogicMine.xml</DocumentationFile>
-  </PropertyGroup>
+        <Version>2.0.0.0</Version>
+        <Authors>Tony Di Nucci</Authors>
+        <AssemblyTitle>LogicMine</AssemblyTitle>
+        <Description>The core LogicMine library</Description>
+        <Copyright>Tony Di Nucci 2019</Copyright>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
 
 </Project>

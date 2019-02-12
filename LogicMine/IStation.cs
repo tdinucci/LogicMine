@@ -1,52 +1,63 @@
-﻿/*
-MIT License
-
-Copyright(c) 2018
-Antonio Di Nucci
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+using System;
 using System.Threading.Tasks;
 
 namespace LogicMine
 {
-  /// <summary>
-  /// A station is a waypoint within an <see cref="IShaft{TBasket}"/> which can process baskets as they descend to and 
-  /// ascent from an <see cref="ITerminal{TBasket}"/>
-  /// </summary>
-  /// <typeparam name="TBasket">The type of basket the station deals with</typeparam>
-  public interface IStation<in TBasket> where TBasket : IBasket
-  {
-    /// <summary>
-    /// Called whenever the station is encountered within a shaft when the basket is descending
-    /// </summary>
-    /// <param name="basket">The basket travelling down the shaft</param>
-    /// <param name="visit">The visit the basket is currently making</param>
-    /// <returns>A Task that may be awaited</returns>
-    Task DescendToAsync(TBasket basket, IVisit visit);
+    /// <inheritdoc />
+    /// <typeparam name="TRequest">The type of request handled by the station</typeparam>
+    /// <typeparam name="TResponse">The type of response handled by the station</typeparam>
+    public interface IStation<in TRequest, TResponse> : IStation
+        where TRequest : class, IRequest
+        where TResponse : IResponse
+    {
+        /// <summary>
+        /// Act on a basket on it's way down a shaft.
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
+        Task DescendToAsync(IBasket<TRequest, TResponse> basket);
+        
+        /// <summary>
+        /// Act on a basket on it's way back up a shaft.
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
+        Task AscendFromAsync(IBasket<TRequest, TResponse> basket);
+    }
 
     /// <summary>
-    /// Called whenever the station is encountered within a shaft when the basket is ascending
+    /// A waypoint on within a shaft which baskets pass through both on the downward and upward journeys.
+    ///
+    /// When a basket descends through a station the response is not yet known and station will typically 
+    /// act on the request.
+    ///
+    /// When a basket ascends through a station the response will be known and the station will typically 
+    /// act on the response.
     /// </summary>
-    /// <param name="basket">The basket travelling up the shaft</param>
-    /// <param name="visit">The visit the basket is currently making</param>
-    /// <returns>A Task that may be awaited</returns>
-    Task AscendFromAsync(TBasket basket, IVisit visit);
-  }
+    public interface IStation
+    {
+        /// <summary>
+        /// The type of request handled by the station
+        /// </summary>
+        Type RequestType { get; }
+
+        /// <summary>
+        /// The type of response handled by the station
+        /// </summary>
+        Type ResponseType { get; }
+
+        /// <summary>
+        /// Act on a basket on it's way down a shaft
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
+        Task DescendToAsync(ref IBasket basket);
+
+        /// <summary>
+        /// Act on a basket on it's way back up a shaft
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
+        Task AscendFromAsync(ref IBasket basket);
+    }
 }

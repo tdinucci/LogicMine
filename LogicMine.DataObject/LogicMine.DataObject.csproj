@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <Version>2.0.0.0</Version>
+        <Authors>Tony Di Nucci</Authors>
+        <AssemblyTitle>LogicMine.DataObject</AssemblyTitle>
+        <Description>A LogicMine API which facilitates common data operations</Description>
+        <Copyright>Tony Di Nucci 2019</Copyright>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Filter\Parse" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FastMember" Version="1.4.1" />
+    </ItemGroup>
+
+</Project>

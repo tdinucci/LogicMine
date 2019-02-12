@@ -1,246 +1,162 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using LogicMine;
-using LogicMine.Api.Get;
-using Test.LogicMine.Common.Types;
+using Test.Common.LogicMine;
+using Test.Common.LogicMine.Mine;
+using Test.Common.LogicMine.Mine.GetDeconstructedDate;
+using Test.Common.LogicMine.Mine.GetTime;
 using Xunit;
 
 namespace Test.LogicMine
 {
-  public class ShaftTest
-  {
-    [Fact]
-    public async Task Simple()
+    public class ShaftTest
     {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal(), null);
+        private const string OptionKey = "Opt";
 
-      var basket = new GetBasket<int, Frog>(18);
-      await shaft.SendAsync(basket).ConfigureAwait(false);
-
-      Assert.Equal(typeof(OkNote), basket.Note.GetType());
-      Assert.Equal(18, basket.AscentPayload.Id);
-      Assert.Equal("Frank", basket.AscentPayload.Name);
-      Assert.Equal(DateTime.Today, basket.AscentPayload.DateOfBirth);
-
-      Assert.Equal(18, basket.DescentPayload);
-    }
-
-    [Fact]
-    public async Task Pipeline()
-    {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation1())
-        .Add(new TestGetStation2());
-
-      var basket = new GetBasket<int, Frog>(22);
-      await shaft.SendAsync(basket).ConfigureAwait(false);
-
-      Assert.Equal(22, basket.AscentPayload.Id);
-      Assert.Equal("Frank21", basket.AscentPayload.Name);
-      Assert.Equal(DateTime.Today, basket.AscentPayload.DateOfBirth);
-      Assert.Equal(22, basket.DescentPayload);
-
-      shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation2())
-        .Add(new TestGetStation1());
-
-      basket = new GetBasket<int, Frog>(33);
-      await shaft.SendAsync(basket).ConfigureAwait(false);
-
-      Assert.Equal(33, basket.AscentPayload.Id);
-      Assert.Equal("Frank12", basket.AscentPayload.Name);
-      Assert.Equal(DateTime.Today, basket.AscentPayload.DateOfBirth);
-      Assert.Equal(33, basket.DescentPayload);
-    }
-
-    [Fact]
-    public async Task ReturnEarly()
-    {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation1())
-        .Add(new TestGetStation2())
-        .Add(new TestGetStationReturnEarly());
-
-      var basket = new GetBasket<int, Frog>(22);
-      await shaft.SendAsync(basket).ConfigureAwait(false);
-
-      Assert.True(basket.Note is ReturnNote);
-
-      Assert.Equal(22, basket.AscentPayload.Id);
-      Assert.Equal("Early Frog", basket.AscentPayload.Name);
-      Assert.Equal(DateTime.Today.AddDays(-1), basket.AscentPayload.DateOfBirth);
-    }
-
-    [Fact]
-    public async Task Trace()
-    {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation1())
-        .Add(new TestGetStation2());
-
-      var basket = new GetBasket<int, Frog>(22);
-      await shaft.SendAsync(basket).ConfigureAwait(false);
-
-      Assert.Equal(5, basket.Visits.Count);
-
-      var visits = basket.Visits.ToArray();
-
-      var visit = visits[0];
-      Assert.True(visit.Description == typeof(TestGetStation1).ToString() && visit.Direction == VisitDirections.Down &&
-                  visit.Duration > TimeSpan.Zero);
-
-      visit = visits[1];
-      Assert.True(visit.Description == typeof(TestGetStation2).ToString() && visit.Direction == VisitDirections.Down &&
-                  visit.Duration > TimeSpan.Zero);
-
-      visit = visits[2];
-      Assert.True(visit.Description == typeof(TestGetTerminal).ToString() && visit.Direction == VisitDirections.Down &&
-                  visit.Duration > TimeSpan.Zero);
-
-      visit = visits[3];
-      Assert.True(visit.Description == typeof(TestGetStation2).ToString() && visit.Direction == VisitDirections.Up &&
-                  visit.Duration > TimeSpan.Zero);
-
-      visit = visits[4];
-      Assert.True(visit.Description == typeof(TestGetStation1).ToString() && visit.Direction == VisitDirections.Up &&
-                  visit.Duration > TimeSpan.Zero);
-
-      var waypointTimes = visits.Sum(v => v.Duration?.TotalMilliseconds);
-      Assert.True(basket.JourneyDuration.TotalMilliseconds >= waypointTimes);
-    }
-
-    [Fact]
-    public async Task ExceptionDown()
-    {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation1())
-        .Add(new TestGetStation2())
-        .Add(new TestGetStationExceptionDown());
-
-      var wasException = false;
-      try
-      {
-        var basket = new GetBasket<int, Frog>(22);
-        await shaft.SendAsync(basket).ConfigureAwait(false);
-      }
-      catch (Exception ex)
-      {
-        wasException = true;
-        Assert.Equal("Ex on descent", ex.InnerException.Message);
-      }
-
-      Assert.True(wasException);
-    }
-
-    [Fact]
-    public async Task ExceptionUp()
-    {
-      var shaft = new Shaft<IGetBasket<int, Frog>>(new TestGetTerminal())
-        .Add(new TestGetStation1())
-        .Add(new TestGetStation2())
-        .Add(new TestGetStationExceptionUp());
-
-      var wasException = false;
-      try
-      {
-        var basket = new GetBasket<int, Frog>(22);
-        await shaft.SendAsync(basket).ConfigureAwait(false);
-      }
-      catch (Exception ex)
-      {
-        wasException = true;
-        Assert.Equal("Ex on ascent", ex.InnerException.Message);
-      }
-
-      Assert.True(wasException);
-    }
-
-    private class TestGetTerminal : ITerminal<IBasket<int, Frog>>
-    {
-      public Task AddResultAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        basket.AscentPayload = new Frog {Id = basket.DescentPayload, Name = "Frank", DateOfBirth = DateTime.Today};
-
-        return Task.CompletedTask;
-      }
-    }
-
-    private class TestGetStation1 : IStation<IBasket<int, Frog>>
-    {
-      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        return Task.CompletedTask;
-      }
-
-      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        basket.AscentPayload.Name += "1";
-
-        return Task.CompletedTask;
-      }
-    }
-
-    private class TestGetStation2 : IStation<IBasket<int, Frog>>
-    {
-      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        return Task.CompletedTask;
-      }
-
-      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        basket.AscentPayload.Name += "2";
-
-        return Task.CompletedTask;
-      }
-    }
-
-    private class TestGetStationReturnEarly : IStation<IBasket<int, Frog>>
-    {
-      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        basket.AscentPayload = new Frog
+        [Fact]
+        public void Construct()
         {
-          Id = basket.DescentPayload,
-          Name = "Early Frog",
-          DateOfBirth = DateTime.Today.AddDays(-1)
-        };
-        basket.ReplaceNote(new ReturnNote());
+            var shaft = new Shaft<GetTimeRequest, GetTimeResponse>(new GetTimeTerminal()) as IShaft;
+            Assert.Equal(typeof(GetTimeRequest), shaft.RequestType);
+            Assert.Equal(typeof(GetTimeResponse), shaft.ResponseType);
 
-        return Task.CompletedTask;
-      }
+            shaft = new Shaft<GetDeconstructedDateRequest, GetDeconstructedDateRespone>(
+                new GetDeconstructedDateTerminal());
+            Assert.Equal(typeof(GetDeconstructedDateRequest), shaft.RequestType);
+            Assert.Equal(typeof(GetDeconstructedDateRespone), shaft.ResponseType);
+        }
 
-      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        return Task.CompletedTask;
-      }
+        [Fact]
+        public async Task AddStations()
+        {
+            var shaft = new Shaft<GetTimeRequest, GetTimeResponse>(new GetTimeTerminal());
+
+            for (var i = 0; i < 5; i++)
+            {
+                shaft.AddToTop(new TestStation(i));
+                shaft.AddToBottom(new OtherTestStation(i));
+            }
+
+            var request = new GetTimeRequest();
+            request.Options.Add(OptionKey, string.Empty);
+            var response = await shaft.SendAsync(request).ConfigureAwait(false);
+
+            Assert.Equal("vTSvTSvTSvTSvTSvOSvOSvOSvOSvOS^OS^OS^OS^OS^OS^TS^TS^TS^TS^TS", request.Options[OptionKey]);
+            Assert.True(response.Time < DateTime.Now && response.Time > DateTime.Now.AddSeconds(-1));
+        }
+
+        [Fact]
+        public async Task Trace()
+        {
+            var exporter = new TestTraceExporter();
+            var shaft = new Shaft<GetTimeRequest, GetTimeResponse>(exporter,
+                new GetTimeTerminal(),
+                new TestStation(1),
+                new OtherTestStation(2));
+
+            var response = await shaft.SendAsync(new GetTimeRequest()).ConfigureAwait(false);
+            Assert.True(response.Time < DateTime.Now && response.Time > DateTime.Now.AddSeconds(-1));
+
+            var expectedLines = @"
+Test.LogicMine.ShaftTest+TestStation Down
+	[20:32:56.6074861] DescendToAsync 1
+Test.LogicMine.ShaftTest+OtherTestStation Down
+	[20:32:56.6086293] DescendToAsync 2
+Test.Common.LogicMine.Mine.GetTime.GetTimeTerminal Down
+Test.LogicMine.ShaftTest+OtherTestStation Up
+	[20:32:56.6127470] AscendFromAsync 2
+Test.LogicMine.ShaftTest+TestStation Up
+	[20:32:56.6127927] AscendFromAsync 1"
+                .Trim()
+                .Split('\n')
+                .Where(l => !string.IsNullOrWhiteSpace(l))
+                .ToArray();
+
+            var traceLines = exporter.Trace
+                .Split('\n')
+                .Where(l=>!string.IsNullOrWhiteSpace(l))
+                .ToArray();
+
+            Assert.Equal(expectedLines.Length, traceLines.Length);
+            for (var i = 0; i < expectedLines.Length; i++)
+            {
+                var expectedLine = expectedLines[i];
+                var traceLine = traceLines[i];
+
+                if (expectedLine.IndexOf(']') > 0)
+                {
+                    expectedLine = expectedLine.Substring(expectedLine.IndexOf(']'));
+                    traceLine = traceLine.Substring(traceLine.IndexOf(']'));
+                }
+
+                Assert.Equal(expectedLine, traceLine);
+            }
+        }
+
+        [Fact]
+        public async Task SendAsync_TerminalOnly()
+        {
+            var shaft = new Shaft<GetTimeRequest, GetTimeResponse>(new GetTimeTerminal());
+            var response = await shaft.SendAsync(new GetTimeRequest()).ConfigureAwait(false);
+
+            Assert.NotEqual(Guid.Empty, response.RequestId);
+            Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-1));
+            Assert.True(response.Time < DateTime.Now && response.Time > DateTime.Now.AddSeconds(-1));
+            Assert.Null(response.Error);
+        }
+
+        [Fact]
+        public async Task SendAsync_WithStation()
+        {
+            var shaft = new Shaft<GetTimeRequest, GetTimeResponse>(new GetTimeTerminal(), new SecurityStation());
+            var response = await shaft.SendAsync(new GetTimeRequest()).ConfigureAwait(false);
+
+            Assert.NotEqual(Guid.Empty, response.RequestId);
+            Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-1));
+            Assert.False(response.Time.HasValue);
+            Assert.Equal("Invalid access token", response.Error);
+        }
+
+        private class OtherTestStation : TestStation
+        {
+            protected override string Option { get; } = "OS";
+
+            public OtherTestStation(int id) : base(id)
+            {
+            }
+        }
+
+        private class TestStation : Station<IRequest, IResponse>
+        {
+            protected virtual string Option { get; } = "TS";
+            
+            private readonly int _id;
+
+            public TestStation(int id)
+            {
+                _id = id;
+            }
+
+            public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
+            {
+                basket.CurrentVisit.Log($"{nameof(DescendToAsync)} {_id}");
+                
+                if (basket.Request.Options.ContainsKey(OptionKey))
+                    basket.Request.Options[OptionKey] += $"v{Option}";
+                
+                return Task.CompletedTask;
+            }
+
+            public override Task AscendFromAsync(IBasket<IRequest, IResponse> basket)
+            {
+                basket.CurrentVisit.Log($"{nameof(AscendFromAsync)} {_id}");
+
+                if (basket.Request.Options.ContainsKey(OptionKey))
+                    basket.Request.Options[OptionKey] += $"^{Option}";
+                
+                return Task.CompletedTask;
+            }
+        }
     }
-
-    private class TestGetStationExceptionDown : IStation<IBasket<int, Frog>>
-    {
-      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        throw new InvalidOperationException("Ex on descent");
-      }
-
-      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        return Task.CompletedTask;
-      }
-    }
-
-    private class TestGetStationExceptionUp : IStation<IBasket<int, Frog>>
-    {
-      public Task DescendToAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        return Task.CompletedTask;
-      }
-
-      public Task AscendFromAsync(IBasket<int, Frog> basket, IVisit visit)
-      {
-        throw new InvalidOperationException("Ex on ascent");
-      }
-    }
-  }
 }
