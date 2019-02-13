@@ -10,13 +10,15 @@ using Newtonsoft.Json.Linq;
 namespace Sample.LogicMine.Shop.Service
 {
     public class Startup
-    {   
+    {
+        private static readonly string TraceFilePath = Path.Combine(Path.GetTempPath(), "sample-logicmine-shop.trace");
+        
         public void ConfigureServices(IServiceCollection services)
         {
             var filename = Path.Combine(Path.GetTempPath(), "sample-logicmine-shop.db");
             var connectionString = new DbGenerator(filename).CreateDb();
-            
-            var traceExporter = new SampleTraceExporter();
+
+            var traceExporter = new SimpleTraceExporter(TraceFilePath);
 
             services
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
@@ -24,7 +26,8 @@ namespace Sample.LogicMine.Shop.Service
                 .AddSingleton<ITraceExporter>(traceExporter)
                 .AddSingleton(services)
                 .AddSingleton(new DbConnectionString(connectionString))
-                .AddSingleton<IRequestRouter<JObject>, SampleRequestRouter>()
+                //.AddSingleton<IRequestRouter<JObject>, IntelligentRequestRouter>()
+                .AddSingleton<IRequestRouter<JObject>, SimpleRequestRouter>()
                 .AddMvc();
         }
 

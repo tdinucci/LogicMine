@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sample.LogicMine.Shop.Service
 {
-    public class SampleRequestRouter : JsonRequestRouter
+    public class IntelligentRequestRouter : JsonRequestRouter
     {
         private const string AuthorisationHeaderName = "Authorization";
         private const string BearerSchemeName = "Bearer";
@@ -20,7 +20,7 @@ namespace Sample.LogicMine.Shop.Service
         private readonly IServiceCollection _serviceCollection;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SampleRequestRouter(IServiceCollection serviceCollection, IHttpContextAccessor httpContextAccessor,
+        public IntelligentRequestRouter(IServiceCollection serviceCollection, IHttpContextAccessor httpContextAccessor,
             ITraceExporter traceExporter) : base(new global::LogicMine.Mine(traceExporter), traceExporter)
         {
             _serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));

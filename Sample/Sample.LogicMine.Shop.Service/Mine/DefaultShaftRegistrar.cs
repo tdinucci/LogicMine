@@ -12,8 +12,10 @@ namespace Sample.LogicMine.Shop.Service.Mine
             _traceExporter = traceExporter ?? throw new ArgumentNullException(nameof(traceExporter));
         }
 
-        protected override IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
-            ITerminal<TRequest, TResponse> terminal)
+        protected IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
+            ITerminal<TRequest, TResponse> terminal) 
+            where TRequest : class, IRequest 
+            where TResponse : IResponse
         {
             return new Shaft<TRequest, TResponse>(_traceExporter, terminal, new SecurityStation());
         }
