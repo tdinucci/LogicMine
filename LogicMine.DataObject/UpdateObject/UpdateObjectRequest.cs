@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LogicMine.DataObject.UpdateObject
 {
@@ -14,12 +15,12 @@ namespace LogicMine.DataObject.UpdateObject
         /// The type to update
         /// </summary>
         public Type ObjectType { get; } = typeof(T);
-        
+
         /// <summary>
         /// The identity of the object to update
         /// </summary>
         public TId ObjectId { get; }
-        
+
         /// <summary>
         /// The properties to modify 
         /// </summary>

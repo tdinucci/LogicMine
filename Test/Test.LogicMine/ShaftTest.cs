@@ -34,8 +34,17 @@ namespace Test.LogicMine
 
             for (var i = 0; i < 5; i++)
             {
-                shaft.AddToTop(new TestStation(i));
-                shaft.AddToBottom(new OtherTestStation(i));
+                var station1 = new TestStation(i);
+                Assert.Null(station1.Within);
+                
+                var station2 = new OtherTestStation(i);
+                Assert.Null(station1.Within);
+                
+                shaft.AddToTop(station1);
+                shaft.AddToBottom(station2);
+                
+                Assert.Equal(shaft, station1.Within);
+                Assert.Equal(shaft, station2.Within);
             }
 
             var request = new GetTimeRequest();

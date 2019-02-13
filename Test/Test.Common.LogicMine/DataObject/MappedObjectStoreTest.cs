@@ -163,6 +163,40 @@ namespace Test.Common.LogicMine.DataObject
         }
 
         [Fact]
+        public void Update_LowerCasePropertyName()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var store = GetStore();
+                InsertFrogs(store, 10);
+
+                var collection = store.GetCollectionAsync(7).GetAwaiter().GetResult();
+                Assert.True(collection.Length == 7);
+
+                var id = collection.Last().Id;
+                store.UpdateAsync(id, new Dictionary<string, object> {{nameof(Frog<TId>.Name).ToLower(), "Patched"}})
+                    .GetAwaiter().GetResult();
+
+                var frogs = store.GetCollectionAsync().GetAwaiter().GetResult();
+
+                var seenPatched = false;
+                Assert.True(frogs.Length == 10);
+                foreach (var frog in frogs)
+                {
+                    if (frog.Id.Equals(id))
+                    {
+                        Assert.Equal("Patched", frog.Name);
+                        seenPatched = true;
+                    }
+                    else
+                        Assert.NotEqual("Patched", frog.Name);
+                }
+
+                Assert.True(seenPatched);
+            }
+        }
+
+        [Fact]
         public void Delete()
         {
             lock (GlobalLocker.Lock)

@@ -23,6 +23,38 @@ namespace Test.LogicMine
         }
 
         [Fact]
+        public void AddShaft()
+        {
+            var traceExporter = new TestTraceExporter();
+
+            var terminal1 = new GetObjectTerminal<Frog>();
+            var station1 = new MakeNameUppercaseStation<Frog>();
+            var shaft1 = new DefaultShaft<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(traceExporter,
+                terminal1, station1);
+
+            var terminal2 = new GetObjectTerminal<Tadpole>();
+            var station2 = new MakeNameUppercaseStation<Tadpole>();
+            var shaft2 = new DefaultShaft<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(traceExporter,
+                terminal2, station2);
+
+            var mine = new Mine()
+                .AddShaft(shaft1)
+                .AddShaft(shaft2);
+
+            Assert.Equal(mine, shaft1.Within);
+            Assert.Equal(shaft1, station1.Within);
+            Assert.Equal(shaft1, terminal1.Within);
+            Assert.Equal(mine, station1.Within.Within);
+            Assert.Equal(mine, terminal1.Within.Within);
+
+            Assert.Equal(mine, shaft2.Within);
+            Assert.Equal(shaft2, station2.Within);
+            Assert.Equal(shaft2, terminal2.Within);
+            Assert.Equal(mine, station2.Within.Within);
+            Assert.Equal(mine, terminal2.Within.Within);
+        }
+
+        [Fact]
         public async Task GetObject1()
         {
             var traceExporter = new TestTraceExporter();

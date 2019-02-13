@@ -19,7 +19,8 @@ namespace LogicMine.DataObject.Ado.Sqlite
         /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
         /// <param name="mapper">An object-relational mapper</param>
         public SqliteMappedObjectStore(string connectionString, SqliteMappedObjectDescriptor<T, TId> descriptor,
-            IDbMapper<T> mapper) : base(new SqliteInterface(connectionString), descriptor, mapper)
+            IDbMapper<T> mapper = null) :
+            base(new SqliteInterface(connectionString), descriptor, mapper ?? new DbMapper<T>(descriptor))
         {
         }
 

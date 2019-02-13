@@ -2,6 +2,7 @@
 
 namespace Test.Common.LogicMine.DataType
 {
+#pragma warning disable 659
     public class Frog<TId>
     {
         public TId Id { get; set; }
@@ -16,4 +17,5 @@ namespace Test.Common.LogicMine.DataType
                    DateOfBirth.Date == frog.DateOfBirth.Date;
         }
     }
+#pragma warning restore 659
 }

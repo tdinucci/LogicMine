@@ -3,7 +3,17 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
-    
+    /// <summary>
+    /// An internal interface which allows for certain properties to be manipulated from types within this library
+    /// </summary>
+    internal interface IInternalShaft : IShaft
+    {
+        /// <summary>
+        /// A reference to the mine which contains the shaft
+        /// </summary>
+        new IMine Within { get; set; }
+    }
+
     /// <inheritdoc />
     /// <typeparam name="TRequest">The request type</typeparam>
     /// <typeparam name="TResponse">The response type</typeparam>
@@ -44,6 +54,11 @@ namespace LogicMine
     /// </summary>
     public interface IShaft
     {
+        /// <summary>
+        /// A reference to the mine which contains the shaft
+        /// </summary>
+        IMine Within { get; }
+        
         /// <summary>
         /// The request type
         /// </summary>

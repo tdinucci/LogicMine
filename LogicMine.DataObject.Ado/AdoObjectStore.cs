@@ -43,7 +43,8 @@ namespace LogicMine.DataObject.Ado
         /// <param name="dbInterface">An interface to an underlying database</param>
         /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
         /// <param name="mapper">An object-relational mapper</param>
-        protected AdoObjectStore(IDbInterface<TDbParameter> dbInterface, IDataObjectDescriptor descriptor, IDbMapper<T> mapper)
+        protected AdoObjectStore(IDbInterface<TDbParameter> dbInterface, IDataObjectDescriptor descriptor,
+            IDbMapper<T> mapper)
         {
             DbInterface = dbInterface ?? throw new ArgumentNullException(nameof(dbInterface));
             Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
@@ -160,20 +161,30 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public Task UpdateAsync(TId id, IDictionary<string, object> modifiedProperties)
+        public async Task UpdateAsync(TId id, IDictionary<string, object> modifiedProperties)
         {
             if (modifiedProperties == null) throw new ArgumentNullException(nameof(modifiedProperties));
 
             var statement = GetUpdateDbStatement(id, modifiedProperties);
 
-            return DbInterface.ExecuteNonQueryAsync(statement);
+            var recordsAffected = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
+            if (recordsAffected != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Update failed, expected to update 1 record but updated {recordsAffected}");
+            }
         }
 
         /// <inheritdoc />
-        public Task DeleteAsync(TId id)
+        public async Task DeleteAsync(TId id)
         {
             var statement = GetDeleteDbStatement(id);
-            return DbInterface.ExecuteNonQueryAsync(statement);
+            var recordsAffected = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
+            if (recordsAffected != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Delete failed, expected to update 1 record but updated {recordsAffected}");
+            }
         }
     }
 }

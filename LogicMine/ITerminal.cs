@@ -2,6 +2,14 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
+    /// <summary>
+    /// An internal interface which allows for certain properties to be manipulated from types within this library
+    /// </summary>
+    internal interface IInternalTerminal : ITerminal
+    {
+        new IShaft Within { get; set; }
+    }
+    
     /// <inheritdoc />
     public interface ITerminal<in TRequest, TResponse> : ITerminal
         where TRequest : class, IRequest
@@ -20,6 +28,11 @@ namespace LogicMine
     /// </summary>
     public interface ITerminal
     {
+        /// <summary>
+        /// The shaft this station is within
+        /// </summary>
+        IShaft Within { get; }
+        
         /// <summary>
         /// Add a response to the basket
         /// </summary>

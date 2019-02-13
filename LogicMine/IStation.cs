@@ -3,6 +3,14 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
+    /// <summary>
+    /// An internal interface which allows for certain properties to be manipulated from types within this library
+    /// </summary>
+    internal interface IInternalStation : IStation
+    {
+        new IShaft Within { get; set; }
+    }
+
     /// <inheritdoc />
     /// <typeparam name="TRequest">The type of request handled by the station</typeparam>
     /// <typeparam name="TResponse">The type of response handled by the station</typeparam>
@@ -16,7 +24,7 @@ namespace LogicMine
         /// <param name="basket">The basket to act on</param>
         /// <returns></returns>
         Task DescendToAsync(IBasket<TRequest, TResponse> basket);
-        
+
         /// <summary>
         /// Act on a basket on it's way back up a shaft.
         /// </summary>
@@ -36,6 +44,11 @@ namespace LogicMine
     /// </summary>
     public interface IStation
     {
+        /// <summary>
+        /// The shaft this station is within
+        /// </summary>
+        IShaft Within { get; }
+
         /// <summary>
         /// The type of request handled by the station
         /// </summary>

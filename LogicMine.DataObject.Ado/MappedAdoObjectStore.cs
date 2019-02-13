@@ -127,13 +127,14 @@ namespace LogicMine.DataObject.Ado
         protected override IDbStatement<TDbParameter> GetUpdateDbStatement(TId identity,
             IDictionary<string, object> modifiedProperties)
         {
+            modifiedProperties = modifiedProperties.ToDictionary(p => p.Key.ToLower(), p => p.Value);
             var parameters = new List<TDbParameter>();
 
             var typeAccessor = TypeAccessor.Create(typeof(T));
             var members = typeAccessor.GetMembers();
 
             var assignments = string.Empty;
-            foreach (var member in members.Where(m => modifiedProperties.ContainsKey(m.Name)))
+            foreach (var member in members.Where(m => modifiedProperties.ContainsKey(m.Name.ToLower())))
             {
                 if (!Descriptor.CanWrite(member.Name))
                     throw new InvalidOperationException($"Cannot write to '{member.Name}'");
@@ -146,13 +147,16 @@ namespace LogicMine.DataObject.Ado
                 assignments += $"{MakeColumnNameSafe(column)} = {paramName},";
 
                 var paramValue =
-                    Descriptor.ProjectPropertyValue(modifiedProperties[member.Name], member.Name) ??
+                    Descriptor.ProjectPropertyValue(modifiedProperties[member.Name.ToLower()], member.Name) ??
                     DBNull.Value;
 
                 parameters.Add(GetDbParameter(paramName, paramValue));
             }
 
             assignments = assignments.TrimEnd(',');
+            if (string.IsNullOrWhiteSpace(assignments))
+                throw new InvalidOperationException("Failed to determine assignments for update statement");
+
             var sql = $"UPDATE {Descriptor.FullTableName} SET {assignments} WHERE {Descriptor.PrimaryKey} = @Id";
 
             parameters.Add(GetDbParameter("@Id", identity));

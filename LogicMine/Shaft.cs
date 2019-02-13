@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
-    /// <inheritdoc />
-    public class Shaft<TRequest, TResponse> : IShaft<TRequest, TResponse>
+    /// <inheritdoc cref="IShaft{TRequest,TResponse}" />
+    public class Shaft<TRequest, TResponse> : IShaft<TRequest, TResponse>, IInternalShaft
         where TRequest : class, IRequest
         where TResponse : IResponse
     {
         private readonly IList<IStation> _stations = new List<IStation>();
         private readonly ITerminal _terminal;
         private readonly ITraceExporter _traceExporter;
+
+        public IMine Within { get; set; }
 
         /// <inheritdoc />
         Type IShaft.RequestType { get; } = typeof(TRequest);
@@ -43,6 +45,9 @@ namespace LogicMine
             _traceExporter = traceExporter;
             _terminal = terminal ?? throw new ArgumentNullException(nameof(terminal));
 
+            if (_terminal is IInternalTerminal internalTerminal)
+                internalTerminal.Within = this;
+
             AddToBottom(stations.ToArray());
         }
 
@@ -67,6 +72,9 @@ namespace LogicMine
                 {
                     EnsureCompatible(station);
                     _stations.Insert(0, station);
+
+                    if (station is IInternalStation internalStation)
+                        internalStation.Within = this;
                 }
             }
 
@@ -82,6 +90,9 @@ namespace LogicMine
                 {
                     EnsureCompatible(station);
                     _stations.Add(station);
+                    
+                    if (station is IInternalStation internalStation)
+                        internalStation.Within = this;
                 }
             }
 

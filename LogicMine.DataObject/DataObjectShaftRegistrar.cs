@@ -27,16 +27,54 @@ namespace LogicMine.DataObject
             AddStandardDataShafts(mine);
         }
 
+        protected virtual IShaft<GetObjectRequest<T, TId>, GetObjectResponse<T>> BuildGetObjectShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new GetObjectTerminal<T, TId>(objectStore));
+        }
+
+        protected virtual IShaft<GetCollectionRequest<T>, GetCollectionResponse<T>> BuildGetCollectionShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new GetCollectionTerminal<T>(objectStore));
+        }
+
+        protected virtual IShaft<CreateObjectRequest<T>, CreateObjectResponse<T, TId>> BuildCreateObjectShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new CreateObjectTerminal<T, TId>(objectStore));
+        }
+
+        protected virtual IShaft<UpdateObjectRequest<T, TId>, UpdateObjectResponse> BuildUpdateObjectShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new UpdateObjectTerminal<T, TId>(objectStore));
+        }
+
+        protected virtual IShaft<DeleteObjectRequest<T, TId>, DeleteObjectResponse> BuildDeleteObjectShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new DeleteObjectTerminal<T, TId>(objectStore));
+        }
+
         private void AddStandardDataShafts(IMine mine)
         {
             var objectStore = GetDataObjectStore();
 
-            mine
-                .AddShaft(GetBasicShaft(new GetObjectTerminal<T, TId>(objectStore)))
-                .AddShaft(GetBasicShaft(new GetCollectionTerminal<T>(objectStore)))
-                .AddShaft(GetBasicShaft(new CreateObjectTerminal<T, TId>(objectStore)))
-                .AddShaft(GetBasicShaft(new UpdateObjectTerminal<T, TId>(objectStore)))
-                .AddShaft(GetBasicShaft(new DeleteObjectTerminal<T, TId>(objectStore)));
+            var shafts = new IShaft[]
+            {
+                BuildGetObjectShaft(objectStore),
+                BuildGetCollectionShaft(objectStore),
+                BuildCreateObjectShaft(objectStore),
+                BuildUpdateObjectShaft(objectStore),
+                BuildDeleteObjectShaft(objectStore)
+            };
+
+            foreach (var shaft in shafts)
+            {
+                if (shaft != null)
+                    mine.AddShaft(shaft);
+            }
         }
     }
 }

@@ -31,6 +31,8 @@ namespace LogicMine
             }
 
             _requestTypeShafts.Add(shaft.RequestType, shaft);
+            if (shaft is IInternalShaft internalShaft)
+                internalShaft.Within = this;
 
             return this;
         }

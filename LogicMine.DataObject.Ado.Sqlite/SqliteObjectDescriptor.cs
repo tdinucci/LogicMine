@@ -33,6 +33,8 @@ namespace LogicMine.DataObject.Ado.Sqlite
           return Convert.ToBoolean(columnValue);
         if ((propertyType == typeof(int) || propertyType == typeof(int?)) && !(columnValue is int))
           return Convert.ToInt32(columnValue);
+        if ((propertyType == typeof(decimal) || propertyType == typeof(decimal?)) && !(columnValue is decimal))
+          return Convert.ToDecimal(columnValue);
         if ((propertyType == typeof(DateTime) || propertyType == typeof(DateTime?)) && !(columnValue is DateTime))
           return Convert.ToDateTime(columnValue);
       }

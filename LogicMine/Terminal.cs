@@ -3,13 +3,16 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
-    /// <inheritdoc />
-    public abstract class Terminal<TRequest, TResponse> : ITerminal<TRequest, TResponse>
+    /// <inheritdoc cref="ITerminal{TRequest,TResponse}" />
+    public abstract class Terminal<TRequest, TResponse> : ITerminal<TRequest, TResponse>, IInternalTerminal
         where TRequest : class, IRequest
         where TResponse : IResponse
     {
         /// <inheritdoc />
         public abstract Task AddResponseAsync(IBasket<TRequest, TResponse> basket);
+
+        /// <inheritdoc cref="ITerminal{TRequest,TResponse}" />
+        public IShaft Within { get; set; }
 
         /// <inheritdoc />
         Task ITerminal.AddResponseAsync(IBasket basket)
