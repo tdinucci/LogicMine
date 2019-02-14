@@ -4,6 +4,7 @@ using LogicMine.DataObject.CreateObject;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Customer.Create
 {
+    // This is just an example station which modifies data within a request before it's written to the data store
     public class NormalisationStation : Station<CreateObjectRequest<Customer>, CreateObjectResponse<Customer, int>>
     {
         public override Task DescendToAsync(

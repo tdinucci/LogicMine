@@ -18,8 +18,17 @@ namespace Test.LogicMine
                 .AddShaft(new DefaultShaft<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(traceExporter,
                     new GetObjectTerminal<Frog>(),
                     new MakeNameUppercaseStation<Frog>()))
+
                 .AddShaft(new DefaultShaft<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(traceExporter,
-                    new GetObjectTerminal<Tadpole>()));
+                    new GetObjectTerminal<Tadpole>()))
+
+                .AddShaft(new DefaultShaft<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>(
+                    traceExporter,
+                    new GetFroggyTadpoleTerminal()))
+                
+                .AddShaft(new DefaultShaft<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>(
+                    traceExporter,
+                    new GetFroggyTadpoleTerminal_ChildError()));
         }
 
         [Fact]
@@ -41,17 +50,17 @@ namespace Test.LogicMine
                 .AddShaft(shaft1)
                 .AddShaft(shaft2);
 
-            Assert.Equal(mine, shaft1.Within);
+            Assert.Equal(mine, (IMine)shaft1.Within);
             Assert.Equal(shaft1, station1.Within);
             Assert.Equal(shaft1, terminal1.Within);
-            Assert.Equal(mine, station1.Within.Within);
-            Assert.Equal(mine, terminal1.Within.Within);
+            Assert.Equal(mine, (IMine)station1.Within.Within);
+            Assert.Equal(mine, (IMine)terminal1.Within.Within);
 
-            Assert.Equal(mine, shaft2.Within);
+            Assert.Equal(mine, (IMine)shaft2.Within);
             Assert.Equal(shaft2, station2.Within);
             Assert.Equal(shaft2, terminal2.Within);
-            Assert.Equal(mine, station2.Within.Within);
-            Assert.Equal(mine, terminal2.Within.Within);
+            Assert.Equal(mine, (IMine)station2.Within.Within);
+            Assert.Equal(mine, (IMine)terminal2.Within.Within);
         }
 
         [Fact]
@@ -113,6 +122,115 @@ namespace Test.LogicMine
                 response.Error);
         }
 
+        [Fact]
+        public async Task ChildRequest()
+        {
+            var traceExporter = new TestTraceExporter();
+            var mine = CreateMine(traceExporter);
+
+            var request = new GetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
+            var response = await mine
+                .SendAsync<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>(request)
+                .ConfigureAwait(false);
+
+            Assert.NotNull(response.Object);
+            Assert.Equal(5, response.Object.Frog.Id);
+            Assert.Equal(5, response.Object.Tadpole.Id);
+
+            var expectedTrace = $@"
+BasketId: {response.Object.FrogRequestId}
+ParentId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+MakeNameUppercaseStation`1[Test.LogicMine.MineTest+Frog] Down
+Test.LogicMine.MineTest+GetObjectTerminal`1[Test.LogicMine.MineTest+Frog] Down
+Test.LogicMine.MineTest+MakeNameUppercaseStation`1[Test.LogicMine.MineTest+Frog] Up
+Test.LogicMine.MineTest+SecurityStation Up
+---
+BasketId: {response.Object.TadpoleRequestId}
+ParentId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+GetObjectTerminal`1[Test.LogicMine.MineTest+Tadpole] Down
+Test.LogicMine.MineTest+SecurityStation Up
+---
+BasketId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+GetFroggyTadpoleTerminal Down
+Test.LogicMine.MineTest+SecurityStation Up
+---
+".TrimStart();
+
+            Assert.Equal(expectedTrace, traceExporter.Trace);
+        }
+
+        [Fact]
+        public async Task ChildRequest_NonGen()
+        {
+            var traceExporter = new TestTraceExporter();
+            var mine = CreateMine(traceExporter);
+
+            var request = new GetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
+            var response = await mine.SendAsync(request).ConfigureAwait(false) as GetObjectResponse<FroggyTadpole>;
+
+            Assert.NotNull(response.Object);
+            Assert.Equal(5, response.Object.Frog.Id);
+            Assert.Equal(5, response.Object.Tadpole.Id);
+
+            var expectedTrace = $@"
+BasketId: {response.Object.FrogRequestId}
+ParentId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+MakeNameUppercaseStation`1[Test.LogicMine.MineTest+Frog] Down
+Test.LogicMine.MineTest+GetObjectTerminal`1[Test.LogicMine.MineTest+Frog] Down
+Test.LogicMine.MineTest+MakeNameUppercaseStation`1[Test.LogicMine.MineTest+Frog] Up
+Test.LogicMine.MineTest+SecurityStation Up
+---
+BasketId: {response.Object.TadpoleRequestId}
+ParentId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+GetObjectTerminal`1[Test.LogicMine.MineTest+Tadpole] Down
+Test.LogicMine.MineTest+SecurityStation Up
+---
+BasketId: {response.RequestId}
+Test.LogicMine.MineTest+SecurityStation Down
+Test.LogicMine.MineTest+GetFroggyTadpoleTerminal Down
+Test.LogicMine.MineTest+SecurityStation Up
+---
+".TrimStart();
+
+            Assert.Equal(expectedTrace, traceExporter.Trace);
+        }
+        
+        [Fact]
+        public async Task ChildRequest_Error()
+        {
+            var traceExporter = new TestTraceExporter();
+            var mine = CreateMine(traceExporter);
+
+            var request = new GetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
+            var response = await mine
+                .SendAsync<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>(request)
+                .ConfigureAwait(false);
+
+            Assert.Null(response.Object);
+            Assert.NotEqual(Guid.Empty, response.RequestId);
+            Assert.Equal("Child request failed: Invalid access token", response.Error);
+        }
+
+        [Fact]
+        public async Task ChildRequest_ErrorNonGen()
+        {
+            var traceExporter = new TestTraceExporter();
+            var mine = CreateMine(traceExporter);
+
+            var request = new GetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
+            var response =
+                await mine.SendAsync(request).ConfigureAwait(false) as GetObjectResponse<FroggyTadpole_Error>;
+
+            Assert.Null(response.Object);
+            Assert.NotEqual(Guid.Empty, response.RequestId);
+            Assert.Equal("Child request failed: Invalid access token", response.Error);
+        }
+
         private class DefaultShaft<TRequest, TResponse> : Shaft<TRequest, TResponse>
             where TRequest : class, IRequest
             where TResponse : IResponse
@@ -128,6 +246,11 @@ namespace Test.LogicMine
         {
             public TId ObjectId { get; }
 
+            public GetObjectRequest(TId objectId)
+            {
+                ObjectId = objectId;
+            }
+            
             public GetObjectRequest(string accessToken, TId objectId)
             {
                 Options.Add(AccessTokenKey, accessToken);
@@ -161,7 +284,7 @@ namespace Test.LogicMine
                     result = db.GetFrog(id) as T;
                 else if (typeof(T) == typeof(Tadpole))
                     result = db.GetTadpole(id) as T;
-                else
+                else 
                     throw new InvalidCastException("Unexpected data type requested");
 
                 basket.Response = new GetObjectResponse<T>(basket.Request, result);
@@ -170,6 +293,69 @@ namespace Test.LogicMine
             }
         }
 
+        private class GetFroggyTadpoleTerminal : 
+            Terminal<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>
+        {
+            public override async Task AddResponseAsync(
+                IBasket<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>> basket)
+            {
+                var id = basket.Request.ObjectId;
+
+                var frogRequest = new GetObjectRequest<Frog, int>(id);
+                var frogResponse = await Within.Within
+                    .SendAsync<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(basket, frogRequest)
+                    .ConfigureAwait(false);
+
+                var tadpoleRequest = new GetObjectRequest<Tadpole, int>(id);
+                var tadpoleResponse = await Within.Within
+                    .SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(basket, tadpoleRequest)
+                    .ConfigureAwait(false);
+
+                var froggyTadpole = new FroggyTadpole
+                {
+                    Frog = frogResponse.Object, 
+                    Tadpole = tadpoleResponse.Object,
+                    
+                    FrogRequestId = frogRequest.Id,
+                    TadpoleRequestId = tadpoleRequest.Id
+                };
+                basket.Response = new GetObjectResponse<FroggyTadpole>(basket.Request, froggyTadpole);
+            }
+        }
+
+        private class GetFroggyTadpoleTerminal_ChildError : 
+            Terminal<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>
+        {
+            public override async Task AddResponseAsync(
+                IBasket<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>> basket)
+            {
+                var id = basket.Request.ObjectId;
+
+                var frogRequest = new GetObjectRequest<Frog, int>(id);
+                
+                // by passing false for inheritParentOptions we're preventing security info from passing to the child 
+                // which should cause an error
+                var frogResponse = await Within.Within
+                    .SendAsync<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(basket, frogRequest, false)
+                    .ConfigureAwait(false);
+
+                var tadpoleRequest = new GetObjectRequest<Tadpole, int>(id);
+                var tadpoleResponse = await Within.Within
+                    .SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(basket, tadpoleRequest, false)
+                    .ConfigureAwait(false);
+
+                var froggyTadpole = new FroggyTadpole_Error
+                {
+                    Frog = frogResponse.Object, 
+                    Tadpole = tadpoleResponse.Object,
+                    
+                    FrogRequestId = frogRequest.Id,
+                    TadpoleRequestId = tadpoleRequest.Id
+                };
+                basket.Response = new GetObjectResponse<FroggyTadpole_Error>(basket.Request, froggyTadpole);
+            }
+        }
+        
         private class MakeNameUppercaseStation<T> : Station<GetObjectRequest<T, int>, GetObjectResponse<T>>
             where T : class, INamed
         {
@@ -268,6 +454,19 @@ namespace Test.LogicMine
             }
         }
 
+        private class FroggyTadpole
+        {
+            public Frog Frog { get; set; }
+            public Tadpole Tadpole { get; set; }
+            
+            public Guid FrogRequestId { get; set; }
+            public Guid TadpoleRequestId { get; set; }
+        }
+        
+        private class FroggyTadpole_Error : FroggyTadpole
+        {
+        }
+        
         private interface INamed
         {
             string Name { get; set; }

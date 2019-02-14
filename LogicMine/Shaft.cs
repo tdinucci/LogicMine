@@ -15,7 +15,7 @@ namespace LogicMine
         private readonly ITerminal _terminal;
         private readonly ITraceExporter _traceExporter;
 
-        public IMine Within { get; set; }
+        public IContainingMine Within { get; set; }
 
         /// <inheritdoc />
         Type IShaft.RequestType { get; } = typeof(TRequest);

@@ -11,12 +11,25 @@ namespace LogicMine.Routing.Json
     /// </summary>
     public abstract class JsonRequestRouter : RequestRouter<JObject>
     {
+        /// <summary>
+        /// Construct a JsonRequestRouter
+        /// </summary>
+        /// <param name="mine">The mine to route requests to</param>
+        /// <param name="errorExporter">The error exporter to use when errors are encountered</param>
         protected JsonRequestRouter(IMine mine, IErrorExporter errorExporter) : base(mine, errorExporter)
         {
         }
 
+        /// <summary>
+        /// Returns the collection of custom requests which the router is aware of
+        /// </summary>
+        /// <returns></returns>
         protected abstract IEnumerable<Type> GetCustomRequestTypes();
 
+        /// <summary>
+        /// Returns a parser registry which contains the standard compliment of JSON request parsers.
+        /// </summary>
+        /// <returns></returns>
         protected override IRequestParserRegistry<JObject> GetParserRegistry()
         {
             var customRequestTypes = GetCustomRequestTypes()?.ToArray() ?? new Type[0];

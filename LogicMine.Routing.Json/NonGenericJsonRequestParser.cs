@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace LogicMine.Routing.Json
 {
     /// <summary>
-    /// A JsonRequestParser that specialises in handling general, non-generic requests
+    /// A <see cref="JsonRequestParser"/> that specialises in handling general, non-generic requests
     /// </summary>
     public class NonGenericJsonRequestParser : JsonRequestParser
     {

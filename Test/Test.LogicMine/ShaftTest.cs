@@ -67,16 +67,19 @@ namespace Test.LogicMine
             var response = await shaft.SendAsync(new GetTimeRequest()).ConfigureAwait(false);
             Assert.True(response.Time < DateTime.Now && response.Time > DateTime.Now.AddSeconds(-1));
 
-            var expectedLines = @"
+            var expectedLines = $@"
+BasketId: {response.RequestId}
 Test.LogicMine.ShaftTest+TestStation Down
-	[20:32:56.6074861] DescendToAsync 1
+	[00:26:22.3625607] DescendToAsync 1
 Test.LogicMine.ShaftTest+OtherTestStation Down
-	[20:32:56.6086293] DescendToAsync 2
+	[00:26:22.3636539] DescendToAsync 2
 Test.Common.LogicMine.Mine.GetTime.GetTimeTerminal Down
 Test.LogicMine.ShaftTest+OtherTestStation Up
-	[20:32:56.6127470] AscendFromAsync 2
+	[00:26:22.3676717] AscendFromAsync 2
 Test.LogicMine.ShaftTest+TestStation Up
-	[20:32:56.6127927] AscendFromAsync 1"
+	[00:26:22.3677089] AscendFromAsync 1
+---
+"
                 .Trim()
                 .Split('\n')
                 .Where(l => !string.IsNullOrWhiteSpace(l))

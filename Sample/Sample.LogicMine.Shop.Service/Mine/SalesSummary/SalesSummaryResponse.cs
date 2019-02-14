@@ -2,6 +2,7 @@ using LogicMine;
 
 namespace Sample.LogicMine.Shop.Service.Mine.SalesSummary
 {
+    // The response to a sales summary request
     public class SalesSummaryResponse : Response
     {
         public int NumberOfSales { get; set; }

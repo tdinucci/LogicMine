@@ -1,10 +1,16 @@
-using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
 
 namespace Sample.LogicMine.Shop.Service
 {
-    public class DbGenerator : IDisposable
+    /// <summary>
+    /// This is used to generate an Sqlite database for the sample service to work with.
+    /// Sqlite was chosen simply because you don't need to install a DB server.
+    ///
+    /// Each time this generator runs the database that was generated the last time it ran is deleted,
+    /// meaning each time this sample service is run you start off with no data
+    /// </summary>
+    public class DbGenerator
     {
         private readonly string _filename;
 
@@ -87,11 +93,6 @@ CREATE TABLE Purchase
         {
             if (File.Exists(_filename))
                 File.Delete(_filename);
-        }
-
-        public void Dispose()
-        {
-            DeleteDb();
         }
     }
 }

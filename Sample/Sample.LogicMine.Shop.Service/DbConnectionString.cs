@@ -2,7 +2,9 @@ using System;
 
 namespace Sample.LogicMine.Shop.Service
 {
-    // This class just exists so that we've got a type to use with the dependency injection container
+    /// <summary>
+    /// This class just exists so that we've got a type to use with the dependency injection container
+    /// </summary>
     public class DbConnectionString
     {
         public string Value { get; }

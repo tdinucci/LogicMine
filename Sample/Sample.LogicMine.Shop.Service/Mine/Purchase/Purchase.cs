@@ -12,6 +12,7 @@ namespace Sample.LogicMine.Shop.Service.Mine.Purchase
         public decimal UnitDiscount { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        // these fields are used within the shaft only and so are internal
         internal Customer.Customer Customer { get; set; }
         internal Product.Product Product { get; set; }
     }

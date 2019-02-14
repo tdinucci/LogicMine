@@ -6,6 +6,7 @@ using LogicMine.DataObject.CreateObject;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Purchase.Create
 {
+    // A sample station that rejects requests (by throwing an exception) if they don't meet the applications requirements.
     public class ValidationStation : Station<CreateObjectRequest<Purchase>, CreateObjectResponse<Purchase, int>>
     {
         public override Task DescendToAsync(

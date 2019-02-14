@@ -12,14 +12,19 @@ namespace Test.Common.LogicMine
         public void Export(IBasket basket)
         {
             var sb = new StringBuilder();
+
+            sb.AppendLine($"BasketId: {basket.Request.Id}");
+            if (basket.Request.ParentId != null)
+                sb.AppendLine($"ParentId: {basket.Request.ParentId}");
+
             foreach (var visit in basket.Visits)
             {
                 sb.AppendLine($"{visit.Description} {visit.Direction}");
                 foreach (var logMessage in visit.LogMessages)
                     sb.AppendLine($"\t{logMessage}");
             }
-
-            Trace = sb.ToString();
+            
+            Trace += sb.AppendLine("---").ToString();
         }
 
         public void ExportError(Exception exception)

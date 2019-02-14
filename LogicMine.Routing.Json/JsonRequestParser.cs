@@ -7,8 +7,12 @@ namespace LogicMine.Routing.Json
     /// </summary>
     public abstract class JsonRequestParser : RequestParser<JObject>
     {
+        /// <summary>
+        /// The field within a JObject request which specifies the request type
+        /// </summary>
         public const string RequestTypeField = "requestType";
 
+        /// <inheritdoc />
         protected override string GetRequestType(JObject rawRequest)
         {
             if (rawRequest.ContainsKey(RequestTypeField))

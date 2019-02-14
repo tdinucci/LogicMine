@@ -4,6 +4,7 @@ using LogicMine;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Login
 {
+    // A VERY basic terminal which returns an access token if the requests credentials are acceptable.
     public class LoginTerminal : Terminal<LoginRequest, LoginResponse>
     {
         private const string ExpectedUsername = "eddie";

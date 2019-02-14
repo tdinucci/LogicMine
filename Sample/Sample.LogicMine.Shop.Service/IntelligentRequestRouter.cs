@@ -11,6 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sample.LogicMine.Shop.Service
 {
+    /// <summary>
+    /// This is one of the two implementations of JsonRequestRouter in this project.  Only one is active at any time
+    /// and you can choose in Startup.cs which one to use.
+    ///
+    /// This implementation is the more complex of the two however it will automatically adapt to changes to the
+    /// project.  This means that this class shouldn't need altered as new functionality is added to the service.
+    /// </summary>
     public class IntelligentRequestRouter : JsonRequestRouter
     {
         private const string AuthorisationHeaderName = "Authorization";
@@ -27,6 +34,10 @@ namespace Sample.LogicMine.Shop.Service
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
+        // This method dynamically finds all IDataObjectDescriptor's within the current assembly and constructs them.
+        // It is expected that the implementations all have a default constructor - if this wasn't the case then the 
+        // IServiceCollection which was passed to the constructor could be used to construct these types as is done in 
+        // GetShaftRegistrars()
         protected override IEnumerable<IDataObjectDescriptor> GetDataObjectDescriptors()
         {
             var descriptorTypes = Assembly.GetExecutingAssembly().GetTypes()
@@ -50,6 +61,9 @@ namespace Sample.LogicMine.Shop.Service
             return descriptors;
         }
 
+        // Here we dynamically discover the IShaftRegistrar implementations and instantiate them.
+        // Shaft registrars won't typically have default constructors and so the DI contains that was passed in 
+        // is used.
         protected override IEnumerable<IShaftRegistrar> GetShaftRegistrars()
         {
             var registrarTypes = Assembly.GetExecutingAssembly().GetTypes()
@@ -67,6 +81,7 @@ namespace Sample.LogicMine.Shop.Service
             return registrarTypes.Select(registrarType => (IShaftRegistrar) provider.GetService(registrarType));
         }
 
+        // Discover the custom request types which have been defined in the assembly
         protected override IEnumerable<Type> GetCustomRequestTypes()
         {
             return Assembly.GetExecutingAssembly().GetTypes()
@@ -74,6 +89,14 @@ namespace Sample.LogicMine.Shop.Service
                 .ToArray();
         }
 
+        /// <summary>
+        /// This method is called after a request has been parsed but before it's been dispatched to a mine.
+        /// The implementation here pulls the Authorization header from HTTP request and adds it to the IRequest.  This
+        /// can then be inspected within the mine and the request rejected if the access token is invalid.
+        ///
+        /// The SecurityStation type in this sample makes use of the data added to the request here.
+        /// </summary>
+        /// <param name="request">The parsed request</param>
         protected override void PreprocessRequest(IRequest request)
         {
             var authHeader = _httpContextAccessor.HttpContext.Request.Headers[AuthorisationHeaderName].FirstOrDefault();

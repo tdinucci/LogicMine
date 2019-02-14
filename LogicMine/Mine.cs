@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
-    /// <inheritdoc />
-    public class Mine : IMine
+    /// <inheritdoc cref="IMine" />
+    public class Mine : IMine, IContainingMine
     {
         private readonly ITraceExporter _traceExporter;
         private readonly Dictionary<Type, IShaft> _requestTypeShafts = new Dictionary<Type, IShaft>();
@@ -82,6 +82,45 @@ namespace LogicMine
                 _traceExporter?.ExportError(ex);
 
                 return ResponseFactory.Create<TResponse>(request, ex.Message);
+            }
+        }
+
+        async Task<IResponse> IContainingMine.SendAsync(IBasket parent, IRequest request, bool inheritParentOptions)
+        {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            AssociateChildRequest(parent, request, inheritParentOptions);
+
+            var response = await SendAsync(request).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(response.Error))
+                throw new InvalidOperationException($"Child request failed: {response.Error}");
+
+            return response;
+        }
+
+        async Task<TResponse> IContainingMine.SendAsync<TRequest, TResponse>(IBasket parent, TRequest request,
+            bool inheritParentOptions)
+        {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            AssociateChildRequest(parent, request, inheritParentOptions);
+
+            var response = await SendAsync<TRequest, TResponse>(request).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(response.Error))
+                throw new InvalidOperationException($"Child request failed: {response.Error}");
+
+            return response;
+        }
+
+        private void AssociateChildRequest(IBasket fromParent, IRequest toRequest, bool inheritParentOptions)
+        {
+            toRequest.ParentId = fromParent.Request.Id;
+            if (inheritParentOptions)
+            {
+                foreach (var option in fromParent.Request.Options)
+                    toRequest.Options.Add(option.Key, option.Value);
             }
         }
     }

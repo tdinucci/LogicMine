@@ -8,6 +8,10 @@ using Sample.LogicMine.Shop.Service.Mine.Product.Create;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Product
 {
+    /// <summary>
+    /// Here we specify the specialisations of our shafts that deal with the Product type.  Due to the inherited
+    /// functionality we will have shafts for CRUD operations which ensure that requests are authorised.
+    /// </summary>
     public class ProductDataObjectShaftRegistrar : DefaultDataObjectShaftRegistrar<Product, int>
     {
         private readonly string _dbConnectionString;
@@ -22,21 +26,25 @@ namespace Sample.LogicMine.Shop.Service.Mine.Product
 
         protected override IDataObjectStore<Product, int> GetDataObjectStore()
         {
+            // return the store that contains products.  Here we're using an Sqlite store however this could easily 
+            // be swapped out later for a different implementation of IDataObjectStore later.
             return new SqliteMappedObjectStore<Product, int>(_dbConnectionString, new ProductDescriptor());
         }
 
         protected override IShaft<CreateObjectRequest<Product>, CreateObjectResponse<Product, int>>
             BuildCreateObjectShaft(IDataObjectStore<Product, int> objectStore)
         {
+            // Here a new station is added to the shaft.  It's being added to the bottom because we want the
+            // SecurityStation (which the base implementation adds) to remain at the top.
             return base.BuildCreateObjectShaft(objectStore)
-                .AddToTop(new ValidationStation());
+                .AddToBottom(new ValidationStation());
         }
 
         protected override IShaft<DeleteObjectRequest<Product, int>, DeleteObjectResponse> BuildDeleteObjectShaft(
             IDataObjectStore<Product, int> objectStore)
         {
-            // disable the delete shaft - in a real application you'd most likely have a shaft and it would either
-            // disallow deletion if a product had been purchased or perform a soft delete
+            // We don't want to allow for customers to be deleted, so prevent the base implementation from returning 
+            // the default shaft.
             return null;
         }
     }

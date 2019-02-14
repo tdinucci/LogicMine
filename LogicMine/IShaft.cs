@@ -11,7 +11,7 @@ namespace LogicMine
         /// <summary>
         /// A reference to the mine which contains the shaft
         /// </summary>
-        new IMine Within { get; set; }
+        new IContainingMine Within { get; set; }
     }
 
     /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace LogicMine
         /// <summary>
         /// A reference to the mine which contains the shaft
         /// </summary>
-        IMine Within { get; }
+        IContainingMine Within { get; }
         
         /// <summary>
         /// The request type

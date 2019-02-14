@@ -6,14 +6,16 @@ using LogicMine.DataObject.GetObject;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Purchase.Create
 {
+    // This pulls data into the request which can be used by later stations in the shaft, it demonstrates how 
+    // one shaft can fork off into another
     public class PullDependantDataStation : Station<CreateObjectRequest<Purchase>, CreateObjectResponse<Purchase, int>>
     {
         public override Task DescendToAsync(
             IBasket<CreateObjectRequest<Purchase>, CreateObjectResponse<Purchase, int>> basket)
         {
             var request = basket.Request;
-            var getCustomerTask = GetObjectAsync<Customer.Customer>(request, request.Object.CustomerId);
-            var getProductTask = GetObjectAsync<Product.Product>(request, request.Object.ProductId);
+            var getCustomerTask = GetObjectAsync<Customer.Customer>(basket, request.Object.CustomerId);
+            var getProductTask = GetObjectAsync<Product.Product>(basket, request.Object.ProductId);
             Task.WaitAll(getCustomerTask, getProductTask);
 
             if (!string.IsNullOrWhiteSpace(getCustomerTask.Result.Error))
@@ -28,15 +30,10 @@ namespace Sample.LogicMine.Shop.Service.Mine.Purchase.Create
             return Task.CompletedTask;
         }
 
-        private Task<GetObjectResponse<T>> GetObjectAsync<T>(IRequest rootRequest, int id)
+        private Task<GetObjectResponse<T>> GetObjectAsync<T>(IBasket parent, int id)
         {
             var request = new GetObjectRequest<T, int>(id);
-
-            // relay any security tokens, etc.
-            foreach (var option in rootRequest.Options)
-                request.Options.Add(option.Key, option.Value);
-
-            return Within.Within.SendAsync<GetObjectRequest<T, int>, GetObjectResponse<T>>(request);
+            return Within.Within.SendAsync<GetObjectRequest<T, int>, GetObjectResponse<T>>(parent, request);
         }
     }
 }

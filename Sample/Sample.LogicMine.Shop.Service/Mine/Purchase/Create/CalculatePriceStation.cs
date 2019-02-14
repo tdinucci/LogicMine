@@ -5,6 +5,7 @@ using LogicMine.DataObject.CreateObject;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Purchase.Create
 {
+    // A sample station that calculates pricing for a purchase before it's committed to the data store
     public class CalculatePriceStation : Station<CreateObjectRequest<Purchase>, CreateObjectResponse<Purchase, int>>
     {
         public override Task DescendToAsync(

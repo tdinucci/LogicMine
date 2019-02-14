@@ -3,6 +3,7 @@ using LogicMine;
 
 namespace Sample.LogicMine.Shop.Service.Mine.Login
 {
+    // If a login request is successful then a response will be returned which contains an access token
     public class LoginResponse : Response
     {
         public string AccessToken { get; }

@@ -17,11 +17,17 @@ namespace LogicMine.Web
         private const string DateField = "date";
         private const string ErrorField = "error";
 
+        /// <summary>
+        /// Construct a JsonRequestController
+        /// </summary>
+        /// <param name="requestRouter">The router which takes raw requests and dispatches them to a mine</param>
+        /// <param name="errorExporter">The error exporter to use when errors occur</param>
         public JsonRequestController(IRequestRouter<JObject> requestRouter, IErrorExporter errorExporter) :
             base(requestRouter, errorExporter)
         {
         }
 
+        /// <inheritdoc />
         protected override IActionResult GetActionResult(IResponse response)
         {
             var jsonResponse = JObject.FromObject(response, JsonSerializer.Create(new JsonSerializerSettings

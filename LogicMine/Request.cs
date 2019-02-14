@@ -10,6 +10,9 @@ namespace LogicMine
         public Guid Id { get; } = Guid.NewGuid();
 
         /// <inheritdoc />
+        public Guid? ParentId { get; set; }
+        
+        /// <inheritdoc />
         public IDictionary<string, object> Options { get; } = new Dictionary<string, object>();
 
         /// <summary>

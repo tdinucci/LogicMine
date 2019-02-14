@@ -13,11 +13,20 @@ namespace LogicMine.Routing
         /// <inheritdoc />
         public ImmutableHashSet<string> HandledRequestTypes => _handledRequestTypes.ToImmutableHashSet();
 
+        /// <summary>
+        /// Returns the type of request which rawRequest contains
+        /// </summary>
+        /// <param name="rawRequest">The request to determine the type of</param>
+        /// <returns></returns>
         protected abstract string GetRequestType(TRawRequest rawRequest);
 
         /// <inheritdoc />
         public abstract IRequest Parse(TRawRequest rawRequest);
 
+        /// <summary>
+        /// Add the names of the request types which this parser can handle
+        /// </summary>
+        /// <param name="requestTypeNames"></param>
         protected void AddHandledRequestType(params string[] requestTypeNames)
         {
             if (requestTypeNames != null)
@@ -44,6 +53,10 @@ namespace LogicMine.Routing
             }
         }
 
+        /// <summary>
+        /// Get a description of the request types that are handled by this parser
+        /// </summary>
+        /// <returns></returns>
         protected string GetHandledRequestTypesDescription()
         {
             return _handledRequestTypes.Aggregate((c, n) => $"{c},{n}");

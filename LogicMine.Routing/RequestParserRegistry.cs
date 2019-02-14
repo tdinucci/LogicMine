@@ -9,6 +9,11 @@ namespace LogicMine.Routing
         private IDictionary<string, IRequestParser<TRawRequest>> Parsers { get; } =
             new Dictionary<string, IRequestParser<TRawRequest>>();
 
+        /// <summary>
+        /// Returns the type of request which rawRequest contains
+        /// </summary>
+        /// <param name="request">The request to determine the type of</param>
+        /// <returns></returns>
         protected abstract string GetRequestType(TRawRequest request);
 
         /// <inheritdoc />

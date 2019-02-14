@@ -11,10 +11,12 @@ namespace Sample.LogicMine.Shop.Service
 {
     public class Startup
     {
+        // We'll a trace of every baskets journey to this file
         private static readonly string TraceFilePath = Path.Combine(Path.GetTempPath(), "sample-logicmine-shop.trace");
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
+            // Generate the Sqlite database we're be using.  If there is already a database then it will be replaced.
             var filename = Path.Combine(Path.GetTempPath(), "sample-logicmine-shop.db");
             var connectionString = new DbGenerator(filename).CreateDb();
 
@@ -24,10 +26,10 @@ namespace Sample.LogicMine.Shop.Service
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddSingleton<IErrorExporter>(traceExporter)
                 .AddSingleton<ITraceExporter>(traceExporter)
-                .AddSingleton(services)
+                .AddSingleton(services) // used by IntelligentRequestRouter - see comments in that class
                 .AddSingleton(new DbConnectionString(connectionString))
-                //.AddSingleton<IRequestRouter<JObject>, IntelligentRequestRouter>()
-                .AddSingleton<IRequestRouter<JObject>, SimpleRequestRouter>()
+                .AddSingleton<IRequestRouter<JObject>, IntelligentRequestRouter>()
+                //.AddSingleton<IRequestRouter<JObject>, SimpleRequestRouter>()
                 .AddMvc();
         }
 

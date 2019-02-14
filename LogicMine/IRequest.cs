@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace LogicMine
-{
+{   
     /// <summary>
     /// Represents a request that a caller is making, e.g. to get some data object or to perform an operation
     /// </summary>
@@ -16,6 +16,12 @@ namespace LogicMine
         /// </summary>
         Guid Id { get; }
 
+        /// <summary>
+        /// While one request is being processed another may fork off for some reason.  By setting the ParentId to
+        /// the Id of the parent request it is possible to tie these requests together in recorded traces.
+        /// </summary>
+        Guid? ParentId { get; set; }
+        
         /// <summary>
         /// May contain any supplemental data which you want to travel with the request, e.g. security token,
         /// calling system, etc.  Any objects which the request passes through may make use of this however they

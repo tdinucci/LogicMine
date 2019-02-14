@@ -6,6 +6,11 @@ using LogicMine.DataObject.Ado.Sqlite;
 
 namespace Sample.LogicMine.Shop.Service.Mine.SalesSummary
 {
+    // A custom terminal that issues a query to the database.
+    //
+    // If you'd prefer not to write any SQL then you could easily fork off a child request to get the required
+    // data to perform the calculation or use something like Entity Framework.  The code here will be the most
+    // efficient however it does couple us to Sqlite.
     public class SalesSummaryTerminal : Terminal<SalesSummaryRequest, SalesSummaryResponse>
     {
         private readonly string _dbConnectionString;

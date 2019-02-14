@@ -14,6 +14,13 @@ using Sample.LogicMine.Shop.Service.Mine.SalesSummary;
 
 namespace Sample.LogicMine.Shop.Service
 {
+    /// <summary>
+    /// This is one of the two implementations of JsonRequestRouter in this project.  Only one is active at any time
+    /// and you can choose in Startup.cs which one to use.
+    ///
+    /// This implementation is the simplest of the two however will need to be modified every time new functionality
+    /// is added to the service.
+    /// </summary>
     public class SimpleRequestRouter: JsonRequestRouter
     {
         private const string AuthorisationHeaderName = "Authorization";
@@ -33,6 +40,7 @@ namespace Sample.LogicMine.Shop.Service
             _dbConnectionString = dbConnectionString ?? throw new ArgumentNullException(nameof(dbConnectionString));
         }
 
+        // This returns the custom request types the service deals with
         protected override IEnumerable<Type> GetCustomRequestTypes()
         {
             return new[]
@@ -42,6 +50,7 @@ namespace Sample.LogicMine.Shop.Service
             };
         }
         
+        // This returns the collection of data object descriptors applicable to the service
         protected override IEnumerable<IDataObjectDescriptor> GetDataObjectDescriptors()
         {
             return new IDataObjectDescriptor[]
@@ -52,6 +61,7 @@ namespace Sample.LogicMine.Shop.Service
             };
         }
 
+        // This returns all required shaft registrars 
         protected override IEnumerable<IShaftRegistrar> GetShaftRegistrars()
         {
             return new IShaftRegistrar[]
@@ -64,6 +74,14 @@ namespace Sample.LogicMine.Shop.Service
             };
         }
 
+        /// <summary>
+        /// This method is called after a request has been parsed but before it's been dispatched to a mine.
+        /// The implementation here pulls the Authorization header from HTTP request and adds it to the IRequest.  This
+        /// can then be inspected within the mine and the request rejected if the access token is invalid.
+        ///
+        /// The SecurityStation type in this sample makes use of the data added to the request here.
+        /// </summary>
+        /// <param name="request">The parsed request</param>
         protected override void PreprocessRequest(IRequest request)
         {
             var authHeader = _httpContextAccessor.HttpContext.Request.Headers[AuthorisationHeaderName].FirstOrDefault();
