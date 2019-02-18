@@ -79,4 +79,3 @@ Coming soon...
 
 LogicMine.DataObject depends on https://github.com/mgravell/fast-member
 
-LogicMine.DataObject.Salesforce depends on https://github.com/developerforce/Force.com-Toolkit-for-NET

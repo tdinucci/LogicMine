@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Dinucci.Salesforce.Client.Data;
 using LogicMine.DataObject.Filter;
 using Newtonsoft.Json.Linq;
 
@@ -11,13 +12,12 @@ namespace LogicMine.DataObject.Salesforce
     public class SalesforceObjectStore<T> : IDataObjectStore<T, string>
         where T : new()
     {
-        protected SalesforceCredentials Credentials { get; }
+        protected IDataApi SalesforceDataApi { get; }
         protected SalesforceObjectDescriptor<T> Descriptor { get; }
 
-        public SalesforceObjectStore(SalesforceCredentials credentials,
-            SalesforceObjectDescriptor<T> descriptor)
+        public SalesforceObjectStore(IDataApi salesforceDataApi, SalesforceObjectDescriptor<T> descriptor)
         {
-            Credentials = credentials ?? throw new ArgumentNullException(nameof(credentials));
+            SalesforceDataApi = salesforceDataApi ?? throw new ArgumentNullException(nameof(salesforceDataApi));
             Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
             if (Descriptor.DataType != typeof(T))
             {
@@ -81,7 +81,6 @@ namespace LogicMine.DataObject.Salesforce
 
         public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
         {
-            var sfClient = new SalesforceClient(Credentials);
             var properties = Descriptor.GetReadableProperties();
 
             var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(filter)}";
@@ -92,10 +91,10 @@ namespace LogicMine.DataObject.Salesforce
                     query += $" OFFSET {page * max}";
             }
 
-            var queryResult = await sfClient.QueryAsync(query).ConfigureAwait(false);
+            var queryResult = await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false);
             if (queryResult.Done)
             {
-                var result = new T[queryResult.Records.Count];
+                var result = new T[queryResult.Records.Length];
                 for (var i = 0; i < result.Length; i++)
                     result[i] = MapObject(queryResult.Records[i], properties);
 
@@ -116,13 +115,12 @@ namespace LogicMine.DataObject.Salesforce
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
-            var sfClient = new SalesforceClient(Credentials);
             var properties = Descriptor.GetReadableProperties();
 
             var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(id)}";
 
-            var queryResult = await sfClient.QueryAsync(query).ConfigureAwait(false);
-            if (queryResult.Done && queryResult.Records.Count == 1)
+            var queryResult = await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false);
+            if (queryResult.Done && queryResult.Records.Length == 1)
                 return MapObject(queryResult.Records[0], properties);
 
             throw new InvalidOperationException(
@@ -133,7 +131,6 @@ namespace LogicMine.DataObject.Salesforce
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
-            var sfClient = new SalesforceClient(Credentials);
             var properties = typeof(T).GetProperties()
                 .Where(p => Descriptor.CanWrite(p.Name));
 
@@ -149,11 +146,7 @@ namespace LogicMine.DataObject.Salesforce
 
             PrepareForCreation(jobj);
 
-            var response = await sfClient.CreateAsync(Descriptor.SalesforceTypeName, jobj).ConfigureAwait(false);
-            if (!response.Success)
-                throw new InvalidOperationException($"Failed to post object: {response.Errors}");
-
-            return response.Id;
+            return await SalesforceDataApi.CreateAsync(Descriptor.SalesforceTypeName, jobj).ConfigureAwait(false);
         }
 
         public async Task UpdateAsync(string id, IDictionary<string, object> modifiedProperties)
@@ -164,7 +157,6 @@ namespace LogicMine.DataObject.Salesforce
             if (modifiedProperties == null || !modifiedProperties.Any())
                 throw new ArgumentException("Value contains no elements.", nameof(modifiedProperties));
 
-            var sfClient = new SalesforceClient(Credentials);
             var jobj = new JObject();
             foreach (var modifiedProperty in modifiedProperties)
             {
@@ -172,11 +164,7 @@ namespace LogicMine.DataObject.Salesforce
                 jobj.Add(mappedPropertyName, JToken.FromObject(modifiedProperty.Value));
             }
 
-            var sfResponse = await sfClient.UpdateAsync(Descriptor.SalesforceTypeName, id, jobj)
-                .ConfigureAwait(false);
-
-            if (!sfResponse.Success)
-                throw new InvalidOperationException($"Patch failed: {sfResponse.Errors}");
+            await SalesforceDataApi.UpdateAsync(Descriptor.SalesforceTypeName, id, jobj).ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(string id)
@@ -184,11 +172,7 @@ namespace LogicMine.DataObject.Salesforce
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
-            var sfClient = new SalesforceClient(Credentials);
-            var isSuccess = await sfClient.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
-
-            if (!isSuccess)
-                throw new InvalidOperationException("Failed to delete object");
+            await SalesforceDataApi.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
         }
     }
 }

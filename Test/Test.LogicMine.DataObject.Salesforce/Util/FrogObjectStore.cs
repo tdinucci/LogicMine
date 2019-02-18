@@ -1,3 +1,4 @@
+using Dinucci.Salesforce.Client.Data;
 using LogicMine.DataObject.Salesforce;
 using Test.Common.LogicMine.DataType;
 
@@ -7,7 +8,7 @@ namespace Test.LogicMine.DataObject.Salesforce.Util
     {
         private static readonly FrogDescriptor ObjDescriptor = new FrogDescriptor();
 
-        public FrogObjectStore(SalesforceCredentials credentials) : base(credentials, ObjDescriptor)
+        public FrogObjectStore(IDataApi salesforceDataApi) : base(salesforceDataApi, ObjDescriptor)
         {
         }
     }

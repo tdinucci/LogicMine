@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using LogicMine.DataObject;
 using Test.Common.LogicMine.DataObject;
 using Test.Common.LogicMine.DataType;
@@ -8,9 +9,17 @@ namespace Test.LogicMine.DataObject.Salesforce
 {
     public class SalesforceMappedObjectStoreTest : MappedObjectStoreTest<Frog<string>, string>
     {
+        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly DataGenerator _dataGenerator;
+
+        public SalesforceMappedObjectStoreTest()
+        {
+            _dataGenerator = new DataGenerator(_httpClient);
+        }
+
         protected override IDataObjectStore<Frog<string>, string> GetStore()
         {
-            return DataGenerator.GetStore();
+            return _dataGenerator.GetStore();
         }
 
         protected override Frog<string> CreateFrog(int index, string name, DateTime dateOfBirth)
@@ -20,7 +29,7 @@ namespace Test.LogicMine.DataObject.Salesforce
 
         protected override void DeleteAll()
         {
-            DataGenerator.DeleteAll();
+            _dataGenerator.DeleteAll();
         }
     }
 }

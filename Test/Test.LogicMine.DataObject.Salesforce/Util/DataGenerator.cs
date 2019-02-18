@@ -1,10 +1,13 @@
+using System;
+using System.Net.Http;
+using Dinucci.Salesforce.Client.Auth;
+using Dinucci.Salesforce.Client.Data;
 using LogicMine.DataObject;
-using LogicMine.DataObject.Salesforce;
 using Test.Common.LogicMine.DataType;
 
 namespace Test.LogicMine.DataObject.Salesforce.Util
 {
-    public static class DataGenerator
+    public class DataGenerator
     {
         private const string SfClientId =
             "3MVG9ZPHiJTk7yFyo2kgZvLTvpjobQskYGDyhEnON21Vz1BfOAbXSOBrvM395NJsBVhCgIck6IoESDreYY6Ah";
@@ -14,15 +17,24 @@ namespace Test.LogicMine.DataObject.Salesforce.Util
         private const string SfPassword = "";
         private const string SfAuthEndpoint = "https://test.salesforce.com/services/oauth2/token";
 
-        public static IDataObjectStore<Frog<string>, string> GetStore()
-        {
-            var sfConfig =
-                new SalesforceCredentials(SfClientId, SfClientSecret, SfUsername, SfPassword, SfAuthEndpoint);
+        private readonly HttpClient _httpClient;
 
-            return new FrogObjectStore(sfConfig);
+        public DataGenerator(HttpClient httpClient)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public static void DeleteAll()
+        public IDataObjectStore<Frog<string>, string> GetStore()
+        {
+            var sfAuthenticator = new PasswordFlowAuthenticator(SfClientId, SfClientSecret, SfUsername, SfPassword,
+                SfAuthEndpoint, _httpClient);
+
+            var sfDataApi = new DataApi(sfAuthenticator, _httpClient, 44);
+
+            return new FrogObjectStore(sfDataApi);
+        }
+
+        public void DeleteAll()
         {
             var store = GetStore();
             var collection = store.GetCollectionAsync().GetAwaiter().GetResult();
