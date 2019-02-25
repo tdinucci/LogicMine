@@ -13,8 +13,8 @@ namespace Test.LogicMine.DataObject.Salesforce.Util
             "3MVG9ZPHiJTk7yFyo2kgZvLTvpjobQskYGDyhEnON21Vz1BfOAbXSOBrvM395NJsBVhCgIck6IoESDreYY6Ah";
 
         private const string SfClientSecret = "8204173310639812200";
-        private const string SfUsername = "developer@sthree.com.d18";
-        private const string SfPassword = "salesforce1";
+        private const string SfUsername = "";
+        private const string SfPassword = "";
         private const string SfAuthEndpoint = "https://test.salesforce.com/services/oauth2/token";
 
         private readonly HttpClient _httpClient;
