@@ -69,10 +69,16 @@ namespace LogicMine
             try
             {
                 var response = await SendAsync(request).ConfigureAwait(false);
-                if (response != null && !(response is TResponse))
+                if (response != null)
                 {
-                    throw new InvalidOperationException(
-                        $"Expected response to be a '{typeof(TResponse)}' but it was a '{response.GetType()}'");
+                    if (!string.IsNullOrWhiteSpace(response.Error))
+                        throw new InvalidOperationException(response.Error);
+
+                    if (!(response is TResponse))
+                    {
+                        throw new InvalidOperationException(
+                            $"Expected response to be a '{typeof(TResponse)}' but it was a '{response.GetType()}'");
+                    }
                 }
 
                 return (TResponse) response;
