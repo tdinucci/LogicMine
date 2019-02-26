@@ -36,6 +36,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.LogicMine.Shop.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.LogicMine.Shop.Client", "Sample\Sample.LogicMine.Shop.Client\Sample.LogicMine.Shop.Client.csproj", "{F0AF88EE-B1F3-49AC-A539-086C3C349E0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.DataObject.Ado.PostgreSql", "LogicMine.DataObject.Ado.PostgreSql\LogicMine.DataObject.Ado.PostgreSql.csproj", "{FD4C9402-FD28-47D9-A882-539B1539C1BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.DataObject.Ado.PostgreSql", "Test\Test.LogicMine.DataObject.Ado.PostgreSql\Test.LogicMine.DataObject.Ado.PostgreSql.csproj", "{0587807F-428E-4934-BED2-39B94CE1E36C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +110,14 @@ Global
 		{F0AF88EE-B1F3-49AC-A539-086C3C349E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0AF88EE-B1F3-49AC-A539-086C3C349E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0AF88EE-B1F3-49AC-A539-086C3C349E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4C9402-FD28-47D9-A882-539B1539C1BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4C9402-FD28-47D9-A882-539B1539C1BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4C9402-FD28-47D9-A882-539B1539C1BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4C9402-FD28-47D9-A882-539B1539C1BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0587807F-428E-4934-BED2-39B94CE1E36C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0587807F-428E-4934-BED2-39B94CE1E36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0587807F-428E-4934-BED2-39B94CE1E36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0587807F-428E-4934-BED2-39B94CE1E36C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{43FBC8AA-9772-4DDC-9ECF-CAEF12BAE2FF} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
@@ -116,5 +128,6 @@ Global
 		{16C1F97E-BC32-410F-8636-A6CD734705E8} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
 		{9792FB6C-EC46-48B0-B51F-09CB7EFE3229} = {FBD291FA-5152-4A53-8A56-9F08CBC7B5D2}
 		{F0AF88EE-B1F3-49AC-A539-086C3C349E0D} = {FBD291FA-5152-4A53-8A56-9F08CBC7B5D2}
+		{0587807F-428E-4934-BED2-39B94CE1E36C} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
 	EndGlobalSection
 EndGlobal

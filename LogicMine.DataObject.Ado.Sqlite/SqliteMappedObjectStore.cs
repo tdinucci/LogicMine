@@ -13,7 +13,7 @@ namespace LogicMine.DataObject.Ado.Sqlite
         where T : new()
     {
         /// <summary>
-        /// Construct a new SqliteMappedDbLayer
+        /// Construct a new SqliteMappedObjectStore
         /// </summary>
         /// <param name="connectionString">The db's connection string</param>
         /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>

@@ -1,16 +1,16 @@
 ﻿using System.Data;
-using LogicMine.DataObject.Ado.Sqlite;
-using Microsoft.Data.Sqlite;
+using LogicMine.DataObject.Ado.PostgreSql;
+using Npgsql;
 using Xunit;
 
-namespace Test.LogicMine.DataObject.Ado.Sqlite
+namespace Test.LogicMine.DataObject.Ado.PostgreSql
 {
-    public class SqliteStatementTest
+    public class PostgreSqlStatementTest
     {
         [Fact]
         public void ConstructBasic()
         {
-            var statement = new SqliteStatement("select * from frog");
+            var statement = new PostgreSqlStatement("select * from frog");
             Assert.Equal("select * from frog", statement.Text);
             Assert.Empty(statement.Parameters);
             Assert.Equal(CommandType.Text, statement.Type);
@@ -19,7 +19,7 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
         [Fact]
         public void ConstructType()
         {
-            var statement = new SqliteStatement("exec proc", CommandType.StoredProcedure);
+            var statement = new PostgreSqlStatement("exec proc", CommandType.StoredProcedure);
             Assert.Equal("exec proc", statement.Text);
             Assert.Empty(statement.Parameters);
             Assert.Equal(CommandType.StoredProcedure, statement.Type);
@@ -28,9 +28,9 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
         [Fact]
         public void ConstructParameters()
         {
-            var statement = new SqliteStatement(
+            var statement = new PostgreSqlStatement(
                 "select * from frog where species like @species and colour like @colour",
-                new SqliteParameter("@species", "tree"), new SqliteParameter("@colour", "green"));
+                new NpgsqlParameter("@species", "tree"), new NpgsqlParameter("@colour", "green"));
 
             Assert.Equal("select * from frog where species like @species and colour like @colour", statement.Text);
             Assert.Equal(CommandType.Text, statement.Type);
@@ -42,9 +42,9 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
         [Fact]
         public void ConstructTypeParameters()
         {
-            var statement = new SqliteStatement(
+            var statement = new PostgreSqlStatement(
                 "exec getfrogs @species, @colour", CommandType.StoredProcedure,
-                new SqliteParameter("@species", "tree"), new SqliteParameter("@colour", "green"));
+                new NpgsqlParameter("@species", "tree"), new NpgsqlParameter("@colour", "green"));
 
             Assert.Equal("exec getfrogs @species, @colour", statement.Text);
             Assert.Equal(CommandType.StoredProcedure, statement.Type);

@@ -1,11 +1,11 @@
 ﻿using System;
-using LogicMine.DataObject.Ado.Sqlite;
+using LogicMine.DataObject.Ado.PostgreSql;
 using LogicMine.DataObject.Filter;
 using Xunit;
 
-namespace Test.LogicMine.DataObject.Ado.Sqlite
+namespace Test.LogicMine.DataObject.Ado.PostgreSql
 {
-    public class SqliteFilterGeneratorTest
+    public class PostgreSqlFilterGeneratorTest
     {
         [Fact]
         public void General()
@@ -18,7 +18,7 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
                 new InFilterTerm("D", new object[] {1, 2, 3}),
                 new RangeFilterTerm("E", DateTime.Today, DateTime.Today.AddDays(7))
             });
-            var generator = new SqliteFilterGenerator(filter);
+            var generator = new PostgreSqlFilterGenerator(filter);
             var dbFilter = generator.Generate();
 
             Assert.Equal("WHERE A = @p0 AND B < @p1 AND C > @p2 AND D IN (@p3,@p4,@p5) AND E BETWEEN @p6 AND @p7",
@@ -47,7 +47,7 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
                 new InFilterTerm("D", new object[] {1, 2, 3}),
                 new RangeFilterTerm("E", DateTime.Today, DateTime.Today.AddDays(7))
             });
-            var generator = new SqliteFilterGenerator(filter, (pn) => pn + "x");
+            var generator = new PostgreSqlFilterGenerator(filter, (pn) => pn + "x");
             var dbFilter = generator.Generate();
 
             Assert.Equal("WHERE Ax = @p0 AND Bx < @p1 AND Cx > @p2 AND Dx IN (@p3,@p4,@p5) AND Ex BETWEEN @p6 AND @p7",
