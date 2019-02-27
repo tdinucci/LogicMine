@@ -117,8 +117,8 @@ namespace LogicMine.DataObject.Ado
             fieldNames = fieldNames.TrimEnd(',');
             parameterNames = parameterNames.TrimEnd(',');
 
-            var sql = $"INSERT INTO {Descriptor.FullTableName} ({fieldNames}) VALUES ({parameterNames});\r\n" +
-                      $"{GetSelectLastIdentityQuery()}";
+            var sql =
+                $"INSERT INTO {Descriptor.FullTableName} ({fieldNames}) VALUES ({parameterNames}) {GetSelectLastIdentityQuery()}";
 
             return new DbStatement<TDbParameter>(sql, parameters.ToArray());
         }

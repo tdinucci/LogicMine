@@ -51,7 +51,7 @@ namespace LogicMine.DataObject.Ado.Sqlite
         /// <inheritdoc />
         protected override string GetSelectLastIdentityQuery()
         {
-            return "SELECT last_insert_rowid();";
+            return $";{Environment.NewLine}SELECT last_insert_rowid();";
         }
 
         /// <inheritdoc />

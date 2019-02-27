@@ -54,7 +54,7 @@ namespace LogicMine.DataObject.Ado.PostgreSql
         /// <inheritdoc />
         protected override string GetSelectLastIdentityQuery()
         {
-            return "SELECT CAST(lastval() AS integer);";
+            return $"returning {Descriptor.PrimaryKey}";
         }
 
         /// <inheritdoc />

@@ -7,11 +7,11 @@ namespace Test.LogicMine.DataObject.Ado.PostgreSql.Util
     public class DbGenerator : IDisposable
     {
         private const string DbName = "logic_mine_test";
-        private const string ServerConnectionString = "Host=localhost;Username=;Password=admin";
+        private const string ServerConnectionString = "Host=localhost;Username=postgres;Password=admin";
 
         // Pooled connections can go bad after table is dropped
         private static readonly string DbConnectionString =
-            $"Host=localhost;Username=postgres;Password=;Database={DbName};Pooling=false";
+            $"Host=localhost;Username=postgres;Password=admin;Database={DbName};Pooling=false";
 
         public string CreateDb()
         {
