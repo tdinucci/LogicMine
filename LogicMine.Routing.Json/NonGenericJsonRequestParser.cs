@@ -89,7 +89,7 @@ namespace LogicMine.Routing.Json
                             $"Raw request contains the unexpected field '{rawProperty.Name}'");
                     }
 
-                    prop.SetValue(request, rawProperty.ToObject(prop.PropertyType));
+                    prop.SetValue(request, rawProperty.Value.ToObject(prop.PropertyType));
                 }
                 catch (Exception ex)
                 {
