@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
 
-        <Version>2.0.2</Version>
+        <Version>2.0.3</Version>
         <Authors>Tony Di Nucci</Authors>
         <AssemblyTitle>LogicMine.DataObject</AssemblyTitle>
         <Description>A LogicMine API which facilitates common data operations</Description>

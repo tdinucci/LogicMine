@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
 
-        <Version>2.0.2</Version>
+        <Version>2.0.3</Version>
         <Authors>Tony Di Nucci</Authors>
         <AssemblyTitle>LogicMine.DataObject.Ado.Sqlite</AssemblyTitle>
         <Description>Types which facilitate working with Sqlite</Description>
