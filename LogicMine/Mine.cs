@@ -91,6 +91,14 @@ namespace LogicMine
             }
         }
 
+        /// <inheritdoc />
+        public async Task SendAsync(IBasket basket)
+        {
+            if (basket == null) throw new ArgumentNullException(nameof(basket));
+
+            basket.Response = await SendAsync(basket.Request).ConfigureAwait(false);
+        }
+
         async Task<IResponse> IContainingMine.SendAsync(IBasket parent, IRequest request, bool inheritParentOptions)
         {
             if (parent == null) throw new ArgumentNullException(nameof(parent));

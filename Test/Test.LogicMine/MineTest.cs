@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using LogicMine;
+using LogicMine.DataObject.GetObject;
 using Test.Common.LogicMine;
 using Xunit;
 
@@ -15,18 +16,18 @@ namespace Test.LogicMine
         private IMine CreateMine(ITraceExporter traceExporter)
         {
             return new Mine()
-                .AddShaft(new DefaultShaft<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(traceExporter,
+                .AddShaft(new DefaultShaft<MyGetObjectRequest<Frog, int>, MyGetObjectResponse<Frog>>(traceExporter,
                     new GetObjectTerminal<Frog>(),
                     new MakeNameUppercaseStation<Frog>()))
 
-                .AddShaft(new DefaultShaft<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(traceExporter,
+                .AddShaft(new DefaultShaft<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(traceExporter,
                     new GetObjectTerminal<Tadpole>()))
 
-                .AddShaft(new DefaultShaft<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>(
+                .AddShaft(new DefaultShaft<MyGetObjectRequest<FroggyTadpole, int>, MyGetObjectResponse<FroggyTadpole>>(
                     traceExporter,
                     new GetFroggyTadpoleTerminal()))
                 
-                .AddShaft(new DefaultShaft<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>(
+                .AddShaft(new DefaultShaft<MyGetObjectRequest<FroggyTadpole_Error, int>, MyGetObjectResponse<FroggyTadpole_Error>>(
                     traceExporter,
                     new GetFroggyTadpoleTerminal_ChildError()));
         }
@@ -38,12 +39,12 @@ namespace Test.LogicMine
 
             var terminal1 = new GetObjectTerminal<Frog>();
             var station1 = new MakeNameUppercaseStation<Frog>();
-            var shaft1 = new DefaultShaft<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(traceExporter,
+            var shaft1 = new DefaultShaft<MyGetObjectRequest<Frog, int>, MyGetObjectResponse<Frog>>(traceExporter,
                 terminal1, station1);
 
             var terminal2 = new GetObjectTerminal<Tadpole>();
             var station2 = new MakeNameUppercaseStation<Tadpole>();
-            var shaft2 = new DefaultShaft<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(traceExporter,
+            var shaft2 = new DefaultShaft<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(traceExporter,
                 terminal2, station2);
 
             var mine = new Mine()
@@ -69,8 +70,8 @@ namespace Test.LogicMine
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<Frog, int>(ValidAccessToken, 3);
-            var response = await mine.SendAsync<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(request)
+            var request = new MyGetObjectRequest<Frog, int>(ValidAccessToken, 3);
+            var response = await mine.SendAsync<MyGetObjectRequest<Frog, int>, MyGetObjectResponse<Frog>>(request)
                 .ConfigureAwait(false);
 
             Assert.NotNull(response.Object);
@@ -84,8 +85,8 @@ namespace Test.LogicMine
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
-            var response = await mine.SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(request)
+            var request = new MyGetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
+            var response = await mine.SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(request)
                 .ConfigureAwait(false);
 
             Assert.NotNull(response.Object);
@@ -94,13 +95,28 @@ namespace Test.LogicMine
         }
 
         [Fact]
+        public async Task GetObject_Basket()
+        {
+            var traceExporter = new TestTraceExporter();
+            var mine = CreateMine(traceExporter);
+
+            var request = new MyGetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
+            var basket = new MyGetObjectBasket<Tadpole, int>(request);
+            await mine.SendAsync(basket).ConfigureAwait(false);
+
+            Assert.NotNull(basket.Response.Object);
+            Assert.Equal(5, basket.Response.Object.Id);
+            Assert.Equal("Taddy 5", basket.Response.Object.Name);
+        }
+        
+        [Fact]
         public async Task GetBadAccessToken()
         {
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<Tadpole, int>("ABC", 5);
-            var response = await mine.SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(request)
+            var request = new MyGetObjectRequest<Tadpole, int>("ABC", 5);
+            var response = await mine.SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(request)
                 .ConfigureAwait(false);
 
             Assert.Null(response.Object);
@@ -113,12 +129,12 @@ namespace Test.LogicMine
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
-            var response = await mine.SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Frog>>(request)
+            var request = new MyGetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
+            var response = await mine.SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Frog>>(request)
                 .ConfigureAwait(false);
 
             Assert.Equal(
-                "Expected response to be a 'Test.LogicMine.MineTest+GetObjectResponse`1[Test.LogicMine.MineTest+Frog]' but it was a 'Test.LogicMine.MineTest+GetObjectResponse`1[Test.LogicMine.MineTest+Tadpole]'",
+                "Expected response to be a 'Test.LogicMine.MineTest+MyGetObjectResponse`1[Test.LogicMine.MineTest+Frog]' but it was a 'Test.LogicMine.MineTest+MyGetObjectResponse`1[Test.LogicMine.MineTest+Tadpole]'",
                 response.Error);
         }
 
@@ -128,9 +144,9 @@ namespace Test.LogicMine
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
+            var request = new MyGetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
             var response = await mine
-                .SendAsync<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>(request)
+                .SendAsync<MyGetObjectRequest<FroggyTadpole, int>, MyGetObjectResponse<FroggyTadpole>>(request)
                 .ConfigureAwait(false);
 
             Assert.NotNull(response.Object);
@@ -168,8 +184,8 @@ Test.LogicMine.MineTest+SecurityStation Up
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
-            var response = await mine.SendAsync(request).ConfigureAwait(false) as GetObjectResponse<FroggyTadpole>;
+            var request = new MyGetObjectRequest<FroggyTadpole, int>(ValidAccessToken, 5);
+            var response = await mine.SendAsync(request).ConfigureAwait(false) as MyGetObjectResponse<FroggyTadpole>;
 
             Assert.NotNull(response.Object);
             Assert.Equal(5, response.Object.Frog.Id);
@@ -206,9 +222,9 @@ Test.LogicMine.MineTest+SecurityStation Up
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
+            var request = new MyGetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
             var response = await mine
-                .SendAsync<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>(request)
+                .SendAsync<MyGetObjectRequest<FroggyTadpole_Error, int>, MyGetObjectResponse<FroggyTadpole_Error>>(request)
                 .ConfigureAwait(false);
 
             Assert.Null(response.Object);
@@ -222,9 +238,9 @@ Test.LogicMine.MineTest+SecurityStation Up
             var traceExporter = new TestTraceExporter();
             var mine = CreateMine(traceExporter);
 
-            var request = new GetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
+            var request = new MyGetObjectRequest<FroggyTadpole_Error, int>(ValidAccessToken, 5);
             var response =
-                await mine.SendAsync(request).ConfigureAwait(false) as GetObjectResponse<FroggyTadpole_Error>;
+                await mine.SendAsync(request).ConfigureAwait(false) as MyGetObjectResponse<FroggyTadpole_Error>;
 
             Assert.Null(response.Object);
             Assert.NotEqual(Guid.Empty, response.RequestId);
@@ -242,39 +258,46 @@ Test.LogicMine.MineTest+SecurityStation Up
             }
         }
 
-        private class GetObjectRequest<T, TId> : Request
+        private class MyGetObjectRequest<T, TId> : Request
         {
             public TId ObjectId { get; }
 
-            public GetObjectRequest(TId objectId)
+            public MyGetObjectRequest(TId objectId)
             {
                 ObjectId = objectId;
             }
             
-            public GetObjectRequest(string accessToken, TId objectId)
+            public MyGetObjectRequest(string accessToken, TId objectId)
             {
                 Options.Add(AccessTokenKey, accessToken);
                 ObjectId = objectId;
             }
         }
 
-        private class GetObjectResponse<T> : Response
+        private class MyGetObjectResponse<T> : Response
         {
             public T Object { get; }
 
-            public GetObjectResponse(IRequest request) : base(request)
+            public MyGetObjectResponse(IRequest request) : base(request)
             {
             }
             
-            public GetObjectResponse(IRequest request, T obj) :base(request)
+            public MyGetObjectResponse(IRequest request, T obj) :base(request)
             {
                 Object = obj;
             }
         }
 
-        private class GetObjectTerminal<T> : Terminal<GetObjectRequest<T, int>, GetObjectResponse<T>> where T : class
+        private class MyGetObjectBasket<T, TId> : Basket<MyGetObjectRequest<T, TId>, MyGetObjectResponse<T>>
         {
-            public override Task AddResponseAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
+            public MyGetObjectBasket(MyGetObjectRequest<T, TId> request) : base(request)
+            {
+            }
+        }
+
+        private class GetObjectTerminal<T> : Terminal<MyGetObjectRequest<T, int>, MyGetObjectResponse<T>> where T : class
+        {
+            public override Task AddResponseAsync(IBasket<MyGetObjectRequest<T, int>, MyGetObjectResponse<T>> basket)
             {
                 var id = basket.Request.ObjectId;
                 var db = new Database();
@@ -287,28 +310,28 @@ Test.LogicMine.MineTest+SecurityStation Up
                 else 
                     throw new InvalidCastException("Unexpected data type requested");
 
-                basket.Response = new GetObjectResponse<T>(basket.Request, result);
+                basket.Response = new MyGetObjectResponse<T>(basket.Request, result);
 
                 return Task.CompletedTask;
             }
         }
 
         private class GetFroggyTadpoleTerminal : 
-            Terminal<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>>
+            Terminal<MyGetObjectRequest<FroggyTadpole, int>, MyGetObjectResponse<FroggyTadpole>>
         {
             public override async Task AddResponseAsync(
-                IBasket<GetObjectRequest<FroggyTadpole, int>, GetObjectResponse<FroggyTadpole>> basket)
+                IBasket<MyGetObjectRequest<FroggyTadpole, int>, MyGetObjectResponse<FroggyTadpole>> basket)
             {
                 var id = basket.Request.ObjectId;
 
-                var frogRequest = new GetObjectRequest<Frog, int>(id);
+                var frogRequest = new MyGetObjectRequest<Frog, int>(id);
                 var frogResponse = await Within.Within
-                    .SendAsync<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(basket, frogRequest)
+                    .SendAsync<MyGetObjectRequest<Frog, int>, MyGetObjectResponse<Frog>>(basket, frogRequest)
                     .ConfigureAwait(false);
 
-                var tadpoleRequest = new GetObjectRequest<Tadpole, int>(id);
+                var tadpoleRequest = new MyGetObjectRequest<Tadpole, int>(id);
                 var tadpoleResponse = await Within.Within
-                    .SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(basket, tadpoleRequest)
+                    .SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(basket, tadpoleRequest)
                     .ConfigureAwait(false);
 
                 var froggyTadpole = new FroggyTadpole
@@ -319,29 +342,29 @@ Test.LogicMine.MineTest+SecurityStation Up
                     FrogRequestId = frogRequest.Id,
                     TadpoleRequestId = tadpoleRequest.Id
                 };
-                basket.Response = new GetObjectResponse<FroggyTadpole>(basket.Request, froggyTadpole);
+                basket.Response = new MyGetObjectResponse<FroggyTadpole>(basket.Request, froggyTadpole);
             }
         }
 
         private class GetFroggyTadpoleTerminal_ChildError : 
-            Terminal<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>>
+            Terminal<MyGetObjectRequest<FroggyTadpole_Error, int>, MyGetObjectResponse<FroggyTadpole_Error>>
         {
             public override async Task AddResponseAsync(
-                IBasket<GetObjectRequest<FroggyTadpole_Error, int>, GetObjectResponse<FroggyTadpole_Error>> basket)
+                IBasket<MyGetObjectRequest<FroggyTadpole_Error, int>, MyGetObjectResponse<FroggyTadpole_Error>> basket)
             {
                 var id = basket.Request.ObjectId;
 
-                var frogRequest = new GetObjectRequest<Frog, int>(id);
+                var frogRequest = new MyGetObjectRequest<Frog, int>(id);
                 
                 // by passing false for inheritParentOptions we're preventing security info from passing to the child 
                 // which should cause an error
                 var frogResponse = await Within.Within
-                    .SendAsync<GetObjectRequest<Frog, int>, GetObjectResponse<Frog>>(basket, frogRequest, false)
+                    .SendAsync<MyGetObjectRequest<Frog, int>, MyGetObjectResponse<Frog>>(basket, frogRequest, false)
                     .ConfigureAwait(false);
 
-                var tadpoleRequest = new GetObjectRequest<Tadpole, int>(id);
+                var tadpoleRequest = new MyGetObjectRequest<Tadpole, int>(id);
                 var tadpoleResponse = await Within.Within
-                    .SendAsync<GetObjectRequest<Tadpole, int>, GetObjectResponse<Tadpole>>(basket, tadpoleRequest, false)
+                    .SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Tadpole>>(basket, tadpoleRequest, false)
                     .ConfigureAwait(false);
 
                 var froggyTadpole = new FroggyTadpole_Error
@@ -352,19 +375,19 @@ Test.LogicMine.MineTest+SecurityStation Up
                     FrogRequestId = frogRequest.Id,
                     TadpoleRequestId = tadpoleRequest.Id
                 };
-                basket.Response = new GetObjectResponse<FroggyTadpole_Error>(basket.Request, froggyTadpole);
+                basket.Response = new MyGetObjectResponse<FroggyTadpole_Error>(basket.Request, froggyTadpole);
             }
         }
         
-        private class MakeNameUppercaseStation<T> : Station<GetObjectRequest<T, int>, GetObjectResponse<T>>
+        private class MakeNameUppercaseStation<T> : Station<MyGetObjectRequest<T, int>, MyGetObjectResponse<T>>
             where T : class, INamed
         {
-            public override Task DescendToAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
+            public override Task DescendToAsync(IBasket<MyGetObjectRequest<T, int>, MyGetObjectResponse<T>> basket)
             {
                 return Task.CompletedTask;
             }
 
-            public override Task AscendFromAsync(IBasket<GetObjectRequest<T, int>, GetObjectResponse<T>> basket)
+            public override Task AscendFromAsync(IBasket<MyGetObjectRequest<T, int>, MyGetObjectResponse<T>> basket)
             {
                 basket.Response.Object.Name = basket.Response.Object.Name.ToUpper();
 

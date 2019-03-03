@@ -366,21 +366,24 @@ namespace Test.Common.LogicMine.Mine
         }
 
         [Fact]
-        public async Task ReverseString()
+        public void ReverseString()
         {
-            var traceExporter = new TestTraceExporter();
-            var mine = CreateMine(traceExporter, 0);
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 0);
 
-            var forward = "hello there";
-            var expectedReversed = "ereht olleh";
+                var forward = "hello there";
+                var expectedReversed = "ereht olleh";
 
-            var request = new ReverseStringRequest(forward);
-            request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                var request = new ReverseStringRequest(forward);
+                request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
-            var response = await mine.SendAsync<ReverseStringRequest, RevereStringResponse>(request)
-                .ConfigureAwait(false);
+                var response = mine.SendAsync<ReverseStringRequest, RevereStringResponse>(request)
+                    .GetAwaiter().GetResult();
 
-            Assert.Equal(expectedReversed, response.Reversed);
+                Assert.Equal(expectedReversed, response.Reversed);
+            }
         }
 
         private class ReverseStringRequest : Request
