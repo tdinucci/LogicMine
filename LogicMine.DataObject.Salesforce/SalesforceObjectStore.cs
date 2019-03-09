@@ -70,7 +70,7 @@ namespace LogicMine.DataObject.Salesforce
             foreach (var property in properties)
             {
                 var mappedPropertyName = Descriptor.GetMappedColumnName(property.Name);
-                var propValue = record[mappedPropertyName].ToObject(property.PropertyType);
+                var propValue = record[mappedPropertyName].ToObject<object>();
                 var sfValue = Descriptor.ProjectColumnValue(propValue, property.PropertyType);
 
                 property.SetValue(mappedObject, sfValue);
