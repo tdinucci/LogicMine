@@ -69,11 +69,18 @@ namespace LogicMine.DataObject.Salesforce
             var mappedObject = new T();
             foreach (var property in properties)
             {
-                var mappedPropertyName = Descriptor.GetMappedColumnName(property.Name);
-                var propValue = record[mappedPropertyName].ToObject<object>();
-                var sfValue = Descriptor.ProjectColumnValue(propValue, property.PropertyType);
+                try
+                {
+                    var mappedPropertyName = Descriptor.GetMappedColumnName(property.Name);
+                    var propValue = record[mappedPropertyName].ToObject<object>();
+                    var sfValue = Descriptor.ProjectColumnValue(propValue, property.PropertyType);
 
-                property.SetValue(mappedObject, sfValue);
+                    property.SetValue(mappedObject, sfValue);
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException($"Failed to map property '{property.Name}'", ex);
+                }
             }
 
             return mappedObject;
