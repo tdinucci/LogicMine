@@ -9,6 +9,9 @@ namespace LogicMine.DataObject.Ado.PostgreSql
     /// </summary>
     public class PostgreSqlFilterGenerator : DbFilterGenerator<NpgsqlParameter>
     {
+        /// <inheritdoc />
+        protected override string StringConcatOperator { get; } = "||";
+
         /// <summary>
         /// Construct a new PostgreSqlFilterGenerator
         /// </summary>

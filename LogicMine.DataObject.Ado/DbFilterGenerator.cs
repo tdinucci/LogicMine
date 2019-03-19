@@ -19,6 +19,11 @@ namespace LogicMine.DataObject.Ado
         private int _paramNo;
 
         /// <summary>
+        /// Different DB's have different operators for string concatenation, allow for this to be overriden
+        /// </summary>
+        protected virtual string StringConcatOperator { get; } = "+";
+
+        /// <summary>
         /// Construct a new DbFilterGenerator
         /// </summary>
         /// <param name="filter">The IFilter to convert</param>
@@ -78,7 +83,7 @@ namespace LogicMine.DataObject.Ado
             return GetDbFilter(clause, parameters.ToArray());
         }
 
-        private Tuple<string, IList<TDbParameter>> GenerateCondition(IFilterTerm term)
+        protected virtual Tuple<string, IList<TDbParameter>> GenerateCondition(IFilterTerm term)
         {
             switch (term.Operator)
             {
@@ -96,7 +101,7 @@ namespace LogicMine.DataObject.Ado
             }
         }
 
-        private Tuple<string, IList<TDbParameter>> GenerateBetweenCondition(RangeFilterTerm term)
+        protected virtual Tuple<string, IList<TDbParameter>> GenerateBetweenCondition(RangeFilterTerm term)
         {
             var fieldName = GetColumnName(term.PropertyName);
             var p1Name = GetParameterName();
@@ -111,7 +116,7 @@ namespace LogicMine.DataObject.Ado
             return new Tuple<string, IList<TDbParameter>>(clause, parameters);
         }
 
-        private Tuple<string, IList<TDbParameter>> GenerateInCondition(InFilterTerm term)
+        protected virtual Tuple<string, IList<TDbParameter>> GenerateInCondition(InFilterTerm term)
         {
             var clause = string.Empty;
             var parameters = new List<TDbParameter>();
@@ -137,7 +142,7 @@ namespace LogicMine.DataObject.Ado
             return new Tuple<string, IList<TDbParameter>>(clause, parameters);
         }
 
-        private Tuple<string, TDbParameter> GenerateBasicCondition(IFilterTerm term)
+        protected virtual Tuple<string, TDbParameter> GenerateBasicCondition(IFilterTerm term)
         {
             var fieldName = GetColumnName(term.PropertyName);
             var clause = fieldName + " ";
@@ -169,13 +174,13 @@ namespace LogicMine.DataObject.Ado
                     clause += $">= {paramName}";
                     break;
                 case FilterOperators.StartsWith:
-                    clause += $"LIKE {paramName} + '%'";
+                    clause += $"LIKE {paramName} {StringConcatOperator} '%'";
                     break;
                 case FilterOperators.EndsWith:
-                    clause += $"LIKE '%' + {paramName}";
+                    clause += $"LIKE '%' {StringConcatOperator} {paramName}";
                     break;
                 case FilterOperators.Contains:
-                    clause += $"LIKE '%' + {paramName} + '%'";
+                    clause += $"LIKE '%' {StringConcatOperator} {paramName} {StringConcatOperator} '%'";
                     break;
             }
 
@@ -184,7 +189,7 @@ namespace LogicMine.DataObject.Ado
                 : new Tuple<string, TDbParameter>(clause, GetDbParameter(paramName, term.Value));
         }
 
-        private string GetColumnName(string propName)
+        protected virtual string GetColumnName(string propName)
         {
             if (_covertPropToColumnName == null)
                 return propName;
