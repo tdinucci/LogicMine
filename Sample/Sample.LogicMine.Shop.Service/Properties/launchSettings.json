@@ -2,7 +2,7 @@
   "profiles": {
     "Sample.LogicMine.Shop.Service": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "http://localhost:8181",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
