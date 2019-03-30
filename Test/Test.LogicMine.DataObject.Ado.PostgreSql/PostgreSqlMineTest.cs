@@ -6,7 +6,7 @@ using Test.LogicMine.DataObject.Ado.PostgreSql.Util;
 
 namespace Test.LogicMine.DataObject.Ado.PostgreSql
 {
-    public class PostgreSqlMineTest : MineTest<Frog<int>, int>, IDisposable
+    public class PostgreSqlMineTest : MineTest<Frog<int>, int>
     {
         private DbGenerator _dbGenerator;
 
@@ -30,11 +30,6 @@ namespace Test.LogicMine.DataObject.Ado.PostgreSql
 
         protected override void DeleteAll()
         {
-        }
-
-        public void Dispose()
-        {
-            _dbGenerator?.Dispose();
         }
     }
 }

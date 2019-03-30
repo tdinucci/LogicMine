@@ -33,15 +33,7 @@ namespace LogicMine.DataObject.Ado.PostgreSql
             if (statement == null)
                 throw new ArgumentNullException(nameof(statement));
 
-            // until this issue is fixed: https://github.com/npgsql/npgsql/issues/2408
-            var connection = new NpgsqlConnection(_connectionString);
-            if (Transaction.Current != null)
-            {
-                connection.Open();
-                connection.EnlistTransaction(Transaction.Current);
-            }
-
-            return new NpgsqlCommand(statement.Text, connection);
+            return new NpgsqlCommand(statement.Text, new NpgsqlConnection(_connectionString));
         }
     }
 }
