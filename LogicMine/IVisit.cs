@@ -35,6 +35,16 @@ namespace LogicMine
         IEnumerable<string> LogMessages { get; }
 
         /// <summary>
+        /// Warnings that were recorded during the visit
+        /// </summary>
+        IEnumerable<string> LogWarnings { get; }
+
+        /// <summary>
+        /// Errors that were recorded during the visit
+        /// </summary>
+        IEnumerable<string> LogErrors { get; }
+
+        /// <summary>
         /// An exception that occurred during the visit
         /// </summary>
         Exception Exception { get; }
@@ -44,5 +54,23 @@ namespace LogicMine
         /// </summary>
         /// <param name="message">The message to log</param>
         void Log(string message);
+
+        /// <summary>
+        /// Log a warning related to the visit
+        /// </summary>
+        /// <param name="warning">The warning to log</param>
+        void LogWarning(string warning);
+
+        /// <summary>
+        /// Log an error related to the visit
+        /// </summary>
+        /// <param name="error">The error to log</param>
+        void LogError(string error);
+        
+        /// <summary>
+        /// Log an exception related to the visit
+        /// </summary>
+        /// <param name="exception">The exception to log</param>
+        void LogError(Exception exception);
     }
 }

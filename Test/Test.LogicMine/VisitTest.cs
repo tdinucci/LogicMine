@@ -39,13 +39,15 @@ namespace Test.LogicMine
         }
 
         [Fact]
-        public void Log()
+        public void LogMessages()
         {
             const int logCount = 50;
             var visit = new Visit(Guid.NewGuid().ToString(), VisitDirection.Down);
             for (var i = 0; i < logCount; i++)
                 visit.Log(i.ToString());
 
+            Assert.Empty(visit.LogWarnings);
+            Assert.Empty(visit.LogErrors);
             Assert.True(visit.LogMessages.Count() == logCount);
 
             var index = 0;
@@ -60,6 +62,80 @@ namespace Test.LogicMine
             }
         }
 
+        [Fact]
+        public void LogWarnings()
+        {
+            const int logCount = 50;
+            var visit = new Visit(Guid.NewGuid().ToString(), VisitDirection.Down);
+            for (var i = 0; i < logCount; i++)
+                visit.LogWarning(i.ToString());
+
+            Assert.Empty(visit.LogMessages);
+            Assert.Empty(visit.LogErrors);
+            Assert.True(visit.LogWarnings.Count() == logCount);
+
+            var index = 0;
+            foreach (var warning in visit.LogWarnings)
+            {
+                var timeString = warning.Substring(1, warning.IndexOf(']') - 1);
+                var time = DateTime.Parse(timeString);
+
+                Assert.True(time < DateTime.Now && time > DateTime.Now.AddSeconds(-1));
+                Assert.Equal(index.ToString(), warning.Substring(warning.IndexOf(']') + 2));
+                index++;
+            }
+        }
+
+        [Fact]
+        public void LogErrors()
+        {
+            const int logCount = 50;
+            var visit = new Visit(Guid.NewGuid().ToString(), VisitDirection.Down);
+            for (var i = 0; i < logCount; i++)
+                visit.LogError(i.ToString());
+
+            Assert.Empty(visit.LogMessages);
+            Assert.Empty(visit.LogWarnings);
+            Assert.True(visit.LogErrors.Count() == logCount);
+
+            var index = 0;
+            foreach (var error in visit.LogErrors)
+            {
+                var timeString = error.Substring(1, error.IndexOf(']') - 1);
+                var time = DateTime.Parse(timeString);
+
+                Assert.True(time < DateTime.Now && time > DateTime.Now.AddSeconds(-1));
+                Assert.Equal(index.ToString(), error.Substring(error.IndexOf(']') + 2));
+                index++;
+            }
+        }
+
+        [Fact]
+        public void LogException()
+        {
+            const int logCount = 5;
+            var visit = new Visit(Guid.NewGuid().ToString(), VisitDirection.Down);
+            for (var i = 0; i < logCount; i++)
+            {
+                var exception = new InvalidOperationException($"Bad thing {i}");
+                visit.LogError(exception);
+            }
+
+            Assert.Empty(visit.LogMessages);
+            Assert.Empty(visit.LogWarnings);
+            Assert.True(visit.LogErrors.Count() == logCount);
+
+            var index = 0;
+            foreach (var error in visit.LogErrors)
+            {
+                var timeString = error.Substring(1, error.IndexOf(']') - 1);
+                var time = DateTime.Parse(timeString);
+
+                Assert.True(time < DateTime.Now && time > DateTime.Now.AddSeconds(-1));
+                index++;
+            }
+        }
+        
         private void RunConstructTest(string description, VisitDirection direction)
         {
             var visit = new Visit(description, direction);
