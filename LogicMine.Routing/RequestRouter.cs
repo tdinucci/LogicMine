@@ -8,6 +8,8 @@ namespace LogicMine.Routing
     /// <inheritdoc />
     public abstract class RequestRouter<TRawRequest> : IRequestRouter<TRawRequest>
     {
+        private static readonly object InitLock = new object();
+        
         private bool _isInitialised;
         private readonly IMine _mine;
         private readonly IErrorExporter _errorExporter;
@@ -58,11 +60,17 @@ namespace LogicMine.Routing
         {
             if (!_isInitialised)
             {
-                DataObjectDescriptorRegistry = GetDescriptorRegistry();
-                ParserRegistry = GetParserRegistry();
-                InitialiseMineShafts(_mine);
+                lock (InitLock)
+                {
+                    if (!_isInitialised)
+                    {
+                        DataObjectDescriptorRegistry = GetDescriptorRegistry();
+                        ParserRegistry = GetParserRegistry();
+                        InitialiseMineShafts(_mine);
 
-                _isInitialised = true;
+                        _isInitialised = true;
+                    }
+                }
             }
         }
 
