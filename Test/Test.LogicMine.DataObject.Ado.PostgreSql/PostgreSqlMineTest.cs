@@ -10,6 +10,8 @@ namespace Test.LogicMine.DataObject.Ado.PostgreSql
     {
         private DbGenerator _dbGenerator;
 
+        protected override bool PerformTransactionTests => true;
+
         protected override IDataObjectDescriptor GetDescriptor()
         {
             return new FrogDescriptor();

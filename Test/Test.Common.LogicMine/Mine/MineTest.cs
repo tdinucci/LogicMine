@@ -23,6 +23,8 @@ namespace Test.Common.LogicMine.Mine
         protected abstract TFrog CreateFrog(int index, string name, DateTime dateOfBirth);
         protected abstract void DeleteAll();
 
+        protected virtual bool PerformTransactionTests { get; }
+        
         private void InsertFrogs(IDataObjectStore<TFrog, TId> store, int count)
         {
             DeleteAll();
@@ -37,22 +39,28 @@ namespace Test.Common.LogicMine.Mine
             Task.WaitAll(tasks);
         }
 
-        private IMine CreateMine(ITraceExporter traceExporter, int frogCount)
+        private IMine CreateMine(ITraceExporter traceExporter, int frogCount, bool forTransactionTest = false,
+            bool failTransaction = false)
         {
             var objectStore = GetObjectStore();
             InsertFrogs(objectStore, frogCount);
 
+            var createShaft = new Shaft<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(traceExporter,
+                new CreateObjectTerminal<TFrog, TId>(objectStore),
+                new SecurityStation(),
+                new CreateFailTransactionStation<TFrog, TId>(failTransaction));
+
+            createShaft.ExecuteWithinTransaction = forTransactionTest;
+
             return new global::LogicMine.Mine()
+                .AddShaft(createShaft)
+                
                 .AddShaft(new Shaft<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(traceExporter,
                     new GetObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
 
                 .AddShaft(new Shaft<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(traceExporter,
                     new GetCollectionTerminal<TFrog>(objectStore),
-                    new SecurityStation()))
-
-                .AddShaft(new Shaft<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(traceExporter,
-                    new CreateObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
 
                 .AddShaft(new Shaft<UpdateObjectRequest<TFrog, TId>, UpdateObjectResponse>(traceExporter,
@@ -338,6 +346,81 @@ namespace Test.Common.LogicMine.Mine
 
                 Assert.Null(getResponse.Error);
                 Assert.Equal(frog, getResponse.Object);
+            }
+        }
+
+        [Fact]
+        public void CreateInTransaction()
+        {
+            if (!PerformTransactionTests)
+                return;
+
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 0, true);
+
+                var name = Guid.NewGuid().ToString();
+                var frog = CreateFrog(1, name, DateTime.Today.AddDays(-150));
+
+                var createRequest = new CreateObjectRequest<TFrog>(frog);
+                createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                var createResponse =
+                    mine.SendAsync<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(createRequest)
+                        .GetAwaiter().GetResult();
+
+                Assert.Null(createResponse.Error);
+                Assert.False(string.IsNullOrWhiteSpace(createResponse.ObjectId.ToString()));
+
+                frog.Id = createResponse.ObjectId;
+
+                var getRequest = new GetObjectRequest<TFrog, TId>(createResponse.ObjectId);
+                getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var getResponse = mine
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .GetAwaiter().GetResult();
+
+                Assert.Null(getResponse.Error);
+                Assert.Equal(frog, getResponse.Object);
+            }
+        }
+
+        [Fact]
+        public void CreateFailTransaction()
+        {
+            if (!PerformTransactionTests)
+                return;
+
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 0, true, true);
+
+                var name = Guid.NewGuid().ToString();
+                var frog = CreateFrog(1, name, DateTime.Today.AddDays(-150));
+
+                var createRequest = new CreateObjectRequest<TFrog>(frog);
+                createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                var createResponse =
+                    mine.SendAsync<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(createRequest)
+                        .GetAwaiter().GetResult();
+
+                Assert.Equal("A failure has occurred", createResponse.Error);
+
+                var getRequest = new GetCollectionRequest<TFrog>(new Filter<TFrog>(new[]
+                {
+                    new FilterTerm("Name", FilterOperators.Equal, name)
+                }));
+
+                getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var getResponse = mine
+                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getRequest)
+                    .GetAwaiter().GetResult();
+
+                Assert.Null(getResponse.Error);
+                Assert.True(getResponse.Objects.Length == 0);
             }
         }
 

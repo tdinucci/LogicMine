@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace LogicMine
 {
@@ -22,6 +23,9 @@ namespace LogicMine
 
         /// <inheritdoc />
         Type IShaft.ResponseType { get; } = typeof(TResponse);
+
+        /// <inheritdoc />
+        public bool ExecuteWithinTransaction { get; set; }
 
         /// <summary>
         /// Constructs a new shaft
@@ -125,6 +129,10 @@ namespace LogicMine
         /// <inheritdoc />
         public async Task<TResponse> SendAsync(TRequest request)
         {
+            TransactionScope scope = null;
+            if (ExecuteWithinTransaction)
+                scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
             var stopwatch = Stopwatch.StartNew();
             Basket<TRequest, TResponse> basket = null;
             try
@@ -143,6 +151,8 @@ namespace LogicMine
 
                 await AscendAsync(ref basket).ConfigureAwait(false);
 
+                scope?.Complete();
+
                 return basket.Response;
             }
             catch (Exception ex)
@@ -159,6 +169,8 @@ namespace LogicMine
             }
             finally
             {
+                scope?.Dispose();
+
                 stopwatch.Stop();
                 if (basket != null)
                 {

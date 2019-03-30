@@ -70,6 +70,11 @@ namespace LogicMine
         Type ResponseType { get; }
 
         /// <summary>
+        /// If true then the shaft will execute within a transaction
+        /// </summary>
+        bool ExecuteWithinTransaction { get; set; }
+
+        /// <summary>
         /// Add stations to the top of the shaft
         /// </summary>
         /// <param name="stations">The stations to add</param>
