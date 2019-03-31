@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LogicMine;
 using LogicMine.DataObject;
+using LogicMine.DataObject.CreateCollection;
 using LogicMine.DataObject.CreateObject;
 using LogicMine.DataObject.DeleteObject;
 using LogicMine.DataObject.Filter;
@@ -54,7 +55,7 @@ namespace Test.Common.LogicMine.Mine
 
             return new global::LogicMine.Mine()
                 .AddShaft(createShaft)
-                
+
                 .AddShaft(new Shaft<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(traceExporter,
                     new GetObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
@@ -69,6 +70,10 @@ namespace Test.Common.LogicMine.Mine
 
                 .AddShaft(new Shaft<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse>(traceExporter,
                     new DeleteObjectTerminal<TFrog, TId>(objectStore),
+                    new SecurityStation()))
+
+                .AddShaft(new Shaft<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(traceExporter,
+                    new CreateCollectionTerminal<TFrog>(objectStore),
                     new SecurityStation()))
 
                 .AddShaft(new Shaft<ReverseStringRequest, RevereStringResponse>(traceExporter,
@@ -346,6 +351,45 @@ namespace Test.Common.LogicMine.Mine
 
                 Assert.Null(getResponse.Error);
                 Assert.Equal(frog, getResponse.Object);
+            }
+        }
+
+        [Fact]
+        public void CreateCollection()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 0);
+
+                var frogs = new[]
+                {
+                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-8)},
+                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-7)},
+                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-6)},
+                };
+
+                var createRequest = new CreateCollectionRequest<TFrog>(frogs.Cast<TFrog>());
+                createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                var createResponse =
+                    mine.SendAsync<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(createRequest)
+                        .GetAwaiter().GetResult();
+
+                Assert.Null(createResponse.Error);
+                Assert.True(createResponse.Success);
+
+                var getRequest = new GetCollectionRequest<TFrog>();
+                getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var getResponse = mine
+                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getRequest)
+                    .GetAwaiter().GetResult();
+
+                Assert.Null(getResponse.Error);
+                Assert.True(getResponse.Objects.Length == 3);
+                Assert.Contains(getResponse.Objects, f => f.DateOfBirth == DateTime.Today.AddDays(-8));
+                Assert.Contains(getResponse.Objects, f => f.DateOfBirth == DateTime.Today.AddDays(-7));
+                Assert.Contains(getResponse.Objects, f => f.DateOfBirth == DateTime.Today.AddDays(-6));
             }
         }
 

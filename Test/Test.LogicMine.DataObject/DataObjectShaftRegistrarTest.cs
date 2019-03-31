@@ -93,6 +93,11 @@ namespace Test.LogicMine.DataObject
                 throw new TestCanceledException("GetCollection");
             }
 
+            public Task CreateCollectionAsync(IEnumerable<AltFrog> objs)
+            {
+                throw new TestCanceledException("CreateCollection");
+            }
+
             public Task<AltFrog> GetByIdAsync(int id)
             {
                 throw new TestCanceledException("Get");

@@ -77,6 +77,13 @@ namespace LogicMine.DataObject.Ado
         protected abstract IDbStatement<TDbParameter> GetInsertDbStatement(T obj);
 
         /// <summary>
+        /// Get a statement to insert a collection of objects into the underlying database.
+        /// </summary>
+        /// <param name="objs">The T's to insert</param>
+        /// <returns>A statement to represent the "insert" operation</returns>
+        protected abstract IDbStatement<TDbParameter> GetInsertDbStatement(IEnumerable<T> objs);
+        
+        /// <summary>
         /// Get a statement to perform an update of a record
         /// </summary>
         /// <param name="identity">The identity of the T to update</param>
@@ -158,6 +165,20 @@ namespace LogicMine.DataObject.Ado
             var id = await DbInterface.ExecuteScalarAsync(statement).ConfigureAwait(false);
 
             return Descriptor.ProjectColumnValue<TId>(id);
+        }
+
+        /// <inheritdoc />
+        public async Task CreateCollectionAsync(IEnumerable<T> objs)
+        {
+            if (objs == null) throw new ArgumentNullException(nameof(objs));
+
+            var statement = GetInsertDbStatement(objs);
+            var recordsAffected = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
+            if (recordsAffected == 0)
+            {
+                throw new InvalidOperationException(
+                    "Creation of collection failed, expected to insert at least 1 record but inserted none");
+            }
         }
 
         /// <inheritdoc />

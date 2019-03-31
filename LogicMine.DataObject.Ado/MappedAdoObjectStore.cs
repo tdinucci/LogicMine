@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using FastMember;
 using LogicMine.DataObject.Filter;
 
@@ -119,6 +120,71 @@ namespace LogicMine.DataObject.Ado
 
             var sql =
                 $"INSERT INTO {Descriptor.FullTableName} ({fieldNames}) VALUES ({parameterNames}) {GetSelectLastIdentityQuery()}";
+
+            return new DbStatement<TDbParameter>(sql, parameters.ToArray());
+        }
+
+        /// <inheritdoc />
+        protected override IDbStatement<TDbParameter> GetInsertDbStatement(IEnumerable<T> objs)
+        {
+            var objArray = objs?.ToArray();
+            if (objArray == null || !objArray.Any())
+                throw new ArgumentException($"Expected '{nameof(objs)}' to contain some objects");
+
+            var parameters = new List<TDbParameter>();
+
+            var typeAccessor = TypeAccessor.Create(typeof(T));
+            var members = typeAccessor.GetMembers();
+
+            // get just the fields names
+            var fieldBuilder = new StringBuilder();
+            foreach (var member in members)
+            {
+                var column = Descriptor.GetMappedColumnName(member.Name);
+                if (string.IsNullOrWhiteSpace(column) || !Descriptor.CanWrite(member.Name))
+                    continue;
+
+                if (fieldBuilder.Length > 0)
+                    fieldBuilder.Append(",");
+
+                fieldBuilder.Append(MakeColumnNameSafe(column));
+            }
+
+            // now get the parameters for each object
+            var paramBuilder = new StringBuilder();
+            for (var i = 0; i < objArray.Length; i++)
+            {
+                var obj = objArray[i];
+                var objectAccessor = ObjectAccessor.Create(obj);
+
+                paramBuilder.Append("(");
+                var isExistingParam = false;
+                for (var j = 0; j < members.Count; j++)
+                {
+                    var member = members[j];
+                    var column = Descriptor.GetMappedColumnName(member.Name);
+                    if (string.IsNullOrWhiteSpace(column) || !Descriptor.CanWrite(member.Name))
+                        continue;
+
+                    var paramName = $"@{column}{i}";
+                    var paramValue = Descriptor.ProjectPropertyValue(objectAccessor[member.Name], member.Name) ??
+                                     DBNull.Value;
+                    parameters.Add(GetDbParameter(paramName, paramValue));
+
+                    if (isExistingParam)
+                        paramBuilder.Append(",");
+
+                    paramBuilder.Append(paramName);
+                    isExistingParam = true;
+                }
+
+                paramBuilder.Append(")");
+                if (i < objArray.Length - 1)
+                    paramBuilder.AppendLine(",");
+            }
+
+            var sql =
+                $"INSERT INTO {Descriptor.FullTableName} ({fieldBuilder}) VALUES {paramBuilder} {GetSelectLastIdentityQuery()}";
 
             return new DbStatement<TDbParameter>(sql, parameters.ToArray());
         }

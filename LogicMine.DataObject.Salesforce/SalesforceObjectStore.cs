@@ -156,6 +156,14 @@ namespace LogicMine.DataObject.Salesforce
             return await SalesforceDataApi.CreateAsync(Descriptor.SalesforceTypeName, jobj).ConfigureAwait(false);
         }
 
+        public Task CreateCollectionAsync(IEnumerable<T> objs)
+        {
+            if (objs == null) throw new ArgumentNullException(nameof(objs));
+
+            var tasks = objs.Select(CreateAsync).Cast<Task>().ToArray();
+            return Task.WhenAll(tasks);
+        }
+
         public async Task UpdateAsync(string id, IDictionary<string, object> modifiedProperties)
         {
             if (string.IsNullOrWhiteSpace(id))
