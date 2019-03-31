@@ -42,8 +42,9 @@ namespace LogicMine.DataObject.Ado
             }
             finally
             {
+                var conn = cmd?.Connection;
                 cmd?.Dispose();
-                cmd?.Connection?.Dispose();
+                conn?.Dispose();
             }
         }
 
@@ -69,8 +70,9 @@ namespace LogicMine.DataObject.Ado
             }
             finally
             {
-                cmd?.Connection?.Dispose();
+                var conn = cmd?.Connection;
                 cmd?.Dispose();
+                conn?.Dispose();
             }
         }
 
