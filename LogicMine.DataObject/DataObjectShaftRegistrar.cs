@@ -1,3 +1,4 @@
+using LogicMine.DataObject.CreateCollection;
 using LogicMine.DataObject.CreateObject;
 using LogicMine.DataObject.DeleteObject;
 using LogicMine.DataObject.GetCollection;
@@ -39,7 +40,7 @@ namespace LogicMine.DataObject
             ITerminal<TRequest, TResponse> terminal)
             where TRequest : class, IRequest
             where TResponse : IResponse;
-        
+
         protected virtual IShaft<GetObjectRequest<T, TId>, GetObjectResponse<T>> BuildGetObjectShaft(
             IDataObjectStore<T, TId> objectStore)
         {
@@ -56,6 +57,12 @@ namespace LogicMine.DataObject
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new CreateObjectTerminal<T, TId>(objectStore));
+        }
+
+        protected virtual IShaft<CreateCollectionRequest<T>, CreateCollectionResponse> BuildCreateCollectionShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new CreateCollectionTerminal<T>(objectStore));
         }
 
         protected virtual IShaft<UpdateObjectRequest<T, TId>, UpdateObjectResponse> BuildUpdateObjectShaft(
@@ -79,6 +86,7 @@ namespace LogicMine.DataObject
                 BuildGetObjectShaft(objectStore),
                 BuildGetCollectionShaft(objectStore),
                 BuildCreateObjectShaft(objectStore),
+                BuildCreateCollectionShaft(objectStore),
                 BuildUpdateObjectShaft(objectStore),
                 BuildDeleteObjectShaft(objectStore)
             };
