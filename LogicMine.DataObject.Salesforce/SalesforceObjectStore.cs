@@ -189,5 +189,10 @@ namespace LogicMine.DataObject.Salesforce
 
             await SalesforceDataApi.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
         }
+
+        public Task DeleteCollectionAsync(IFilter<T> filter)
+        {
+            throw new NotSupportedException("This operation isn't supported on Salesforce");
+        }
     }
 }

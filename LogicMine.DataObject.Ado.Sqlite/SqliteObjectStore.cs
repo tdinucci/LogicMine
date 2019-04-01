@@ -1,4 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.Threading.Tasks;
+using LogicMine.DataObject.Filter;
+using Microsoft.Data.Sqlite;
 
 namespace LogicMine.DataObject.Ado.Sqlite
 {
@@ -19,6 +22,11 @@ namespace LogicMine.DataObject.Ado.Sqlite
         protected SqliteObjectStore(string connectionString, SqliteObjectDescriptor<T, TId> descriptor,
             IDbMapper<T> mapper) : base(new SqliteInterface(connectionString), descriptor, mapper)
         {
+        }
+
+        public override Task DeleteCollectionAsync(IFilter<T> filter)
+        {
+            throw new NotSupportedException("This operation isn't supported with SQLite");
         }
     }
 }

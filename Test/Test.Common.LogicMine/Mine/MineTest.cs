@@ -6,6 +6,7 @@ using LogicMine;
 using LogicMine.DataObject;
 using LogicMine.DataObject.CreateCollection;
 using LogicMine.DataObject.CreateObject;
+using LogicMine.DataObject.DeleteCollection;
 using LogicMine.DataObject.DeleteObject;
 using LogicMine.DataObject.Filter;
 using LogicMine.DataObject.GetCollection;
@@ -70,6 +71,10 @@ namespace Test.Common.LogicMine.Mine
 
                 .AddShaft(new Shaft<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse>(traceExporter,
                     new DeleteObjectTerminal<TFrog, TId>(objectStore),
+                    new SecurityStation()))
+                
+                .AddShaft(new Shaft<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse>(traceExporter,
+                    new DeleteCollectionTerminal<TFrog>(objectStore),
                     new SecurityStation()))
 
                 .AddShaft(new Shaft<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(traceExporter,
@@ -319,7 +324,72 @@ namespace Test.Common.LogicMine.Mine
                     Assert.NotEqual(id, frog.Id);
             }
         }
-        
+
+        [Fact]
+        public virtual void DeleteCollection()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 10);
+
+                // have 10, create 10 more that we'll delete with a filter
+                for (var i = 0; i < 10; i++)
+                {
+                    var frog = CreateFrog(i, $"Kermit{i}", DateTime.Today.AddDays(-150));
+
+                    var createRequest = new CreateObjectRequest<TFrog>(frog);
+                    createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+                    var createResponse =
+                        mine.SendAsync<CreateObjectRequest<TFrog>, CreateObjectResponse<TFrog, TId>>(createRequest)
+                            .GetAwaiter().GetResult();
+
+                    Assert.Null(createResponse.Error);
+                    Assert.False(string.IsNullOrWhiteSpace(createResponse.ObjectId.ToString()));
+                }
+
+                // ensure we've 20 items
+                var getCollectionRequest = new GetCollectionRequest<TFrog>();
+                getCollectionRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var getCollectionResponse = mine
+                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getCollectionRequest)
+                    .GetAwaiter().GetResult();
+                
+                Assert.Null(getCollectionResponse.Error);
+                Assert.True(getCollectionResponse.Objects.Length == 20);
+
+                // now do the delete
+                var request = new DeleteCollectionRequest<TFrog>(new Filter<TFrog>(new[]
+                {
+                    new FilterTerm("Name", FilterOperators.StartsWith, "Kermit")
+                }));
+                request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var response = mine
+                    .SendAsync<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse>(request)
+                    .GetAwaiter().GetResult();
+
+                if (!string.IsNullOrWhiteSpace(response.Error))
+                    throw new InvalidOperationException(response.Error);
+                
+                Assert.True(response.Success);
+                Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-5));
+                Assert.Null(response.Error);
+
+                // and ensure we've now got 10 items
+                getCollectionRequest = new GetCollectionRequest<TFrog>();
+                getCollectionRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                getCollectionResponse = mine
+                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(getCollectionRequest)
+                    .GetAwaiter().GetResult();
+
+                Assert.Null(getCollectionResponse.Error);
+                Assert.True(getCollectionResponse.Objects.Length == 10);
+            }
+        }
+
         [Fact]
         public void Create()
         {

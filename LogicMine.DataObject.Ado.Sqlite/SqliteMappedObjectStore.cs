@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using LogicMine.DataObject.Filter;
 using Microsoft.Data.Sqlite;
 
@@ -90,6 +91,11 @@ namespace LogicMine.DataObject.Ado.Sqlite
                 $"ORDER BY {Descriptor.PrimaryKey} LIMIT {max}";
 
             return new DbStatement<SqliteParameter>(query, sqlFilter.Parameters);
+        }
+
+        public override Task DeleteCollectionAsync(IFilter<T> filter)
+        {
+            throw new NotSupportedException("This operation isn't supported with SQLite");
         }
     }
 }

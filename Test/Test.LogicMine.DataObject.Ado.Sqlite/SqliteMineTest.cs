@@ -4,6 +4,7 @@ using LogicMine.DataObject;
 using Test.Common.LogicMine.DataType;
 using Test.Common.LogicMine.Mine;
 using Test.LogicMine.DataObject.Ado.Sqlite.Util;
+using Xunit;
 
 namespace Test.LogicMine.DataObject.Ado.Sqlite
 {
@@ -26,6 +27,12 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
         protected override Frog<int> CreateFrog(int index, string name, DateTime dateOfBirth)
         {
             return new Frog<int> {Name = name, DateOfBirth = dateOfBirth};
+        }
+
+        public override void DeleteCollection()
+        {
+            var ex = Assert.Throws<InvalidOperationException>(() => base.DeleteCollection());
+            Assert.Equal("This operation isn't supported with SQLite", ex.Message);
         }
 
         protected override void DeleteAll()

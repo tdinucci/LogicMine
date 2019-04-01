@@ -66,5 +66,11 @@ namespace LogicMine.DataObject
         /// <param name="objs">The objects to create</param>
         /// <returns></returns>
         Task CreateCollectionAsync(IEnumerable<T> objs);
+
+        /// <summary>
+        /// Delete a collection of T
+        /// </summary>
+        /// <param name="filter">The filter to apply to the set of T</param>
+        Task DeleteCollectionAsync(IFilter<T> filter);
     }
 }

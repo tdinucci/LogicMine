@@ -237,6 +237,18 @@ namespace LogicMine.DataObject.Ado
             return new DbStatement<TDbParameter>(statement, CommandType.Text, GetDbParameter("@Id", identity));
         }
 
+        /// <inheritdoc />
+        protected override IDbStatement<TDbParameter> GetDeleteCollectionDbStatement(IFilter<T> filter)
+        {
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
+
+            var dbFilter = GetDbFilter(filter);
+
+            var query = $"DELETE FROM {Descriptor.FullTableName} {dbFilter.WhereClause}";
+
+            return new DbStatement<TDbParameter>(query, dbFilter.Parameters);
+        }
+
         /// <summary>
         /// Returns a string formatted for a typical "select" statement which includes the columns that are readable
         /// </summary>

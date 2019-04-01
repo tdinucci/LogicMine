@@ -82,7 +82,7 @@ namespace LogicMine.DataObject.Ado
         /// <param name="objs">The T's to insert</param>
         /// <returns>A statement to represent the "insert" operation</returns>
         protected abstract IDbStatement<TDbParameter> GetInsertDbStatement(IEnumerable<T> objs);
-        
+
         /// <summary>
         /// Get a statement to perform an update of a record
         /// </summary>
@@ -98,6 +98,13 @@ namespace LogicMine.DataObject.Ado
         /// <param name="identity">The identity of the T to delete</param>
         /// <returns>A statement to represent the "delete" operation</returns>
         protected abstract IDbStatement<TDbParameter> GetDeleteDbStatement(TId identity);
+
+        /// <summary>
+        /// Get a statement to delete a collection of T
+        /// </summary>
+        /// <param name="filter">The filter to apply to the set of T</param>
+        /// <returns>A statement to represent the "delete" operation</returns>
+        protected abstract IDbStatement<TDbParameter> GetDeleteCollectionDbStatement(IFilter<T> filter);
 
         /// <summary>
         /// Ensures that a column identifier is safe, i.e. if the identifier is a reserved DB keyword 
@@ -121,13 +128,13 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public Task<T[]> GetCollectionAsync(int? max = null, int? page = null)
+        public virtual Task<T[]> GetCollectionAsync(int? max = null, int? page = null)
         {
             return GetCollectionAsync(null, max, page);
         }
 
         /// <inheritdoc />
-        public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
+        public virtual async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
         {
             var statement = GetSelectDbStatement(filter, max, page);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
@@ -144,7 +151,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public async Task<T> GetByIdAsync(TId id)
+        public virtual async Task<T> GetByIdAsync(TId id)
         {
             var statement = GetSelectDbStatement(id);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
@@ -157,7 +164,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public async Task<TId> CreateAsync(T obj)
+        public virtual async Task<TId> CreateAsync(T obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
@@ -168,7 +175,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public async Task CreateCollectionAsync(IEnumerable<T> objs)
+        public virtual async Task CreateCollectionAsync(IEnumerable<T> objs)
         {
             if (objs == null) throw new ArgumentNullException(nameof(objs));
 
@@ -182,7 +189,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public async Task UpdateAsync(TId id, IDictionary<string, object> modifiedProperties)
+        public virtual async Task UpdateAsync(TId id, IDictionary<string, object> modifiedProperties)
         {
             if (modifiedProperties == null) throw new ArgumentNullException(nameof(modifiedProperties));
 
@@ -197,7 +204,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public async Task DeleteAsync(TId id)
+        public virtual async Task DeleteAsync(TId id)
         {
             var statement = GetDeleteDbStatement(id);
             var recordsAffected = await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
@@ -206,6 +213,13 @@ namespace LogicMine.DataObject.Ado
                 throw new InvalidOperationException(
                     $"Delete failed, expected to update 1 record but updated {recordsAffected}");
             }
+        }
+
+        /// <inheritdoc />
+        public virtual async Task DeleteCollectionAsync(IFilter<T> filter)
+        {
+            var statement = GetDeleteCollectionDbStatement(filter);
+            await DbInterface.ExecuteNonQueryAsync(statement).ConfigureAwait(false);
         }
     }
 }

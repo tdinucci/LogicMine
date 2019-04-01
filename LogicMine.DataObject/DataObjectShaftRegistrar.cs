@@ -1,5 +1,6 @@
 using LogicMine.DataObject.CreateCollection;
 using LogicMine.DataObject.CreateObject;
+using LogicMine.DataObject.DeleteCollection;
 using LogicMine.DataObject.DeleteObject;
 using LogicMine.DataObject.GetCollection;
 using LogicMine.DataObject.GetObject;
@@ -77,6 +78,12 @@ namespace LogicMine.DataObject
             return GetBasicShaft(new DeleteObjectTerminal<T, TId>(objectStore));
         }
 
+        protected virtual IShaft<DeleteCollectionRequest<T>, DeleteCollectionResponse> BuildDeleteCollectionShaft(
+            IDataObjectStore<T, TId> objectStore)
+        {
+            return GetBasicShaft(new DeleteCollectionTerminal<T>(objectStore));
+        }
+
         private void AddStandardDataShafts(IMine mine)
         {
             var objectStore = GetDataObjectStore();
@@ -88,7 +95,8 @@ namespace LogicMine.DataObject
                 BuildCreateObjectShaft(objectStore),
                 BuildCreateCollectionShaft(objectStore),
                 BuildUpdateObjectShaft(objectStore),
-                BuildDeleteObjectShaft(objectStore)
+                BuildDeleteObjectShaft(objectStore),
+                BuildDeleteCollectionShaft(objectStore)
             };
 
             foreach (var shaft in shafts)

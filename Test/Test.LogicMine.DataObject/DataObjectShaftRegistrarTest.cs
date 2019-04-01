@@ -117,6 +117,11 @@ namespace Test.LogicMine.DataObject
             {
                 throw new TestCanceledException("Delete");
             }
+            
+            public Task DeleteCollectionAsync(IFilter<AltFrog> filter)
+            {
+                throw new TestCanceledException("DeleteCollection");
+            }
         }
     }
 }

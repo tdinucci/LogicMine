@@ -36,13 +36,13 @@ namespace Test.LogicMine
             {
                 var station1 = new TestStation(i);
                 Assert.Null(station1.Within);
-                
+
                 var station2 = new OtherTestStation(i);
                 Assert.Null(station1.Within);
-                
+
                 shaft.AddToTop(station1);
                 shaft.AddToBottom(station2);
-                
+
                 Assert.Equal(shaft, station1.Within);
                 Assert.Equal(shaft, station2.Within);
             }
@@ -87,7 +87,7 @@ Test.LogicMine.ShaftTest+TestStation Up
 
             var traceLines = exporter.Trace
                 .Split('\n')
-                .Where(l=>!string.IsNullOrWhiteSpace(l))
+                .Where(l => !string.IsNullOrWhiteSpace(l))
                 .ToArray();
 
             Assert.Equal(expectedLines.Length, traceLines.Length);
@@ -128,6 +128,24 @@ Test.LogicMine.ShaftTest+TestStation Up
             Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-1));
             Assert.False(response.Time.HasValue);
             Assert.Equal("Invalid access token", response.Error);
+        }
+
+        [Fact]
+        public async Task SendAsync_DisposableRequest()
+        {
+            var request = new GetDisposableTimeRequest();
+            request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+            Assert.False(request.IsDisposed);
+
+            var shaft = new Shaft<GetDisposableTimeRequest, GetTimeResponse>(new GetTimeTerminal(),
+                new SecurityStation());
+            var response = await shaft.SendAsync(request).ConfigureAwait(false);
+
+            Assert.True(request.IsDisposed);
+            Assert.NotEqual(Guid.Empty, response.RequestId);
+            Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-1));
+            Assert.True(response.Time < DateTime.Now && response.Time > DateTime.Now.AddSeconds(-1));
+            Assert.Null(response.Error);
         }
 
         private class OtherTestStation : TestStation

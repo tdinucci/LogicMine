@@ -171,6 +171,9 @@ namespace LogicMine
             {
                 scope?.Dispose();
 
+                if (request is IDisposable disposableRequest)
+                    disposableRequest.Dispose();
+
                 stopwatch.Stop();
                 if (basket != null)
                 {
