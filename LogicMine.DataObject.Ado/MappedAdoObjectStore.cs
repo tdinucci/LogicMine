@@ -55,12 +55,12 @@ namespace LogicMine.DataObject.Ado
         /// </summary>
         /// <returns>The last database identity value within the current scope</returns>
         protected abstract string GetSelectLastIdentityQuery();
-        
+
         /// <inheritdoc />
-        protected override IDbStatement<TDbParameter> GetSelectDbStatement(TId identity)
+        protected override IDbStatement<TDbParameter> GetSelectDbStatement(TId identity, string[] fields = null)
         {
             var query =
-                $"SELECT {GetSelectableColumns()} FROM {Descriptor.FullTableName} WHERE {Descriptor.PrimaryKey} = @Id";
+                $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.FullTableName} WHERE {Descriptor.PrimaryKey} = @Id";
             return new DbStatement<TDbParameter>(query, GetDbParameter("@Id", identity));
         }
 
@@ -73,11 +73,12 @@ namespace LogicMine.DataObject.Ado
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of records desired</param>
         /// <param name="page">The page within the results that is desired</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A statement to represent the "select" operation</returns>
         protected override IDbStatement<TDbParameter> GetSelectDbStatement(IFilter<T> filter, int? max = null,
-            int? page = null)
+            int? page = null, string[] fields = null)
         {
-            var query = $"SELECT {GetSelectableColumns()} FROM {Descriptor.FullTableName}";
+            var query = $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.FullTableName}";
             if (filter != null)
             {
                 var dbFilter = GetDbFilter(filter);
@@ -253,11 +254,15 @@ namespace LogicMine.DataObject.Ado
         /// Returns a string formatted for a typical "select" statement which includes the columns that are readable
         /// </summary>
         /// <returns>A comma seperated string containing the selectable column names</returns>
-        protected virtual string GetSelectableColumns()
+        protected virtual string GetSelectableColumns(string[] desiredFields)
         {
+            desiredFields = desiredFields ?? new string[0];
+
             var props = typeof(T).GetProperties();
             var colNames = props
-                .Where(prop => Descriptor.CanRead(prop.Name))
+                .Where(prop => Descriptor.CanRead(prop.Name) &&
+                               (!desiredFields.Any() ||
+                                desiredFields.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)))
                 .Select(prop => MakeColumnNameSafe(Descriptor.GetMappedColumnName(prop.Name)))
                 .Where(col => !string.IsNullOrWhiteSpace(col))
                 .ToArray();

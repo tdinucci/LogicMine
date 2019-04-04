@@ -14,7 +14,7 @@ namespace LogicMine.DataObject.Ado.PostgreSql
     {
         /// <inheritdoc />
         protected override string SafeIdentifierFormat => "\"{0}\"";
-        
+
         /// <summary>
         /// Construct a new PostgreSqlMappedObjectStore
         /// </summary>
@@ -59,33 +59,35 @@ namespace LogicMine.DataObject.Ado.PostgreSql
 
         /// <inheritdoc />
         protected override IDbStatement<NpgsqlParameter> GetSelectDbStatement(IFilter<T> filter, int? max = null,
-            int? page = null)
-        {   
+            int? page = null, string[] fields = null)
+        {
             var maxRecords = max.GetValueOrDefault(0);
             if (maxRecords > 0)
             {
                 if (filter != null)
-                    return GetSelectDbStatement(filter, maxRecords, page.GetValueOrDefault(0));
+                    return GetSelectDbStatement(filter, maxRecords, page.GetValueOrDefault(0), fields);
 
-                return GetSelectDbStatement(maxRecords, page.GetValueOrDefault(0));
+                return GetSelectDbStatement(maxRecords, page.GetValueOrDefault(0), fields);
             }
 
             return base.GetSelectDbStatement(filter, max, page);
         }
 
-        private IDbStatement<NpgsqlParameter> GetSelectDbStatement(int max, int page)
+        private IDbStatement<NpgsqlParameter> GetSelectDbStatement(int max, int page, string[] fields)
         {
-            var query = $"SELECT {GetSelectableColumns()} FROM {Descriptor.Table} ORDER BY {Descriptor.PrimaryKey} " +
-                        $"LIMIT {max} OFFSET {max} * {page};";
+            var query =
+                $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.Table} ORDER BY {Descriptor.PrimaryKey} " +
+                $"LIMIT {max} OFFSET {max} * {page};";
 
             return new DbStatement<NpgsqlParameter>(query);
         }
 
-        private IDbStatement<NpgsqlParameter> GetSelectDbStatement(IFilter<T> filter, int max, int page)
+        private IDbStatement<NpgsqlParameter> GetSelectDbStatement(IFilter<T> filter, int max, int page,
+            string[] fields)
         {
             var sqlFilter = GetDbFilter(filter);
 
-            var query = $"SELECT {GetSelectableColumns()} FROM {Descriptor.Table} " +
+            var query = $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.Table} " +
                         $"{sqlFilter.WhereClause} ORDER BY {Descriptor.PrimaryKey} " +
                         $"LIMIT {max} OFFSET {max} * {page};";
 

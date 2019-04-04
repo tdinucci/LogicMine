@@ -57,36 +57,37 @@ namespace LogicMine.DataObject.Ado.Sqlite
 
         /// <inheritdoc />
         protected override IDbStatement<SqliteParameter> GetSelectDbStatement(IFilter<T> filter, int? max = null,
-            int? page = null)
+            int? page = null, string[] fields = null)
         {
             var maxRecords = max.GetValueOrDefault(0);
             if (maxRecords > 0)
             {
                 if (filter != null)
-                    return GetSelectDbStatement(filter, maxRecords, page.GetValueOrDefault(0));
+                    return GetSelectDbStatement(filter, maxRecords, page.GetValueOrDefault(0), fields);
 
-                return GetSelectDbStatement(maxRecords, page.GetValueOrDefault(0));
+                return GetSelectDbStatement(maxRecords, page.GetValueOrDefault(0), fields);
             }
 
             return base.GetSelectDbStatement(filter, max, page);
         }
 
-        private IDbStatement<SqliteParameter> GetSelectDbStatement(int max, int page)
+        private IDbStatement<SqliteParameter> GetSelectDbStatement(int max, int page, string[] fields)
         {
             var query =
-                $"SELECT {GetSelectableColumns()} FROM {Descriptor.Table} WHERE {Descriptor.PrimaryKey} NOT IN (" +
+                $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.Table} WHERE {Descriptor.PrimaryKey} NOT IN (" +
                 $"SELECT {Descriptor.PrimaryKey} FROM {Descriptor.Table} ORDER BY {Descriptor.PrimaryKey} LIMIT {max * page}) " +
                 $"ORDER BY {Descriptor.PrimaryKey} LIMIT {max}";
 
             return new DbStatement<SqliteParameter>(query);
         }
 
-        private IDbStatement<SqliteParameter> GetSelectDbStatement(IFilter<T> filter, int max, int page)
+        private IDbStatement<SqliteParameter> GetSelectDbStatement(IFilter<T> filter, int max, int page,
+            string[] fields)
         {
             var sqlFilter = GetDbFilter(filter);
 
             var query =
-                $"SELECT {GetSelectableColumns()} FROM {Descriptor.Table} {sqlFilter.WhereClause} AND {Descriptor.PrimaryKey} NOT IN (" +
+                $"SELECT {GetSelectableColumns(fields)} FROM {Descriptor.Table} {sqlFilter.WhereClause} AND {Descriptor.PrimaryKey} NOT IN (" +
                 $"SELECT {Descriptor.PrimaryKey} FROM {Descriptor.Table} {sqlFilter.WhereClause} ORDER BY {Descriptor.PrimaryKey} LIMIT {max * page}) " +
                 $"ORDER BY {Descriptor.PrimaryKey} LIMIT {max}";
 

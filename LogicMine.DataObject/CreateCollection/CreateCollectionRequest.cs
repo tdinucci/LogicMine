@@ -18,13 +18,13 @@ namespace LogicMine.DataObject.CreateCollection
         /// <summary>
         /// The objects to create
         /// </summary>
-        public IEnumerable<T> Objects { get; }
+        public T[] Objects { get; }
 
         /// <summary>
         /// Construct a new CreateObjectCollectionRequest
         /// </summary>
         /// <param name="objs">The objects to create</param>
-        public CreateCollectionRequest(IEnumerable<T> objs)
+        public CreateCollectionRequest(T[] objs)
         {
             Objects = objs ?? throw new ArgumentNullException(nameof(objs));
         }

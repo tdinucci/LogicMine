@@ -20,12 +20,19 @@ namespace LogicMine.DataObject.GetObject
         public TId ObjectId { get; }
 
         /// <summary>
+        /// The names of the properties that are required, if null/empty then all properties will be selected
+        /// </summary>
+        public string[] Select { get; set; }
+
+        /// <summary>
         /// Construct a GetObjectRequest
         /// </summary>
         /// <param name="objectId">The identity of the object required</param>
-        public GetObjectRequest(TId objectId)
+        /// <param name="select">The names of the properties that are required, if null/empty then all properties will be selected</param>
+        public GetObjectRequest(TId objectId, string[] select = null)
         {
             ObjectId = objectId;
+            Select = @select;
         }
     }
 }

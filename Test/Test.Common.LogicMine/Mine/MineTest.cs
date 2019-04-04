@@ -439,7 +439,7 @@ namespace Test.Common.LogicMine.Mine
                     new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-6)},
                 };
 
-                var createRequest = new CreateCollectionRequest<TFrog>(frogs.Cast<TFrog>());
+                var createRequest = new CreateCollectionRequest<TFrog>(frogs.Cast<TFrog>().ToArray());
                 createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
                 var createResponse =
                     mine.SendAsync<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(createRequest)

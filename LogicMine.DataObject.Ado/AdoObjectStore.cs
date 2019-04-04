@@ -55,8 +55,9 @@ namespace LogicMine.DataObject.Ado
         /// Get a statement to select a single record
         /// </summary>
         /// <param name="identity">The identity of the T to select</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A statement to represent the "select" operation</returns>
-        protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(TId identity);
+        protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(TId identity, string[] fields = null);
 
         /// <summary>
         /// Get a statement to select all records of type T which match the request.
@@ -64,9 +65,10 @@ namespace LogicMine.DataObject.Ado
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of records desired</param>
         /// <param name="page">The page within the results that is desired</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A statement to represent the "select" operation</returns>
         protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(IFilter<T> filter, int? max = null,
-            int? page = null);
+            int? page = null, string[] fields = null);
 
         /// <summary>
         /// Get a statement to insert an object into the underlying database.
