@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\LogicMine.DataObject.Ado.PostgreSql\LogicMine.DataObject.Ado.PostgreSql.csproj" />
       <ProjectReference Include="..\Test.Common.LogicMine\Test.Common.LogicMine.csproj" />
+      <ProjectReference Include="..\Test.LogicMine.DataObject.Ado\Test.LogicMine.DataObject.Ado.csproj" />
     </ItemGroup>
 
 </Project>

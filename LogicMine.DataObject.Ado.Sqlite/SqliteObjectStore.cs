@@ -19,8 +19,10 @@ namespace LogicMine.DataObject.Ado.Sqlite
         /// <param name="connectionString">The db's connection string</param>
         /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
         /// <param name="mapper">An object-relational mapper</param>
+        /// <param name="transientErrorAwareExecutor">If provided all database operations will be executed within it.  The implementation will dictate things like the retry policy</param>
         protected SqliteObjectStore(string connectionString, SqliteObjectDescriptor<T, TId> descriptor,
-            IDbMapper<T> mapper) : base(new SqliteInterface(connectionString), descriptor, mapper)
+            IDbMapper<T> mapper, ITransientErrorAwareExecutor transientErrorAwareExecutor = null) :
+            base(new SqliteInterface(connectionString, transientErrorAwareExecutor), descriptor, mapper)
         {
         }
 

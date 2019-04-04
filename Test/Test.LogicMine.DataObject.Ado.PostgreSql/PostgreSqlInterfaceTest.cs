@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LogicMine.DataObject.Ado.PostgreSql;
 using Npgsql;
 using Test.Common.LogicMine;
+using Test.LogicMine.DataObject.Ado.Mock;
 using Test.LogicMine.DataObject.Ado.PostgreSql.Util;
 using Xunit;
 
@@ -79,6 +81,58 @@ namespace Test.LogicMine.DataObject.Ado.PostgreSql
                     Assert.Equal(recordCount, count);
                 }
             }
+        }
+
+        [Fact]
+        public async Task RetryContinuedFail()
+        {
+            var dbGenerator = new DbGenerator();
+            var dbInterface = new PostgreSqlInterface(dbGenerator.CreateDb(),
+                new MockTransientErrorAwareExecutor("42P01: relation \"nontable\" does not exist"));
+
+            const string query = "SELECT * FROM NonTable";
+
+            var statement = new PostgreSqlStatement(query);
+            var ex = await Assert
+                .ThrowsAsync<InvalidOperationException>(() => dbInterface.ExecuteScalarAsync(statement))
+                .ConfigureAwait(false);
+
+            Assert.Equal("Failed after 3 attempts", ex.Message);
+        }
+
+        [Fact]
+        public async Task FailNoRetry()
+        {
+            var dbGenerator = new DbGenerator();
+            var dbInterface = new PostgreSqlInterface(dbGenerator.CreateDb(),
+                new MockTransientErrorAwareExecutor("abcd"));
+
+            const string query = "SELECT * FROM NonTable";
+
+            var statement = new PostgreSqlStatement(query);
+            var ex = await Assert
+                .ThrowsAsync<PostgresException>(() => dbInterface.ExecuteScalarAsync(statement))
+                .ConfigureAwait(false);
+
+            Assert.Equal("42P01: relation \"nontable\" does not exist", ex.Message);
+        }
+
+        [Fact]
+        public async Task RetryAndRecover()
+        {
+            var passOnThirdAttemptFunc = new Func<Task<object>>(() => Task.FromResult((object) 123));
+
+            var dbGenerator = new DbGenerator();
+            var dbInterface = new PostgreSqlInterface(dbGenerator.CreateDb(),
+                new MockTransientErrorAwareExecutor("42P01: relation \"nontable\" does not exist",
+                    passOnThirdAttemptFunc));
+
+            const string query = "SELECT * FROM NonTable";
+
+            var statement = new PostgreSqlStatement(query);
+            var result = await dbInterface.ExecuteScalarAsync(statement).ConfigureAwait(false);
+
+            Assert.Equal(123, result);
         }
     }
 }

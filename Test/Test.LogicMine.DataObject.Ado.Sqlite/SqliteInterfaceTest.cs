@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using LogicMine.DataObject.Ado.Sqlite;
 using Microsoft.Data.Sqlite;
+using Test.LogicMine.DataObject.Ado.Mock;
 using Test.LogicMine.DataObject.Ado.Sqlite.Util;
 using Xunit;
 
@@ -80,6 +81,64 @@ namespace Test.LogicMine.DataObject.Ado.Sqlite
 
                     Assert.Equal(recordCount, count);
                 }
+            }
+        }
+
+        [Fact]
+        public async Task RetryContinuedFail()
+        {
+            using (var dbGenerator = new DbGenerator(DbFilename))
+            {
+                var dbInterface = new SqliteInterface(dbGenerator.CreateDb(),
+                    new MockTransientErrorAwareExecutor("SQLite Error 1: 'no such table: NonTable'."));
+
+                const string query = "SELECT * FROM NonTable";
+
+                var statement = new SqliteStatement(query);
+                var ex = await Assert
+                    .ThrowsAsync<InvalidOperationException>(() => dbInterface.ExecuteScalarAsync(statement))
+                    .ConfigureAwait(false);
+
+                Assert.Equal("Failed after 3 attempts", ex.Message);
+            }
+        }
+
+        [Fact]
+        public async Task FailNoRetry()
+        {
+            using (var dbGenerator = new DbGenerator(DbFilename))
+            {
+                var dbInterface = new SqliteInterface(dbGenerator.CreateDb(),
+                    new MockTransientErrorAwareExecutor("abcd"));
+
+                const string query = "SELECT * FROM NonTable";
+
+                var statement = new SqliteStatement(query);
+                var ex = await Assert
+                    .ThrowsAsync<SqliteException>(() => dbInterface.ExecuteScalarAsync(statement))
+                    .ConfigureAwait(false);
+
+                Assert.Equal("SQLite Error 1: 'no such table: NonTable'.", ex.Message);
+            }
+        }
+
+        [Fact]
+        public async Task RetryAndRecover()
+        {
+            var passOnThirdAttemptFunc = new Func<Task<object>>(() => Task.FromResult((object) 123));
+
+            using (var dbGenerator = new DbGenerator(DbFilename))
+            {
+                var dbInterface = new SqliteInterface(dbGenerator.CreateDb(),
+                    new MockTransientErrorAwareExecutor("SQLite Error 1: 'no such table: NonTable'.",
+                        passOnThirdAttemptFunc));
+
+                const string query = "SELECT * FROM NonTable";
+
+                var statement = new SqliteStatement(query);
+                var result = await dbInterface.ExecuteScalarAsync(statement).ConfigureAwait(false);
+
+                Assert.Equal(123, result);
             }
         }
     }

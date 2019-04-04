@@ -15,7 +15,9 @@ namespace LogicMine.DataObject.Ado.PostgreSql
         /// Construct a new PostgreSqlInterface
         /// </summary>
         /// <param name="connectionString">The db's connection string</param>
-        public PostgreSqlInterface(string connectionString)
+        /// <param name="transientErrorAwareExecutor">If provided all database operations will be executed within it.  The implementation will dictate things like the retry policy</param>
+        public PostgreSqlInterface(string connectionString,
+            ITransientErrorAwareExecutor transientErrorAwareExecutor = null) : base(transientErrorAwareExecutor)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(connectionString));

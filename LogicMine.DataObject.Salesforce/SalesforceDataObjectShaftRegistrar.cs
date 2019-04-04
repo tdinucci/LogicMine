@@ -8,19 +8,22 @@ namespace LogicMine.DataObject.Salesforce
     {
         protected IDataApi SalesforceDataApi { get; }
         protected SalesforceObjectDescriptor<T> Descriptor { get; }
+        protected ITransientErrorAwareExecutor TransientErrorAwareExecutor { get; }
 
         protected SalesforceDataObjectShaftRegistrar(IDataApi salesforceDataApi,
-            IDataObjectDescriptorRegistry descriptorRegistry)
+            IDataObjectDescriptorRegistry descriptorRegistry, 
+            ITransientErrorAwareExecutor transientErrorAwareExecutor = null)
         {
             if (descriptorRegistry == null) throw new ArgumentNullException(nameof(descriptorRegistry));
             SalesforceDataApi = salesforceDataApi ?? throw new ArgumentNullException(nameof(salesforceDataApi));
+            TransientErrorAwareExecutor = transientErrorAwareExecutor;
 
             Descriptor = descriptorRegistry.GetDescriptor<T, SalesforceObjectDescriptor<T>>();
         }
 
         protected override IDataObjectStore<T, string> GetDataObjectStore()
         {
-            return new SalesforceObjectStore<T>(SalesforceDataApi, Descriptor);
+            return new SalesforceObjectStore<T>(SalesforceDataApi, Descriptor, TransientErrorAwareExecutor);
         }
     }
 }

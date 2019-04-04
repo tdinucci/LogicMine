@@ -14,11 +14,15 @@ namespace LogicMine.DataObject.Salesforce
     {
         protected IDataApi SalesforceDataApi { get; }
         protected SalesforceObjectDescriptor<T> Descriptor { get; }
+        protected ITransientErrorAwareExecutor TransientErrorAwareExecutor { get; }
 
-        public SalesforceObjectStore(IDataApi salesforceDataApi, SalesforceObjectDescriptor<T> descriptor)
+        public SalesforceObjectStore(IDataApi salesforceDataApi, SalesforceObjectDescriptor<T> descriptor,
+            ITransientErrorAwareExecutor transientErrorAwareExecutor = null)
         {
             SalesforceDataApi = salesforceDataApi ?? throw new ArgumentNullException(nameof(salesforceDataApi));
             Descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
+            TransientErrorAwareExecutor = transientErrorAwareExecutor;
+
             if (Descriptor.DataType != typeof(T))
             {
                 throw new ArgumentException(
@@ -78,7 +82,7 @@ namespace LogicMine.DataObject.Salesforce
                     {
                         continue;
                     }
-                    
+
                     var mappedPropertyName = Descriptor.GetMappedColumnName(property.Name);
                     var propValue = record[mappedPropertyName].ToObject<object>();
                     var sfValue = Descriptor.ProjectColumnValue(propValue, property.PropertyType);
@@ -94,7 +98,8 @@ namespace LogicMine.DataObject.Salesforce
             return mappedObject;
         }
 
-        public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null, string[] fields = null)
+        public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null,
+            string[] fields = null)
         {
             var properties = Descriptor.GetReadableProperties();
 
@@ -106,7 +111,11 @@ namespace LogicMine.DataObject.Salesforce
                     query += $" OFFSET {page * max}";
             }
 
-            var queryResult = await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false);
+            var queryResult = TransientErrorAwareExecutor == null
+                ? await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false)
+                : await TransientErrorAwareExecutor.ExecuteAsync(() => SalesforceDataApi.QueryAsync(query))
+                    .ConfigureAwait(false);
+
             if (queryResult.Done)
             {
                 var result = new T[queryResult.Records.Length];
@@ -134,7 +143,11 @@ namespace LogicMine.DataObject.Salesforce
 
             var query = $"{GetSelectFromQuery(properties, fields)} {GetWhereClause(id)}";
 
-            var queryResult = await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false);
+            var queryResult = TransientErrorAwareExecutor == null
+                ? await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false)
+                : await TransientErrorAwareExecutor.ExecuteAsync(() => SalesforceDataApi.QueryAsync(query))
+                    .ConfigureAwait(false);
+
             if (queryResult.Done && queryResult.Records.Length == 1)
                 return MapObject(queryResult.Records[0], properties, fields);
 
@@ -161,7 +174,11 @@ namespace LogicMine.DataObject.Salesforce
 
             PrepareForCreation(jobj);
 
-            return await SalesforceDataApi.CreateAsync(Descriptor.SalesforceTypeName, jobj).ConfigureAwait(false);
+            return TransientErrorAwareExecutor == null
+                ? await SalesforceDataApi.CreateAsync(Descriptor.SalesforceTypeName, jobj).ConfigureAwait(false)
+                : await TransientErrorAwareExecutor.ExecuteAsync(() =>
+                    SalesforceDataApi.CreateAsync(Descriptor.SalesforceTypeName, jobj)).ConfigureAwait(false);
+            ;
         }
 
         public Task CreateCollectionAsync(IEnumerable<T> objs)
@@ -187,7 +204,14 @@ namespace LogicMine.DataObject.Salesforce
                 jobj.Add(mappedPropertyName, JToken.FromObject(modifiedProperty.Value));
             }
 
-            await SalesforceDataApi.UpdateAsync(Descriptor.SalesforceTypeName, id, jobj).ConfigureAwait(false);
+            if (TransientErrorAwareExecutor == null)
+                await SalesforceDataApi.UpdateAsync(Descriptor.SalesforceTypeName, id, jobj).ConfigureAwait(false);
+            else
+            {
+                await TransientErrorAwareExecutor.ExecuteAsync(() =>
+                    SalesforceDataApi.UpdateAsync(Descriptor.SalesforceTypeName, id, jobj)).ConfigureAwait(false);
+                ;
+            }
         }
 
         public async Task DeleteAsync(string id)
@@ -195,7 +219,13 @@ namespace LogicMine.DataObject.Salesforce
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
-            await SalesforceDataApi.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
+            if (TransientErrorAwareExecutor == null)
+                await SalesforceDataApi.DeleteAsync(Descriptor.SalesforceTypeName, id).ConfigureAwait(false);
+            else
+            {
+                await TransientErrorAwareExecutor.ExecuteAsync(() =>
+                    SalesforceDataApi.DeleteAsync(Descriptor.SalesforceTypeName, id)).ConfigureAwait(false);
+            }
         }
 
         public Task DeleteCollectionAsync(IFilter<T> filter)

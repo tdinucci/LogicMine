@@ -21,9 +21,11 @@ namespace LogicMine.DataObject.Ado.PostgreSql
         /// <param name="connectionString">The db's connection string</param>
         /// <param name="descriptor">Metadata to enable mapping T's to database tables</param>
         /// <param name="mapper">An object-relational mapper</param>
+        /// <param name="transientErrorAwareExecutor">If provided all database operations will be executed within it.  The implementation will dictate things like the retry policy</param>
         public PostgreSqlMappedObjectStore(string connectionString, PostgreSqlMappedObjectDescriptor<T, TId> descriptor,
-            IDbMapper<T> mapper = null) :
-            base(new PostgreSqlInterface(connectionString), descriptor, mapper ?? new DbMapper<T>(descriptor))
+            IDbMapper<T> mapper = null, ITransientErrorAwareExecutor transientErrorAwareExecutor = null) :
+            base(new PostgreSqlInterface(connectionString, transientErrorAwareExecutor), descriptor,
+                mapper ?? new DbMapper<T>(descriptor))
         {
         }
 
