@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using LogicMine.DataObject;
 using LogicMine.DataObject.GetObject;
 using Newtonsoft.Json.Linq;
@@ -27,7 +28,7 @@ namespace LogicMine.Routing.Json.DataObject
 
             if (!rawRequest.ContainsKey("type"))
                 throw new InvalidOperationException("Request does not specify a data type");
-            
+
             if (!rawRequest.ContainsKey("id"))
                 throw new InvalidOperationException("Request does not specify an Id");
 
@@ -35,8 +36,12 @@ namespace LogicMine.Routing.Json.DataObject
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);
             var id = rawRequest["id"].ToObject(descriptor.IdType);
 
+            string[] select = null;
+            if (rawRequest.ContainsKey("select"))
+                select = rawRequest["select"].Values<string>().ToArray();
+
             var requestType = typeof(GetObjectRequest<,>).MakeGenericType(descriptor.DataType, id.GetType());
-            return (IRequest) Activator.CreateInstance(requestType, id);
+            return (IRequest) Activator.CreateInstance(requestType, id, select);
         }
     }
 }

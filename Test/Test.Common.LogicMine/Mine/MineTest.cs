@@ -124,6 +124,32 @@ namespace Test.Common.LogicMine.Mine
         }
 
         [Fact]
+        public void GetWithSelectList()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var selectList = new[] {"Name", "DateOfBirth"};
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 10);
+
+                var id = GetRecordIdAsync(mine, 5).GetAwaiter().GetResult();
+
+                var getRequest = new GetObjectRequest<TFrog, TId>(id, selectList);
+                getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var response = mine
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .GetAwaiter().GetResult();
+
+                Assert.NotNull(response.Object);
+                Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-5));
+                Assert.Null(response.Error);
+                Assert.Equal(default(TId), response.Object.Id);
+                Assert.StartsWith("Frank", response.Object.Name);
+            }
+        }
+
+        [Fact]
         public void GetAll()
         {
             lock (GlobalLocker.Lock)
@@ -140,6 +166,29 @@ namespace Test.Common.LogicMine.Mine
 
                 Assert.Null(response.Error);
                 Assert.True(response.Objects.Length == 100);
+            }
+        }
+
+        [Fact]
+        public void GetAllSelectList()
+        {
+            lock (GlobalLocker.Lock)
+            {
+                var traceExporter = new TestTraceExporter();
+                var mine = CreateMine(traceExporter, 100);
+
+                var selectList = new[] {"Id", "DateOfBirth"};
+                var request = new GetCollectionRequest<TFrog>(null, null, null, selectList);
+                request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
+
+                var response = mine
+                    .SendAsync<GetCollectionRequest<TFrog>, GetCollectionResponse<TFrog>>(request)
+                    .GetAwaiter().GetResult();
+
+                Assert.Null(response.Error);
+                Assert.True(response.Objects.Length == 100);
+                Assert.DoesNotContain(response.Objects, o => o.Name != null);
+                Assert.Empty(response.Objects.Where(o => o.Id.Equals(default(TId))).ToArray());
             }
         }
 
@@ -220,7 +269,7 @@ namespace Test.Common.LogicMine.Mine
                 GetCollectionResponse<TFrog> response;
                 for (var i = 0; i < 8; i++)
                 {
-                    request = new GetCollectionRequest<TFrog>(filter, 6, i);
+                    request = new GetCollectionRequest<TFrog>(filter, 6, i, null);
                     request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                     response = mine
@@ -231,7 +280,7 @@ namespace Test.Common.LogicMine.Mine
                     Assert.True(response.Objects.Length == 6);
                 }
 
-                request = new GetCollectionRequest<TFrog>(filter, 6, 8);
+                request = new GetCollectionRequest<TFrog>(filter, 6, 8, null);
                 request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 response = mine
@@ -434,12 +483,12 @@ namespace Test.Common.LogicMine.Mine
 
                 var frogs = new[]
                 {
-                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-8)},
-                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-7)},
-                    new Frog<int> {Name = Guid.NewGuid().ToString(), DateOfBirth = DateTime.Today.AddDays(-6)},
+                    CreateFrog(1, Guid.NewGuid().ToString(), DateTime.Today.AddDays(-8)),
+                    CreateFrog(2, Guid.NewGuid().ToString(), DateTime.Today.AddDays(-7)),
+                    CreateFrog(3, Guid.NewGuid().ToString(), DateTime.Today.AddDays(-6))
                 };
 
-                var createRequest = new CreateCollectionRequest<TFrog>(frogs.Cast<TFrog>());
+                var createRequest = new CreateCollectionRequest<TFrog>(frogs.ToArray());
                 createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
                 var createResponse =
                     mine.SendAsync<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(createRequest)

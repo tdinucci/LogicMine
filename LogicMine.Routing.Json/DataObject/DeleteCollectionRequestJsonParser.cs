@@ -1,26 +1,29 @@
 using System;
-using System.Linq;
 using LogicMine.DataObject;
+using LogicMine.DataObject.DeleteCollection;
 using LogicMine.DataObject.Filter;
 using LogicMine.DataObject.Filter.Parse;
-using LogicMine.DataObject.GetCollection;
 using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Routing.Json.DataObject
 {
     /// <summary>
-    /// A parser which specialises in parsing GetCollectionRequests from JObjects
+    /// A parser which specialises in parsing DeleteCollectionRequests from JObjects
     /// </summary>
-    public class GetCollectionRequestJsonParser : JsonRequestParser
+    public class DeleteCollectionRequestJsonParser : JsonRequestParser
     {
         private readonly IDataObjectDescriptorRegistry _dataObjectDescriptor;
 
-        public GetCollectionRequestJsonParser(IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
+        /// <summary>
+        /// Construct a DeleteCollectionRequestJsonParser
+        /// </summary>
+        /// <param name="dataObjectDescriptorRegistry">The registry of data object descriptors</param>
+        public DeleteCollectionRequestJsonParser(IDataObjectDescriptorRegistry dataObjectDescriptorRegistry)
         {
             _dataObjectDescriptor =
                 dataObjectDescriptorRegistry ?? throw new ArgumentNullException(nameof(dataObjectDescriptorRegistry));
 
-            AddHandledRequestType("getCollection");
+            AddHandledRequestType("deleteCollection");
         }
 
         /// <inheritdoc />
@@ -30,14 +33,13 @@ namespace LogicMine.Routing.Json.DataObject
 
             if (!rawRequest.ContainsKey("type"))
                 throw new InvalidOperationException("Request does not specify a data type");
+            if (!rawRequest.ContainsKey("filter"))
+                throw new InvalidOperationException("Request does not specify a filter");
 
             var dataTypeName = rawRequest["type"].Value<string>();
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);
 
             IFilter filter = null;
-            int? max = null;
-            int? page = null;
-
             if (rawRequest.ContainsKey("filter"))
             {
                 var filterString = rawRequest["filter"].Value<string>();
@@ -50,18 +52,8 @@ namespace LogicMine.Routing.Json.DataObject
                 }
             }
 
-            if (rawRequest.ContainsKey("max"))
-                max = rawRequest["max"].Value<int?>();
-
-            if (rawRequest.ContainsKey("page"))
-                page = rawRequest["page"].Value<int?>();
-
-            string[] select = null;
-            if (rawRequest.ContainsKey("select"))
-                select = rawRequest["select"].Values<string>().ToArray();
-
-            var requestType = typeof(GetCollectionRequest<>).MakeGenericType(descriptor.DataType);
-            return (IRequest) Activator.CreateInstance(requestType, filter, max, page, select);
+            var requestType = typeof(DeleteCollectionRequest<>).MakeGenericType(descriptor.DataType);
+            return (IRequest) Activator.CreateInstance(requestType, filter);
         }
     }
 }

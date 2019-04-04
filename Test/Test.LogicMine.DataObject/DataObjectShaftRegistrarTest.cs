@@ -83,12 +83,12 @@ namespace Test.LogicMine.DataObject
         
         private class MyDataStore : IDataObjectStore<AltFrog, int>
         {
-            public Task<AltFrog[]> GetCollectionAsync(int? max = null, int? page = null)
+            public Task<AltFrog[]> GetCollectionAsync(int? max = null, int? page = null, string[] fields = null)
             {
                 throw new TestCanceledException("GetCollection");
             }
 
-            public Task<AltFrog[]> GetCollectionAsync(IFilter<AltFrog> filter, int? max = null, int? page = null)
+            public Task<AltFrog[]> GetCollectionAsync(IFilter<AltFrog> filter, int? max = null, int? page = null, string[] fields = null)
             {
                 throw new TestCanceledException("GetCollection");
             }
@@ -98,7 +98,7 @@ namespace Test.LogicMine.DataObject
                 throw new TestCanceledException("CreateCollection");
             }
 
-            public Task<AltFrog> GetByIdAsync(int id)
+            public Task<AltFrog> GetByIdAsync(int id, string[] fields = null)
             {
                 throw new TestCanceledException("Get");
             }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\LogicMine.Routing.Json\LogicMine.Routing.Json.csproj" />
+      <ProjectReference Include="..\Test.Common.LogicMine\Test.Common.LogicMine.csproj" />
     </ItemGroup>
 
     <ItemGroup>

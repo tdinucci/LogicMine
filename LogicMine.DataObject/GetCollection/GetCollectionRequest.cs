@@ -13,7 +13,7 @@ namespace LogicMine.DataObject.GetCollection
         /// The type to retrieve
         /// </summary>
         public Type ObjectType { get; } = typeof(T);
-        
+
         /// <summary>
         /// A filter to apply to the set of T
         /// </summary>
@@ -30,9 +30,14 @@ namespace LogicMine.DataObject.GetCollection
         public int? Page { get; }
 
         /// <summary>
+        /// The names of the properties that are required, if null/empty then all properties will be selected
+        /// </summary>
+        public string[] Select { get; }
+
+        /// <summary>
         /// Construct a new GetCollectionRequest
         /// </summary>
-        public GetCollectionRequest() : this(null, null, null)
+        public GetCollectionRequest() : this(null, null, null, null)
         {
         }
 
@@ -40,7 +45,7 @@ namespace LogicMine.DataObject.GetCollection
         /// Construct a new GetCollectionRequest
         /// </summary>
         /// <param name="filter">The filter to apply to the set of T</param>
-        public GetCollectionRequest(IFilter<T> filter) : this(filter, null, null)
+        public GetCollectionRequest(IFilter<T> filter) : this(filter, null, null, null)
         {
         }
 
@@ -49,7 +54,7 @@ namespace LogicMine.DataObject.GetCollection
         /// </summary>
         /// <param name="max">The maximum number of results to return</param>
         /// <param name="page">The page within the results</param>
-        public GetCollectionRequest(int max, int page) : this(null, max, page)
+        public GetCollectionRequest(int max, int page) : this(null, max, page, null)
         {
         }
 
@@ -59,7 +64,8 @@ namespace LogicMine.DataObject.GetCollection
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of results to return</param>
         /// <param name="page">The page within the results</param>
-        public GetCollectionRequest(IFilter<T> filter, int? max, int? page)
+        /// <param name="select">The names of the properties that are required, if null/empty then all properties will be selected</param>
+        public GetCollectionRequest(IFilter<T> filter, int? max, int? page, string[] select)
         {
             if (max.GetValueOrDefault(1) <= 0)
                 throw new ArgumentException($"The value for '{nameof(max)}' must be greater than 0");
@@ -69,6 +75,7 @@ namespace LogicMine.DataObject.GetCollection
             Filter = filter;
             Max = max;
             Page = page;
+            Select = select;
         }
     }
 }

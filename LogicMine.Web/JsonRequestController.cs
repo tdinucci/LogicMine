@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using LogicMine.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -28,7 +31,7 @@ namespace LogicMine.Web
         }
 
         /// <inheritdoc />
-        protected override IActionResult GetActionResult(IResponse response)
+        protected override IActionResult GetActionResult(JObject request, IResponse response)
         {
             var jsonResponse = JObject.FromObject(response, JsonSerializer.Create(new JsonSerializerSettings
             {
@@ -38,6 +41,7 @@ namespace LogicMine.Web
             if (!string.IsNullOrWhiteSpace(response.Error))
                 return GetErrorResponse(jsonResponse);
 
+            RemoveUnselectedProperties(request, jsonResponse);
             return GetSuccessResponse(jsonResponse);
         }
 
@@ -61,6 +65,60 @@ namespace LogicMine.Web
                 result.Add(ErrorField, response[ErrorField]);
 
             return new InternalServerErrorObjectResult(result);
+        }
+
+        // TODO: This is horribly hacky, do something nicer so this class doesn't have to know anything about specific requests/responses
+        // Purpose of this is to "prettify" the result, the unselected properties will be null in the result but it's nicer
+        // to not even return this to the client
+        private void RemoveUnselectedProperties(JObject request, JObject response)
+        {
+            if (request.ContainsKey("requestType"))
+            {
+                var requestType = request["requestType"].Value<string>();
+                var isGetObjectRequest = string.Equals(requestType, "getObject", StringComparison.OrdinalIgnoreCase);
+                var isGetCollectionRequest = !isGetObjectRequest && string.Equals(requestType, "getCollection",
+                                                 StringComparison.OrdinalIgnoreCase);
+
+                if (isGetObjectRequest || isGetCollectionRequest)
+                {
+                    if (request.ContainsKey("select") && request["select"].HasValues)
+                    {
+                        var selected = request["select"].Select(t => t.Value<string>()).ToArray();
+                        if (selected.Any())
+                        {
+                            if (isGetObjectRequest)
+                            {
+                                if (response["object"] is JObject jObject)
+                                    RemoveUnselectedPropertiesFromJObject(jObject, selected);
+                            }
+                            else if (response["objects"] is JArray objs)
+                            {
+                                foreach (var token in objs)
+                                {
+                                    if (token is JObject jObject)
+                                        RemoveUnselectedPropertiesFromJObject(jObject, selected);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RemoveUnselectedPropertiesFromJObject(JObject jObject, string[] selected)
+        {
+            var toRemove = new List<string>();
+            foreach (var child in jObject.Children())
+            {
+                if (child is JProperty prop &&
+                    !selected.Contains(prop.Name, StringComparer.OrdinalIgnoreCase))
+                {
+                    toRemove.Add(prop.Name);
+                }
+            }
+
+            foreach (var remove in toRemove)
+                jObject.Remove(remove);
         }
     }
 }

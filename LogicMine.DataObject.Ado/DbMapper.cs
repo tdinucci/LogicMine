@@ -27,7 +27,7 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual T MapObject(IDataRecord record)
+        public virtual T MapObject(IDataRecord record, string[] selected)
         {
             var result = new T();
             var accessor = TypeAccessor.Create(typeof(T));
@@ -36,6 +36,12 @@ namespace LogicMine.DataObject.Ado
             {
                 try
                 {
+                    if (selected != null && selected.Length > 0 &&
+                        !selected.Contains(member.Name, StringComparer.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
                     var columnName = Descriptor.GetMappedColumnName(member.Name);
                     if (!string.IsNullOrWhiteSpace(columnName))
                     {
@@ -61,11 +67,11 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual T[] MapObjects(IDataReader reader)
+        public virtual T[] MapObjects(IDataReader reader, string[] selectedFields)
         {
             var result = new List<T>();
             while (reader.Read())
-                result.Add(MapObject(reader));
+                result.Add(MapObject(reader, selectedFields));
 
             return result.ToArray();
         }

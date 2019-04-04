@@ -55,8 +55,9 @@ namespace LogicMine.DataObject.Ado
         /// Get a statement to select a single record
         /// </summary>
         /// <param name="identity">The identity of the T to select</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A statement to represent the "select" operation</returns>
-        protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(TId identity);
+        protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(TId identity, string[] fields = null);
 
         /// <summary>
         /// Get a statement to select all records of type T which match the request.
@@ -64,9 +65,10 @@ namespace LogicMine.DataObject.Ado
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of records desired</param>
         /// <param name="page">The page within the results that is desired</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A statement to represent the "select" operation</returns>
         protected abstract IDbStatement<TDbParameter> GetSelectDbStatement(IFilter<T> filter, int? max = null,
-            int? page = null);
+            int? page = null, string[] fields = null);
 
         /// <summary>
         /// Get a statement to insert an object into the underlying database.
@@ -128,21 +130,22 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual Task<T[]> GetCollectionAsync(int? max = null, int? page = null)
+        public virtual Task<T[]> GetCollectionAsync(int? max = null, int? page = null, string[] fields = null)
         {
-            return GetCollectionAsync(null, max, page);
+            return GetCollectionAsync(null, max, page, fields);
         }
 
         /// <inheritdoc />
-        public virtual async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
+        public virtual async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null,
+            string[] fields = null)
         {
-            var statement = GetSelectDbStatement(filter, max, page);
+            var statement = GetSelectDbStatement(filter, max, page, fields);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
             {
                 var objs = new List<T>();
                 while (await rdr.ReadAsync().ConfigureAwait(false))
                 {
-                    var obj = Mapper.MapObject(rdr);
+                    var obj = Mapper.MapObject(rdr, fields);
                     objs.Add(obj);
                 }
 
@@ -151,15 +154,15 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual async Task<T> GetByIdAsync(TId id)
+        public virtual async Task<T> GetByIdAsync(TId id, string[] fields)
         {
-            var statement = GetSelectDbStatement(id);
+            var statement = GetSelectDbStatement(id, fields);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
             {
                 if (!await rdr.ReadAsync().ConfigureAwait(false))
                     throw new InvalidOperationException($"No '{typeof(T)}' record found");
 
-                return Mapper.MapObject(rdr);
+                return Mapper.MapObject(rdr, fields);
             }
         }
 
