@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
 
-        <Version>2.0.7</Version>
+        <Version>2.0.8</Version>
         <Authors>Tony Di Nucci</Authors>
         <AssemblyTitle>LogicMine.DataObject.Salesforce</AssemblyTitle>
         <Description>Types which facilitate working with Salesforce as a data store</Description>
