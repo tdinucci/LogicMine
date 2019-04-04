@@ -1,5 +1,4 @@
 # LogicMine (master)
-*The master branch should not be considered stable - see version branches for stable code*
 
 *Master is currently v2 (beta) - documentation will be updated once it's completely stable*
 
