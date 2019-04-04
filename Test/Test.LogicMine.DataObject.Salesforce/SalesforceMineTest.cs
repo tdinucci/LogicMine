@@ -4,6 +4,7 @@ using LogicMine.DataObject;
 using Test.Common.LogicMine.DataType;
 using Test.Common.LogicMine.Mine;
 using Test.LogicMine.DataObject.Salesforce.Util;
+using Xunit;
 
 namespace Test.LogicMine.DataObject.Salesforce
 {
@@ -30,6 +31,12 @@ namespace Test.LogicMine.DataObject.Salesforce
         protected override Frog<string> CreateFrog(int index, string name, DateTime dateOfBirth)
         {
             return new Frog<string> {Name = name, DateOfBirth = dateOfBirth};
+        }
+
+        public override void DeleteCollection()
+        {
+            var ex = Assert.ThrowsAny<Exception>(() => base.DeleteCollection());
+            Assert.Equal("This operation isn't supported on Salesforce", ex.Message);
         }
 
         protected override void DeleteAll()

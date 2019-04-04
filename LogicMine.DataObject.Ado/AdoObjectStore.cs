@@ -130,21 +130,22 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual Task<T[]> GetCollectionAsync(int? max = null, int? page = null)
+        public virtual Task<T[]> GetCollectionAsync(int? max = null, int? page = null, string[] fields = null)
         {
-            return GetCollectionAsync(null, max, page);
+            return GetCollectionAsync(null, max, page, fields);
         }
 
         /// <inheritdoc />
-        public virtual async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
+        public virtual async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null,
+            string[] fields = null)
         {
-            var statement = GetSelectDbStatement(filter, max, page);
+            var statement = GetSelectDbStatement(filter, max, page, fields);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
             {
                 var objs = new List<T>();
                 while (await rdr.ReadAsync().ConfigureAwait(false))
                 {
-                    var obj = Mapper.MapObject(rdr);
+                    var obj = Mapper.MapObject(rdr, fields);
                     objs.Add(obj);
                 }
 
@@ -153,15 +154,15 @@ namespace LogicMine.DataObject.Ado
         }
 
         /// <inheritdoc />
-        public virtual async Task<T> GetByIdAsync(TId id)
+        public virtual async Task<T> GetByIdAsync(TId id, string[] fields)
         {
-            var statement = GetSelectDbStatement(id);
+            var statement = GetSelectDbStatement(id, fields);
             using (var rdr = await DbInterface.GetReaderAsync(statement).ConfigureAwait(false))
             {
                 if (!await rdr.ReadAsync().ConfigureAwait(false))
                     throw new InvalidOperationException($"No '{typeof(T)}' record found");
 
-                return Mapper.MapObject(rdr);
+                return Mapper.MapObject(rdr, fields);
             }
         }
 

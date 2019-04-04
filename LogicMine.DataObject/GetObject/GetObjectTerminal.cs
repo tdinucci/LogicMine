@@ -32,7 +32,7 @@ namespace LogicMine.DataObject.GetObject
             if (basket == null) throw new ArgumentNullException(nameof(basket));
             
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            var obj = await _dataObjectStore.GetByIdAsync(basket.Request.ObjectId).ConfigureAwait(false);
+            var obj = await _dataObjectStore.GetByIdAsync(basket.Request.ObjectId, basket.Request.Select).ConfigureAwait(false);
             basket.Response = new GetObjectResponse<T>(basket.Request, obj);
         }
     }

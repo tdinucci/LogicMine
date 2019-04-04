@@ -30,9 +30,11 @@ namespace LogicMine.DataObject.Salesforce
         {
         }
 
-        protected virtual string GetSelectFromQuery(IEnumerable<PropertyInfo> properties)
+        protected virtual string GetSelectFromQuery(IEnumerable<PropertyInfo> properties, string[] fields)
         {
             var selectList = properties
+                .Where(p => fields == null || fields.Length == 0 ||
+                            fields.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
                 .Select(p => Descriptor.GetMappedColumnName(p.Name))
                 .Aggregate((c, n) => $"{c},{n}");
 
@@ -64,13 +66,19 @@ namespace LogicMine.DataObject.Salesforce
             return $"WHERE Id = '{id}'";
         }
 
-        protected virtual T MapObject(JObject record, IEnumerable<PropertyInfo> properties)
+        protected virtual T MapObject(JObject record, IEnumerable<PropertyInfo> properties, string[] selected)
         {
             var mappedObject = new T();
             foreach (var property in properties)
             {
                 try
                 {
+                    if (selected != null && selected.Length > 0 &&
+                        !selected.Contains(property.Name, StringComparer.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    
                     var mappedPropertyName = Descriptor.GetMappedColumnName(property.Name);
                     var propValue = record[mappedPropertyName].ToObject<object>();
                     var sfValue = Descriptor.ProjectColumnValue(propValue, property.PropertyType);
@@ -86,11 +94,11 @@ namespace LogicMine.DataObject.Salesforce
             return mappedObject;
         }
 
-        public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null)
+        public async Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null, string[] fields = null)
         {
             var properties = Descriptor.GetReadableProperties();
 
-            var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(filter)}";
+            var query = $"{GetSelectFromQuery(properties, fields)} {GetWhereClause(filter)}";
             if (max.GetValueOrDefault(0) > 0)
             {
                 query += $" LIMIT {max}";
@@ -103,7 +111,7 @@ namespace LogicMine.DataObject.Salesforce
             {
                 var result = new T[queryResult.Records.Length];
                 for (var i = 0; i < result.Length; i++)
-                    result[i] = MapObject(queryResult.Records[i], properties);
+                    result[i] = MapObject(queryResult.Records[i], properties, fields);
 
                 return result;
             }
@@ -112,23 +120,23 @@ namespace LogicMine.DataObject.Salesforce
                 $"Failed to retrieve collection of {typeof(T)}  - [{query}] - Done: {queryResult.Done}, Count: {queryResult.TotalSize}");
         }
 
-        public Task<T[]> GetCollectionAsync(int? max = null, int? page = null)
+        public Task<T[]> GetCollectionAsync(int? max = null, int? page = null, string[] fields = null)
         {
-            return GetCollectionAsync(null, max, page);
+            return GetCollectionAsync(null, max, page, fields);
         }
 
-        public async Task<T> GetByIdAsync(string id)
+        public async Task<T> GetByIdAsync(string id, string[] fields = null)
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(id));
 
             var properties = Descriptor.GetReadableProperties();
 
-            var query = $"{GetSelectFromQuery(properties)} {GetWhereClause(id)}";
+            var query = $"{GetSelectFromQuery(properties, fields)} {GetWhereClause(id)}";
 
             var queryResult = await SalesforceDataApi.QueryAsync(query).ConfigureAwait(false);
             if (queryResult.Done && queryResult.Records.Length == 1)
-                return MapObject(queryResult.Records[0], properties);
+                return MapObject(queryResult.Records[0], properties, fields);
 
             throw new InvalidOperationException(
                 $"Failed to retrieve {typeof(T)}  - [{query}] - Done: {queryResult.Done}, Count: {queryResult.TotalSize}");

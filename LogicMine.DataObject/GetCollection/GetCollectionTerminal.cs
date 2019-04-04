@@ -29,19 +29,20 @@ namespace LogicMine.DataObject.GetCollection
         public override async Task AddResponseAsync(IBasket<GetCollectionRequest<T>, GetCollectionResponse<T>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
-            
+
             // just let any exceptions bubble up so they they can be handled by the Shaft
             var request = basket.Request;
             T[] collection;
 
             if (request.Filter != null)
             {
-                collection = await _dataObjectStore.GetCollectionAsync(request.Filter, request.Max, request.Page)
+                collection = await _dataObjectStore
+                    .GetCollectionAsync(request.Filter, request.Max, request.Page, request.Select)
                     .ConfigureAwait(false);
             }
             else
             {
-                collection = await _dataObjectStore.GetCollectionAsync(request.Max, request.Page)
+                collection = await _dataObjectStore.GetCollectionAsync(request.Max, request.Page, request.Select)
                     .ConfigureAwait(false);
             }
 

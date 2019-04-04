@@ -256,12 +256,10 @@ namespace LogicMine.DataObject.Ado
         /// <returns>A comma seperated string containing the selectable column names</returns>
         protected virtual string GetSelectableColumns(string[] desiredFields)
         {
-            desiredFields = desiredFields ?? new string[0];
-
             var props = typeof(T).GetProperties();
             var colNames = props
                 .Where(prop => Descriptor.CanRead(prop.Name) &&
-                               (!desiredFields.Any() ||
+                               (desiredFields == null || desiredFields.Length == 0 ||
                                 desiredFields.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)))
                 .Select(prop => MakeColumnNameSafe(Descriptor.GetMappedColumnName(prop.Name)))
                 .Where(col => !string.IsNullOrWhiteSpace(col))

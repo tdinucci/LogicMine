@@ -11,8 +11,9 @@ namespace LogicMine.DataObject
         /// Retrieve an object by id
         /// </summary>
         /// <param name="id">The id of the required object</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>The T with the given id</returns>
-        Task<T> GetByIdAsync(TId id);
+        Task<T> GetByIdAsync(TId id, string[] fields = null);
 
         /// <summary>
         /// Create a new T
@@ -48,8 +49,9 @@ namespace LogicMine.DataObject
         /// </summary>
         /// <param name="max">The maximum number of T's to retrieve</param>
         /// <param name="page">The page of results to retrieve</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A collection of T</returns>
-        Task<T[]> GetCollectionAsync(int? max = null, int? page = null);
+        Task<T[]> GetCollectionAsync(int? max = null, int? page = null, string[] fields = null);
 
         /// <summary>
         /// Retrieve a collection of T
@@ -57,8 +59,9 @@ namespace LogicMine.DataObject
         /// <param name="filter">The filter to apply to the set of T</param>
         /// <param name="max">The maximum number of T's to retrieve</param>
         /// <param name="page">The page of results to retrieve</param>
+        /// <param name="fields">The fields to select.  If null/empty then all fields are selected</param>
         /// <returns>A collection of T</returns>
-        Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null);
+        Task<T[]> GetCollectionAsync(IFilter<T> filter, int? max = null, int? page = null, string[] fields = null);
 
         /// <summary>
         /// Create a new collection of T

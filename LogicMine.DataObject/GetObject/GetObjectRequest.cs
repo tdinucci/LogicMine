@@ -22,7 +22,7 @@ namespace LogicMine.DataObject.GetObject
         /// <summary>
         /// The names of the properties that are required, if null/empty then all properties will be selected
         /// </summary>
-        public string[] Select { get; set; }
+        public string[] Select { get; }
 
         /// <summary>
         /// Construct a GetObjectRequest

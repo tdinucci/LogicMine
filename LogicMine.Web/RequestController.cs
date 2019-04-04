@@ -29,9 +29,10 @@ namespace LogicMine.Web
         /// <summary>
         /// Returns an action result which suits the response, e.g. HTTP 200 on success and HTTP 500 on error
         /// </summary>
+        /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        protected abstract IActionResult GetActionResult(IResponse response);
+        protected abstract IActionResult GetActionResult(TRawRequest request, IResponse response);
 
         /// <summary>
         /// An endpoint for HTTP POST requests which contain requests.  These requests will be passed to the
@@ -46,7 +47,7 @@ namespace LogicMine.Web
             try
             {
                 var response = await _requestRouter.RouteAsync(request).ConfigureAwait(false);
-                return GetActionResult(response);
+                return GetActionResult(request, response);
             }
             catch (Exception ex)
             {

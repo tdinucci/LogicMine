@@ -61,7 +61,7 @@ namespace Test.LogicMine.DataObject.GetCollection
             
             var max = DateTime.Now.Millisecond;
             var page = DateTime.Now.Millisecond;
-            var request = new GetCollectionRequest<Frog<int>>(filter, max, page);
+            var request = new GetCollectionRequest<Frog<int>>(filter, max, page, null);
 
             Assert.False(string.IsNullOrWhiteSpace(request.Id.ToString()));
             Assert.True(request.Options != null && !request.Options.Any());

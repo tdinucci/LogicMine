@@ -17,16 +17,21 @@ namespace Test.LogicMine.Routing.Json.DataObject
             {
                 {"requestType", "createCollection"},
                 {"type", "intFrog"},
-                {"objects", JArray.FromObject(new[]
                 {
-                    new Frog<int>(),
-                    new Frog<int>(),
-                    new Frog<int>()
-                })}
+                    "objects", JArray.FromObject(new[]
+                    {
+                        new Frog<int>(),
+                        new Frog<int>(),
+                        new Frog<int>()
+                    })
+                }
             };
 
-            var request = new CreateCollectionRequestJsonParser(_helper.GetRegistry()).Parse(rawRequest);
-            Assert.IsType(typeof(CreateCollectionRequest<Frog<int>>), request);
+            var request = (CreateCollectionRequest<IntFrog>)
+                new CreateCollectionRequestJsonParser(_helper.GetRegistry()).Parse(rawRequest);
+
+            Assert.True(request.Objects.GetType() == typeof(IntFrog[]));
+            Assert.True(request.Objects.Length == 3);
         }
     }
 }

@@ -38,11 +38,14 @@ namespace LogicMine.Routing.Json.DataObject
 
             var dataTypeName = rawRequest["type"].Value<string>();
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);
-            var objs = rawRequest["objects"].Select(o => o.ToObject(descriptor.DataType));
-            var objArray = descriptor.DataType.MakeArrayType();
+            var objs = rawRequest["objects"].Select(o => o.ToObject(descriptor.DataType)).ToArray();
+            
+            // objs will be an array of object, we need an array of descriptor.DataType
+            var objArray = Array.CreateInstance(descriptor.DataType, objs.Length);
+            Array.Copy(objs, objArray, objs.Length);
 
             var requestType = typeof(CreateCollectionRequest<>).MakeGenericType(descriptor.DataType);
-            return (IRequest) Activator.CreateInstance(requestType, objs);
+            return (IRequest) Activator.CreateInstance(requestType, objArray);
         }
     }
 }

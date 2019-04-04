@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using LogicMine.DataObject;
 using LogicMine.DataObject.Filter;
 using LogicMine.DataObject.Filter.Parse;
@@ -29,7 +30,7 @@ namespace LogicMine.Routing.Json.DataObject
 
             if (!rawRequest.ContainsKey("type"))
                 throw new InvalidOperationException("Request does not specify a data type");
-            
+
             var dataTypeName = rawRequest["type"].Value<string>();
             var descriptor = _dataObjectDescriptor.GetDescriptor(dataTypeName);
 
@@ -55,8 +56,12 @@ namespace LogicMine.Routing.Json.DataObject
             if (rawRequest.ContainsKey("page"))
                 page = rawRequest["page"].Value<int?>();
 
+            string[] select = null;
+            if (rawRequest.ContainsKey("select"))
+                select = rawRequest["select"].Values<string>().ToArray();
+
             var requestType = typeof(GetCollectionRequest<>).MakeGenericType(descriptor.DataType);
-            return (IRequest) Activator.CreateInstance(requestType, filter, max, page);
+            return (IRequest) Activator.CreateInstance(requestType, filter, max, page, select);
         }
     }
 }

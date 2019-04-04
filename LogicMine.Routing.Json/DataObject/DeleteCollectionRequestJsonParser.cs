@@ -52,7 +52,7 @@ namespace LogicMine.Routing.Json.DataObject
                 }
             }
 
-            var requestType = typeof(DeleteCollectionRequest<>).MakeGenericType(descriptor.DataType, descriptor.IdType);
+            var requestType = typeof(DeleteCollectionRequest<>).MakeGenericType(descriptor.DataType);
             return (IRequest) Activator.CreateInstance(requestType, filter);
         }
     }

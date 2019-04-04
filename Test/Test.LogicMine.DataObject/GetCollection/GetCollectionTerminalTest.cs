@@ -90,7 +90,7 @@ namespace Test.LogicMine.DataObject.GetCollection
             var filter =
                 new Filter<Frog<int>>(new[] {new FilterTerm(nameof(Frog<int>.Id), FilterOperators.LessThanOrEqual, 5)});
             
-            var request = new GetCollectionRequest<Frog<int>>(filter, 3, 1);
+            var request = new GetCollectionRequest<Frog<int>>(filter, 3, 1, null);
             var basket = new Basket<GetCollectionRequest<Frog<int>>, GetCollectionResponse<Frog<int>>>(request);
             var terminal = new GetCollectionTerminal<Frog<int>>(store);
             await terminal.AddResponseAsync(basket).ConfigureAwait(false);

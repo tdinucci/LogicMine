@@ -9,22 +9,17 @@ namespace Test.LogicMine.Routing.Json
         {
             var registry = new DataObjectDescriptorRegistry();
             registry
-                .Register(new MyFrogDescriptor())
-                .Register(new MyAltFrogDescriptor());
+                .Register(new MyFrogDescriptor());
 
             return registry;
         }
+    }
 
-        private class IntFrog : Frog<int>
-        {
-        }
+    public class IntFrog : Frog<int>
+    {
+    }
 
-        private class MyFrogDescriptor : DataObjectDescriptor<IntFrog, int>
-        {
-        }
-
-        private class MyAltFrogDescriptor : DataObjectDescriptor<AltFrog, int>
-        {
-        }
+    public class MyFrogDescriptor : DataObjectDescriptor<IntFrog, int>
+    {
     }
 }
