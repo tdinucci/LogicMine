@@ -128,6 +128,18 @@ namespace LogicMine
             return response;
         }
 
+        async Task IContainingMine.SendAsync(IBasket parent, IBasket basket, bool inheritParentOptions)
+        {
+            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (basket == null) throw new ArgumentNullException(nameof(basket));
+
+            AssociateChildRequest(parent, basket.Request, inheritParentOptions);
+
+            await SendAsync(basket).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(basket.Response.Error))
+                throw new InvalidOperationException($"Child basket failed: {basket.Response.Error}");
+        }
+
         private void AssociateChildRequest(IBasket fromParent, IRequest toRequest, bool inheritParentOptions)
         {
             toRequest.ParentId = fromParent.Request.Id;
