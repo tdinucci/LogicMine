@@ -28,7 +28,7 @@ namespace Sample.LogicMine.Shop.Service
                 .AddSingleton<ITraceExporter>(traceExporter)
                 .AddSingleton(services) // used by IntelligentRequestRouter - see comments in that class
                 .AddSingleton(new DbConnectionString(connectionString))
-                .AddSingleton<IRequestRouter<JObject>, IntelligentRequestRouter>()
+                .AddSingleton<IRequestRouter<JObject>, SampleIntelligentJsonRequestRouter>()
                 //.AddSingleton<IRequestRouter<JObject>, SimpleRequestRouter>()
                 .AddMvc();
         }

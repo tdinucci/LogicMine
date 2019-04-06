@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
 
-        <Version>2.0.4</Version>
+        <Version>2.0.5</Version>
         <Authors>Tony Di Nucci</Authors>
         <AssemblyTitle>LogicMine.Web</AssemblyTitle>
         <Description>Types which facilitate the operation of LogicMines over HTTP</Description>
@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\LogicMine.Routing.Json\LogicMine.Routing.Json.csproj" />
       <ProjectReference Include="..\LogicMine.Routing\LogicMine.Routing.csproj" />
     </ItemGroup>
 
