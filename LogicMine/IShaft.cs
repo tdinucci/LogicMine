@@ -40,8 +40,6 @@ namespace LogicMine
         /// </summary>
         /// <param name="request">The request to send</param>
         /// <returns>The response from the shaft</returns>
-        /// <typeparam name="TRequest">The request type</typeparam>
-        /// <typeparam name="TResponse">The response type</typeparam>
         Task<TResponse> SendAsync(TRequest request);
     }
 

@@ -9,6 +9,7 @@
         <Description>The core LogicMine library</Description>
         <Copyright>Tony Di Nucci 2019</Copyright>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
 </Project>
