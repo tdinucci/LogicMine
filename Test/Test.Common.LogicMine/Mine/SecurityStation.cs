@@ -4,7 +4,7 @@ using LogicMine;
 
 namespace Test.Common.LogicMine.Mine
 {
-    public class SecurityStation : Station<IRequest, IResponse>
+    public class SecurityStation : FlexibleStation<IRequest, IResponse>
     {
         public const string AccessTokenOption = "AccessToken";
         public const string ValidAccessToken = "abc123";

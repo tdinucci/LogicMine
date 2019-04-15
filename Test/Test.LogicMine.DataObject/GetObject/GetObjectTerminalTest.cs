@@ -17,7 +17,7 @@ namespace Test.LogicMine.DataObject.GetObject
             var id = 6;
 
             var request = new GetObjectRequest<Frog<int>, int>(id);
-            var basket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>>>(request);
+            var basket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>, int>>(request);
             var terminal = new GetObjectTerminal<Frog<int>, int>(store);
             await terminal.AddResponseAsync(basket).ConfigureAwait(false);
 
@@ -34,7 +34,7 @@ namespace Test.LogicMine.DataObject.GetObject
             var id = 600;
 
             var request = new GetObjectRequest<Frog<int>, int>(id);
-            var basket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>>>(request);
+            var basket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>, int>>(request);
             var terminal = new GetObjectTerminal<Frog<int>, int>(store);
             var ex = await Assert.ThrowsAsync<InvalidOperationException>(()=>terminal.AddResponseAsync(basket)).ConfigureAwait(false);
 

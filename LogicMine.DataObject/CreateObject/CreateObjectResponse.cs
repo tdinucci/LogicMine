@@ -5,7 +5,7 @@ namespace LogicMine.DataObject.CreateObject
     /// </summary>
     /// <typeparam name="T">The type that was created</typeparam>
     /// <typeparam name="TId">The identity type on T</typeparam>
-    public class CreateObjectResponse<T, TId> : Response where T : class
+    public class CreateObjectResponse<T, TId> : Response<CreateObjectRequest<T>> where T : class
     {
         /// <summary>
         /// The id of the object that was created
@@ -16,7 +16,7 @@ namespace LogicMine.DataObject.CreateObject
         /// Construct a new CreateObjectResponse
         /// </summary>
         /// <param name="request">The request that lead to the response</param>
-        public CreateObjectResponse(IRequest request) : base(request)
+        public CreateObjectResponse(CreateObjectRequest<T> request) : base(request)
         {
         }
 
@@ -25,7 +25,7 @@ namespace LogicMine.DataObject.CreateObject
         /// </summary>
         /// <param name="request">The request that lead to the response</param>
         /// <param name="objectId">The id of the object that was created</param>
-        public CreateObjectResponse(IRequest request, TId objectId) : base(request)
+        public CreateObjectResponse(CreateObjectRequest<T> request, TId objectId) : base(request)
         {
             ObjectId = objectId;
         }

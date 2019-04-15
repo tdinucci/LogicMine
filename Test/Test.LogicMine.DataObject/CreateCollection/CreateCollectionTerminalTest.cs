@@ -24,7 +24,7 @@ namespace Test.LogicMine.DataObject.CreateCollection
             };
 
             var request = new CreateCollectionRequest<Frog<int>>(frogs);
-            var basket = new Basket<CreateCollectionRequest<Frog<int>>, CreateCollectionResponse>(request);
+            var basket = new Basket<CreateCollectionRequest<Frog<int>>, CreateCollectionResponse<Frog<int>>>(request);
 
             await terminal.AddResponseAsync(basket).ConfigureAwait(false);
 

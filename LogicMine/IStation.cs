@@ -16,7 +16,7 @@ namespace LogicMine
     /// <typeparam name="TResponse">The type of response handled by the station</typeparam>
     public interface IStation<in TRequest, TResponse> : IStation
         where TRequest : class, IRequest
-        where TResponse : IResponse
+        where TResponse : IResponse<TRequest>
     {
         /// <summary>
         /// Act on a basket on it's way down a shaft.

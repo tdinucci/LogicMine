@@ -137,7 +137,7 @@ Test.LogicMine.ShaftTest+TestStation Up
             request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
             Assert.False(request.IsDisposed);
 
-            var shaft = new Shaft<GetDisposableTimeRequest, GetTimeResponse>(new GetTimeTerminal(),
+            var shaft = new Shaft<GetDisposableTimeRequest, GetDisposableTimeResponse>(new GetDisposableTimeTerminal(),
                 new SecurityStation());
             var response = await shaft.SendAsync(request).ConfigureAwait(false);
 
@@ -157,7 +157,7 @@ Test.LogicMine.ShaftTest+TestStation Up
             }
         }
 
-        private class TestStation : Station<IRequest, IResponse>
+        private class TestStation : FlexibleStation<IRequest, IResponse>
         {
             protected virtual string Option { get; } = "TS";
             

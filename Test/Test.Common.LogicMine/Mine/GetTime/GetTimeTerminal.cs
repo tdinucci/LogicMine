@@ -12,4 +12,13 @@ namespace Test.Common.LogicMine.Mine.GetTime
             return Task.CompletedTask;
         }
     }
+
+    public class GetDisposableTimeTerminal : Terminal<GetDisposableTimeRequest, GetDisposableTimeResponse>
+    {
+        public override Task AddResponseAsync(IBasket<GetDisposableTimeRequest, GetDisposableTimeResponse> basket)
+        {
+            basket.Response = new GetDisposableTimeResponse(basket.Request, DateTime.Now);
+            return Task.CompletedTask;
+        }
+    }
 }

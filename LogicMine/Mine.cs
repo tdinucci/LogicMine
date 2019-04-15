@@ -64,7 +64,7 @@ namespace LogicMine
         /// <inheritdoc />
         public async Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IRequest
-            where TResponse : IResponse
+            where TResponse : IResponse<TRequest>
         {
             try
             {

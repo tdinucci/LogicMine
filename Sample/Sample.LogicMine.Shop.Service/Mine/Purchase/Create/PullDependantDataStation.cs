@@ -30,7 +30,7 @@ namespace Sample.LogicMine.Shop.Service.Mine.Purchase.Create
             return Task.CompletedTask;
         }
 
-        private async Task<GetObjectResponse<T>> GetObjectAsync<T>(IBasket parent, int id)
+        private async Task<GetObjectResponse<T, int>> GetObjectAsync<T>(IBasket parent, int id)
         {
             var requestBasket = new GetObjectBasket<T, int>(new GetObjectRequest<T, int>(id));
             await Within.Within.SendAsync(parent, requestBasket);

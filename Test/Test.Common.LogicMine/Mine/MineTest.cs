@@ -57,7 +57,7 @@ namespace Test.Common.LogicMine.Mine
             return new global::LogicMine.Mine()
                 .AddShaft(createShaft)
 
-                .AddShaft(new Shaft<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(traceExporter,
+                .AddShaft(new Shaft<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(traceExporter,
                     new GetObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
 
@@ -65,19 +65,19 @@ namespace Test.Common.LogicMine.Mine
                     new GetCollectionTerminal<TFrog>(objectStore),
                     new SecurityStation()))
 
-                .AddShaft(new Shaft<UpdateObjectRequest<TFrog, TId>, UpdateObjectResponse>(traceExporter,
+                .AddShaft(new Shaft<UpdateObjectRequest<TFrog, TId>, UpdateObjectResponse<TFrog, TId>>(traceExporter,
                     new UpdateObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
 
-                .AddShaft(new Shaft<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse>(traceExporter,
+                .AddShaft(new Shaft<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse<TFrog, TId>>(traceExporter,
                     new DeleteObjectTerminal<TFrog, TId>(objectStore),
                     new SecurityStation()))
                 
-                .AddShaft(new Shaft<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse>(traceExporter,
+                .AddShaft(new Shaft<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse<TFrog>>(traceExporter,
                     new DeleteCollectionTerminal<TFrog>(objectStore),
                     new SecurityStation()))
 
-                .AddShaft(new Shaft<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(traceExporter,
+                .AddShaft(new Shaft<CreateCollectionRequest<TFrog>, CreateCollectionResponse<TFrog>>(traceExporter,
                     new CreateCollectionTerminal<TFrog>(objectStore),
                     new SecurityStation()))
 
@@ -112,7 +112,7 @@ namespace Test.Common.LogicMine.Mine
                 getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var response = mine
-                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(getRequest)
                     .GetAwaiter().GetResult();
 
                 Assert.NotNull(response.Object);
@@ -138,7 +138,7 @@ namespace Test.Common.LogicMine.Mine
                 getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var response = mine
-                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(getRequest)
                     .GetAwaiter().GetResult();
 
                 Assert.NotNull(response.Object);
@@ -308,7 +308,7 @@ namespace Test.Common.LogicMine.Mine
                 request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var response = mine
-                    .SendAsync<UpdateObjectRequest<TFrog, TId>, UpdateObjectResponse>(request)
+                    .SendAsync<UpdateObjectRequest<TFrog, TId>, UpdateObjectResponse<TFrog, TId>>(request)
                     .GetAwaiter().GetResult();
 
                 Assert.True(response.Success);
@@ -352,7 +352,7 @@ namespace Test.Common.LogicMine.Mine
                 request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var response = mine
-                    .SendAsync<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse>(request)
+                    .SendAsync<DeleteObjectRequest<TFrog, TId>, DeleteObjectResponse<TFrog, TId>>(request)
                     .GetAwaiter().GetResult();
 
                 Assert.True(response.Success);
@@ -416,7 +416,7 @@ namespace Test.Common.LogicMine.Mine
                 request.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var response = mine
-                    .SendAsync<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse>(request)
+                    .SendAsync<DeleteCollectionRequest<TFrog>, DeleteCollectionResponse<TFrog>>(request)
                     .GetAwaiter().GetResult();
 
                 if (!string.IsNullOrWhiteSpace(response.Error))
@@ -465,7 +465,7 @@ namespace Test.Common.LogicMine.Mine
                 getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var getResponse = mine
-                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(getRequest)
                     .GetAwaiter().GetResult();
 
                 Assert.Null(getResponse.Error);
@@ -491,7 +491,7 @@ namespace Test.Common.LogicMine.Mine
                 var createRequest = new CreateCollectionRequest<TFrog>(frogs.ToArray());
                 createRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
                 var createResponse =
-                    mine.SendAsync<CreateCollectionRequest<TFrog>, CreateCollectionResponse>(createRequest)
+                    mine.SendAsync<CreateCollectionRequest<TFrog>, CreateCollectionResponse<TFrog>>(createRequest)
                         .GetAwaiter().GetResult();
 
                 Assert.Null(createResponse.Error);
@@ -541,7 +541,7 @@ namespace Test.Common.LogicMine.Mine
                 getRequest.Options.Add(SecurityStation.AccessTokenOption, SecurityStation.ValidAccessToken);
 
                 var getResponse = mine
-                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(getRequest)
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(getRequest)
                     .GetAwaiter().GetResult();
 
                 Assert.Null(getResponse.Error);
@@ -601,7 +601,7 @@ namespace Test.Common.LogicMine.Mine
                 request.Options.Add(SecurityStation.AccessTokenOption, "xxxx");
 
                 var response = mine
-                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog>>(request)
+                    .SendAsync<GetObjectRequest<TFrog, TId>, GetObjectResponse<TFrog, TId>>(request)
                     .GetAwaiter().GetResult();
 
                 Assert.True(response.Date < DateTime.Now && response.Date > DateTime.Now.AddSeconds(-5));
@@ -642,15 +642,15 @@ namespace Test.Common.LogicMine.Mine
             }
         }
 
-        private class RevereStringResponse : Response
+        private class RevereStringResponse : Response<ReverseStringRequest>
         {
             public string Reversed { get; }
 
-            public RevereStringResponse(IRequest request) : base(request)
+            public RevereStringResponse(ReverseStringRequest request) : base(request)
             {
             }
 
-            public RevereStringResponse(IRequest request, string reversed) : this(request)
+            public RevereStringResponse(ReverseStringRequest request, string reversed) : this(request)
             {
                 Reversed = reversed;
             }

@@ -7,7 +7,7 @@ namespace LogicMine.DataObject.DeleteCollection
     /// A terminal which deletes a collection of objects from an IDataObjectStore
     /// </summary>
     /// <typeparam name="T">The type read</typeparam>
-    public class DeleteCollectionTerminal<T> : Terminal<DeleteCollectionRequest<T>, DeleteCollectionResponse>
+    public class DeleteCollectionTerminal<T> : Terminal<DeleteCollectionRequest<T>, DeleteCollectionResponse<T>>
     {
         private readonly IDataObjectStore<T> _dataObjectStore;
 
@@ -27,7 +27,7 @@ namespace LogicMine.DataObject.DeleteCollection
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown if the basket argument is null</exception>
         public override async Task AddResponseAsync(
-            IBasket<DeleteCollectionRequest<T>, DeleteCollectionResponse> basket)
+            IBasket<DeleteCollectionRequest<T>, DeleteCollectionResponse<T>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
 
@@ -40,7 +40,7 @@ namespace LogicMine.DataObject.DeleteCollection
                 throw new InvalidOperationException("A filter is required");
 
             await _dataObjectStore.DeleteCollectionAsync(request.Filter).ConfigureAwait(false);
-            basket.Response = new DeleteCollectionResponse(request, true);
+            basket.Response = new DeleteCollectionResponse<T>(request, true);
         }
     }
 }

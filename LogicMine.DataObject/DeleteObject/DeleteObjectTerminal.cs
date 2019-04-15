@@ -8,7 +8,7 @@ namespace LogicMine.DataObject.DeleteObject
     /// </summary>
     /// <typeparam name="T">The type to delete</typeparam>
     /// <typeparam name="TId">The identity type on T</typeparam>
-    public class DeleteObjectTerminal<T, TId> : Terminal<DeleteObjectRequest<T, TId>, DeleteObjectResponse>
+    public class DeleteObjectTerminal<T, TId> : Terminal<DeleteObjectRequest<T, TId>, DeleteObjectResponse<T, TId>>
     {
         private readonly IDataObjectStore<T, TId> _dataObjectStore;
 
@@ -27,13 +27,14 @@ namespace LogicMine.DataObject.DeleteObject
         /// <param name="basket">The basket which contains the request</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown if the basket argument is null</exception>
-        public override async Task AddResponseAsync(IBasket<DeleteObjectRequest<T, TId>, DeleteObjectResponse> basket)
+        public override async Task AddResponseAsync(
+            IBasket<DeleteObjectRequest<T, TId>, DeleteObjectResponse<T, TId>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
-            
+
             // just let any exceptions bubble up so they they can be handled by the Shaft
             await _dataObjectStore.DeleteAsync(basket.Request.ObjectId).ConfigureAwait(false);
-            basket.Response = new DeleteObjectResponse(basket.Request, true);
+            basket.Response = new DeleteObjectResponse<T, TId>(basket.Request, true);
         }
     }
 }

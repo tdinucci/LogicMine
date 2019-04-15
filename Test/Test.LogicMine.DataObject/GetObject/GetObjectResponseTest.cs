@@ -13,7 +13,7 @@ namespace Test.LogicMine.DataObject.GetObject
             var id = DateTime.Now.Millisecond;
             var frog = new Frog<int> {Id = id};
             var request = new GetObjectRequest<Frog<int>, int>(id);
-            var response = new GetObjectResponse<Frog<int>>(request, frog);
+            var response = new GetObjectResponse<Frog<int>, int>(request, frog);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);
@@ -31,7 +31,7 @@ namespace Test.LogicMine.DataObject.GetObject
         {
             var id = DateTime.Now.Millisecond;
             var request = new GetObjectRequest<Frog<int>, int>(id);
-            var response = new GetObjectResponse<Frog<int>>(request);
+            var response = new GetObjectResponse<Frog<int>, int>(request);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);

@@ -2,6 +2,20 @@ using System;
 
 namespace LogicMine
 {
+    /// <inheritdoc cref="IResponse{TRequest}" />
+    public class Response<TRequest> : Response, IResponse<TRequest> where TRequest : IRequest
+    {
+        /// <inheritdoc />
+        public Response(TRequest request) : base(request)
+        {
+        }
+
+        /// <inheritdoc />
+        public Response(TRequest request, string error) : base(request, error)
+        {
+        }
+    }
+
     /// <inheritdoc />
     public class Response : IResponse
     {

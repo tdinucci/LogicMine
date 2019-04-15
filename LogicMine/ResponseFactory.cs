@@ -16,11 +16,12 @@ namespace LogicMine
         /// <exception cref="InvalidOperationException">Thrown if the TResponse does not have a constructor which accepts only an IRequest</exception>
         public static TResponse Create<TResponse>(IRequest request) where TResponse : IResponse
         {
-            var ctor = typeof(TResponse).GetConstructor(new[] {typeof(IRequest)});
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            var ctor = typeof(TResponse).GetConstructor(new[] {request.GetType()});
             if (ctor == null)
             {
                 throw new InvalidOperationException(
-                    $"There is no ctor on '{typeof(TResponse)}' that accepts only an '{typeof(IRequest).Name}'");
+                    $"There is no ctor on '{typeof(TResponse)}' that accepts only a '{request.GetType().Name}'");
             }
 
             return (TResponse) ctor.Invoke(new object[] {request});

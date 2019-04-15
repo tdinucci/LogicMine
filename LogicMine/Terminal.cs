@@ -6,7 +6,7 @@ namespace LogicMine
     /// <inheritdoc cref="ITerminal{TRequest,TResponse}" />
     public abstract class Terminal<TRequest, TResponse> : ITerminal<TRequest, TResponse>, IInternalTerminal
         where TRequest : class, IRequest
-        where TResponse : IResponse
+        where TResponse : IResponse<TRequest>
     {
         /// <inheritdoc />
         public abstract Task AddResponseAsync(IBasket<TRequest, TResponse> basket);

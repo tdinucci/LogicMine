@@ -4,7 +4,7 @@ namespace LogicMine.DataObject.GetObject
     /// A response to a GetObjectRequest
     /// </summary>
     /// <typeparam name="T">The data type requested</typeparam>
-    public class GetObjectResponse<T> : Response
+    public class GetObjectResponse<T, TId> : Response<GetObjectRequest<T, TId>>
     {
         /// <summary>
         /// The data type requested
@@ -20,7 +20,7 @@ namespace LogicMine.DataObject.GetObject
         /// Construct a GetObjectResponse 
         /// </summary>
         /// <param name="request">The request that lead to the response</param>
-        public GetObjectResponse(IRequest request) : base(request)
+        public GetObjectResponse(GetObjectRequest<T, TId> request) : base(request)
         {
         }
 
@@ -29,7 +29,7 @@ namespace LogicMine.DataObject.GetObject
         /// </summary>
         /// <param name="request">The request that lead to the response</param>
         /// <param name="obj">The resulting object</param>
-        public GetObjectResponse(IRequest request, T obj) : base(request)
+        public GetObjectResponse(GetObjectRequest<T, TId> request, T obj) : base(request)
         {
             ObjectType = typeof(T).Name;
             Object = obj;

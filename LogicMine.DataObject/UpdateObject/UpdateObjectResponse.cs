@@ -3,7 +3,7 @@ namespace LogicMine.DataObject.UpdateObject
     /// <summary>
     /// A response to an UpdateObjectRequest
     /// </summary>
-    public class UpdateObjectResponse : Response
+    public class UpdateObjectResponse<T, TId> : Response<UpdateObjectRequest<T, TId>>
     {
         /// <summary>
         /// True if the operation was successful
@@ -14,7 +14,7 @@ namespace LogicMine.DataObject.UpdateObject
         /// Construct a UpdateObjectResponse
         /// </summary>
         /// <param name="request">The request that lead to the response</param>
-        public UpdateObjectResponse(IRequest request) : base(request)
+        public UpdateObjectResponse(UpdateObjectRequest<T, TId> request) : base(request)
         {
         }
 
@@ -24,7 +24,8 @@ namespace LogicMine.DataObject.UpdateObject
         /// <param name="request">The request that lead to the response</param>
         /// <param name="success">True if the operation was successful</param>
         /// <param name="error">Any error that occurred updating the object</param>
-        public UpdateObjectResponse(IRequest request, bool success, string error = null) : base(request, error)
+        public UpdateObjectResponse(UpdateObjectRequest<T, TId> request, bool success, string error = null) :
+            base(request, error)
         {
             Success = success;
         }

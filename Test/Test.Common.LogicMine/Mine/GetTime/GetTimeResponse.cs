@@ -3,15 +3,29 @@ using LogicMine;
 
 namespace Test.Common.LogicMine.Mine.GetTime
 {
-    public class GetTimeResponse : Response
+    public class GetTimeResponse : Response<GetTimeRequest>
     {
         public DateTime? Time { get; }
 
-        public GetTimeResponse(IRequest request) : base(request)
+        public GetTimeResponse(GetTimeRequest request) : base(request)
         {
         }
 
-        public GetTimeResponse(IRequest request, DateTime time) : this(request)
+        public GetTimeResponse(GetTimeRequest request, DateTime time) : this(request)
+        {
+            Time = time;
+        }
+    }
+    
+    public class GetDisposableTimeResponse : Response<GetDisposableTimeRequest>
+    {
+        public DateTime? Time { get; }
+
+        public GetDisposableTimeResponse(GetDisposableTimeRequest request) : base(request)
+        {
+        }
+
+        public GetDisposableTimeResponse(GetDisposableTimeRequest request, DateTime time) : this(request)
         {
             Time = time;
         }

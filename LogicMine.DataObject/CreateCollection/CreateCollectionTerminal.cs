@@ -8,7 +8,7 @@ namespace LogicMine.DataObject.CreateCollection
     /// </summary>
     /// <typeparam name="T">The type to create</typeparam>
     public class CreateCollectionTerminal<T> :
-        Terminal<CreateCollectionRequest<T>, CreateCollectionResponse> where T : class
+        Terminal<CreateCollectionRequest<T>, CreateCollectionResponse<T>> where T : class
     {
         private readonly IDataObjectStore<T> _dataObjectStore;
 
@@ -28,13 +28,13 @@ namespace LogicMine.DataObject.CreateCollection
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown if the basket argument is null</exception>
         public override async Task AddResponseAsync(
-            IBasket<CreateCollectionRequest<T>, CreateCollectionResponse> basket)
+            IBasket<CreateCollectionRequest<T>, CreateCollectionResponse<T>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
 
             // just let any exceptions bubble up so they they can be handled by the Shaft
             await _dataObjectStore.CreateCollectionAsync(basket.Request.Objects).ConfigureAwait(false);
-            basket.Response = new CreateCollectionResponse(basket.Request, true);
+            basket.Response = new CreateCollectionResponse<T>(basket.Request, true);
         }
     }
 }

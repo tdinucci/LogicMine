@@ -36,7 +36,7 @@ namespace Test.LogicMine
             var request = new GetTimeRequest();
             var ex = Assert.Throws<InvalidOperationException>(() => ResponseFactory.Create<InvalidResponse>(request));
             Assert.Equal(
-                $"There is no ctor on '{typeof(InvalidResponse)}' that accepts only an '{typeof(IRequest).Name}'",
+                $"There is no ctor on '{typeof(InvalidResponse)}' that accepts only a '{typeof(GetTimeRequest).Name}'",
                 ex.Message);
         }
 

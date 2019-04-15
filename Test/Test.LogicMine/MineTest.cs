@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using LogicMine;
-using LogicMine.DataObject.GetObject;
 using Test.Common.LogicMine;
 using Xunit;
 
@@ -124,21 +123,6 @@ namespace Test.LogicMine
         }
 
         [Fact]
-        public async Task GetBadRequest()
-        {
-            var traceExporter = new TestTraceExporter();
-            var mine = CreateMine(traceExporter);
-
-            var request = new MyGetObjectRequest<Tadpole, int>(ValidAccessToken, 5);
-            var response = await mine.SendAsync<MyGetObjectRequest<Tadpole, int>, MyGetObjectResponse<Frog>>(request)
-                .ConfigureAwait(false);
-
-            Assert.Equal(
-                "Expected response to be a 'Test.LogicMine.MineTest+MyGetObjectResponse`1[Test.LogicMine.MineTest+Frog]' but it was a 'Test.LogicMine.MineTest+MyGetObjectResponse`1[Test.LogicMine.MineTest+Tadpole]'",
-                response.Error);
-        }
-
-        [Fact]
         public async Task ChildRequest()
         {
             var traceExporter = new TestTraceExporter();
@@ -249,7 +233,7 @@ Test.LogicMine.MineTest+SecurityStation Up
 
         private class DefaultShaft<TRequest, TResponse> : Shaft<TRequest, TResponse>
             where TRequest : class, IRequest
-            where TResponse : IResponse
+            where TResponse : IResponse<TRequest>
         {
             public DefaultShaft(ITraceExporter traceExporter, ITerminal<TRequest, TResponse> terminal,
                 params IStation<TRequest, TResponse>[] stations) : base(traceExporter, terminal, stations)
@@ -274,15 +258,15 @@ Test.LogicMine.MineTest+SecurityStation Up
             }
         }
 
-        private class MyGetObjectResponse<T> : Response
+        private class MyGetObjectResponse<T> : Response<MyGetObjectRequest<T, int>>
         {
             public T Object { get; }
 
-            public MyGetObjectResponse(IRequest request) : base(request)
+            public MyGetObjectResponse(MyGetObjectRequest<T, int> request) : base(request)
             {
             }
             
-            public MyGetObjectResponse(IRequest request, T obj) :base(request)
+            public MyGetObjectResponse(MyGetObjectRequest<T, int> request, T obj) :base(request)
             {
                 Object = obj;
             }
@@ -395,7 +379,7 @@ Test.LogicMine.MineTest+SecurityStation Up
             }
         }
 
-        private class SecurityStation : Station<IRequest, IResponse>
+        private class SecurityStation : FlexibleStation<IRequest, IResponse>
         {
             public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
             {

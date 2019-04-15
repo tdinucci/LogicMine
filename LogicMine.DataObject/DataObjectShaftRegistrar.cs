@@ -40,9 +40,9 @@ namespace LogicMine.DataObject
         protected abstract IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
             ITerminal<TRequest, TResponse> terminal)
             where TRequest : class, IRequest
-            where TResponse : IResponse;
+            where TResponse : IResponse<TRequest>;
 
-        protected virtual IShaft<GetObjectRequest<T, TId>, GetObjectResponse<T>> BuildGetObjectShaft(
+        protected virtual IShaft<GetObjectRequest<T, TId>, GetObjectResponse<T, TId>> BuildGetObjectShaft(
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new GetObjectTerminal<T, TId>(objectStore));
@@ -60,25 +60,25 @@ namespace LogicMine.DataObject
             return GetBasicShaft(new CreateObjectTerminal<T, TId>(objectStore));
         }
 
-        protected virtual IShaft<CreateCollectionRequest<T>, CreateCollectionResponse> BuildCreateCollectionShaft(
+        protected virtual IShaft<CreateCollectionRequest<T>, CreateCollectionResponse<T>> BuildCreateCollectionShaft(
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new CreateCollectionTerminal<T>(objectStore));
         }
 
-        protected virtual IShaft<UpdateObjectRequest<T, TId>, UpdateObjectResponse> BuildUpdateObjectShaft(
+        protected virtual IShaft<UpdateObjectRequest<T, TId>, UpdateObjectResponse<T, TId>> BuildUpdateObjectShaft(
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new UpdateObjectTerminal<T, TId>(objectStore));
         }
 
-        protected virtual IShaft<DeleteObjectRequest<T, TId>, DeleteObjectResponse> BuildDeleteObjectShaft(
+        protected virtual IShaft<DeleteObjectRequest<T, TId>, DeleteObjectResponse<T, TId>> BuildDeleteObjectShaft(
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new DeleteObjectTerminal<T, TId>(objectStore));
         }
 
-        protected virtual IShaft<DeleteCollectionRequest<T>, DeleteCollectionResponse> BuildDeleteCollectionShaft(
+        protected virtual IShaft<DeleteCollectionRequest<T>, DeleteCollectionResponse<T>> BuildDeleteCollectionShaft(
             IDataObjectStore<T, TId> objectStore)
         {
             return GetBasicShaft(new DeleteCollectionTerminal<T>(objectStore));

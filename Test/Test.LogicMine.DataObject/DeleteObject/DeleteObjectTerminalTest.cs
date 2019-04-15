@@ -22,7 +22,7 @@ namespace Test.LogicMine.DataObject.DeleteObject
 
             var id = 5;
             var request = new DeleteObjectRequest<Frog<int>, int>(id);
-            var basket = new Basket<DeleteObjectRequest<Frog<int>, int>, DeleteObjectResponse>(request);
+            var basket = new Basket<DeleteObjectRequest<Frog<int>, int>, DeleteObjectResponse<Frog<int>, int>>(request);
 
             await terminal.AddResponseAsync(basket).ConfigureAwait(false);
 

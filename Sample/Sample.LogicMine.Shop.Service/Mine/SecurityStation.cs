@@ -7,7 +7,7 @@ namespace Sample.LogicMine.Shop.Service.Mine
     /// <summary>
     /// This is a VERY basic station which just ensures that all requests contain a certain access token.
     /// </summary>
-    public class SecurityStation : Station<IRequest, IResponse>
+    public class SecurityStation : FlexibleStation<IRequest, IResponse>
     {
         private const string AccessTokenKey = "AccessToken";
         private const string ValidAccessToken = "123";

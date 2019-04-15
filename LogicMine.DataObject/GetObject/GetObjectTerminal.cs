@@ -8,7 +8,7 @@ namespace LogicMine.DataObject.GetObject
     /// </summary>
     /// <typeparam name="T">The required type</typeparam>
     /// <typeparam name="TId">The identity type on T</typeparam>
-    public class GetObjectTerminal<T, TId> : Terminal<GetObjectRequest<T, TId>, GetObjectResponse<T>>
+    public class GetObjectTerminal<T, TId> : Terminal<GetObjectRequest<T, TId>, GetObjectResponse<T, TId>>
     {
         private readonly IDataObjectStore<T, TId> _dataObjectStore;
 
@@ -27,13 +27,15 @@ namespace LogicMine.DataObject.GetObject
         /// <param name="basket">The basket that contains the request</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown if the basket argument is null</exception>
-        public override async Task AddResponseAsync(IBasket<GetObjectRequest<T, TId>, GetObjectResponse<T>> basket)
+        public override async Task AddResponseAsync(IBasket<GetObjectRequest<T, TId>, GetObjectResponse<T, TId>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
-            
+
             // just let any exceptions bubble up so they they can be handled by the Shaft
-            var obj = await _dataObjectStore.GetByIdAsync(basket.Request.ObjectId, basket.Request.Select).ConfigureAwait(false);
-            basket.Response = new GetObjectResponse<T>(basket.Request, obj);
+            var obj = await _dataObjectStore.GetByIdAsync(basket.Request.ObjectId, basket.Request.Select)
+                .ConfigureAwait(false);
+
+            basket.Response = new GetObjectResponse<T, TId>(basket.Request, obj);
         }
     }
 }

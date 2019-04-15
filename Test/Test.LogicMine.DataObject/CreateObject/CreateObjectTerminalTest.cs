@@ -33,7 +33,7 @@ namespace Test.LogicMine.DataObject.CreateObject
             var id = basket.Response.ObjectId;
 
             var readRequest = new GetObjectRequest<Frog<int>, int>(id);
-            var readBasket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>>>(readRequest);
+            var readBasket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>, int>>(readRequest);
             var readTerminal = new GetObjectTerminal<Frog<int>, int>(store);
             await readTerminal.AddResponseAsync(readBasket).ConfigureAwait(false);
 

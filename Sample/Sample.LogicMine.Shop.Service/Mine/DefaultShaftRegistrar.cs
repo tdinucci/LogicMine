@@ -20,7 +20,7 @@ namespace Sample.LogicMine.Shop.Service.Mine
         protected IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
             ITerminal<TRequest, TResponse> terminal) 
             where TRequest : class, IRequest 
-            where TResponse : IResponse
+            where TResponse : IResponse<TRequest>
         {
             return new Shaft<TRequest, TResponse>(_traceExporter, terminal, new SecurityStation());
         }

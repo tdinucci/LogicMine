@@ -13,7 +13,7 @@ namespace LogicMine
     /// <inheritdoc />
     public interface ITerminal<in TRequest, TResponse> : ITerminal
         where TRequest : class, IRequest
-        where TResponse : IResponse
+        where TResponse : IResponse<TRequest>
     {
         /// <summary>
         /// Add a response to the basket

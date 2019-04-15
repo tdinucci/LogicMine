@@ -10,7 +10,7 @@ namespace LogicMine
     /// <inheritdoc cref="IShaft{TRequest,TResponse}" />
     public class Shaft<TRequest, TResponse> : IShaft<TRequest, TResponse>, IInternalShaft
         where TRequest : class, IRequest
-        where TResponse : IResponse
+        where TResponse : IResponse<TRequest>
     {
         private readonly IList<IStation> _stations = new List<IStation>();
         private readonly ITerminal _terminal;

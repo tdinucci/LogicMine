@@ -34,7 +34,7 @@ namespace LogicMine
         Task<TResponse> SendAsync<TRequest, TResponse>(IBasket parent, TRequest request,
             bool inheritParentOptions = true)
             where TRequest : IRequest
-            where TResponse : IResponse;
+            where TResponse : IResponse<TRequest>;
 
         /// <summary>
         /// Sends a basket into the mine, the mine will choose the correct shaft to dispatch it to.

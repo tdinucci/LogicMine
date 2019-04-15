@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace LogicMine
 {
-    /// <inheritdoc cref="IStation{TRequest,TResponse}" />
-    public abstract class Station<TRequest, TResponse> : IStation<TRequest, TResponse>, IInternalStation
+    /// <inheritdoc cref="IStation" />
+    public abstract class FlexibleStation<TRequest, TResponse> : IStation, IInternalStation
         where TRequest : class, IRequest
-        where TResponse : IResponse<TRequest>
+        where TResponse : IResponse
     {
-        /// <inheritdoc cref="IStation{TRequest,TResponse}" />
+        /// <inheritdoc cref="IStation" />
         public IShaft Within { get; set; }
 
         /// <inheritdoc />
@@ -17,10 +17,18 @@ namespace LogicMine
         /// <inheritdoc />
         public Type ResponseType { get; } = typeof(TResponse);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Act on a basket on it's way down a shaft.
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
         public abstract Task DescendToAsync(IBasket<TRequest, TResponse> basket);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Act on a basket on it's way up a shaft.
+        /// </summary>
+        /// <param name="basket">The basket to act on</param>
+        /// <returns></returns>
         public virtual Task AscendFromAsync(IBasket<TRequest, TResponse> basket)
         {
             return Task.CompletedTask;

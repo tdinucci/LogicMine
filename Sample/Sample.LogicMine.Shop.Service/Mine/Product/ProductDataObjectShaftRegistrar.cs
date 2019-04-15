@@ -40,8 +40,8 @@ namespace Sample.LogicMine.Shop.Service.Mine.Product
                 .AddToBottom(new ValidationStation());
         }
 
-        protected override IShaft<DeleteObjectRequest<Product, int>, DeleteObjectResponse> BuildDeleteObjectShaft(
-            IDataObjectStore<Product, int> objectStore)
+        protected override IShaft<DeleteObjectRequest<Product, int>, DeleteObjectResponse<Product, int>>
+            BuildDeleteObjectShaft(IDataObjectStore<Product, int> objectStore)
         {
             // We don't want to allow for customers to be deleted, so prevent the base implementation from returning 
             // the default shaft.

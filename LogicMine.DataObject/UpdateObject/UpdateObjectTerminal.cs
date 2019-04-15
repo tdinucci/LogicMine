@@ -8,7 +8,7 @@ namespace LogicMine.DataObject.UpdateObject
     /// </summary>
     /// <typeparam name="T">The type to update</typeparam>
     /// <typeparam name="TId">The identity type on T</typeparam>
-    public class UpdateObjectTerminal<T, TId> : Terminal<UpdateObjectRequest<T, TId>, UpdateObjectResponse>
+    public class UpdateObjectTerminal<T, TId> : Terminal<UpdateObjectRequest<T, TId>, UpdateObjectResponse<T, TId>>
     {
         private readonly IDataObjectStore<T, TId> _dataObjectStore;
 
@@ -27,7 +27,8 @@ namespace LogicMine.DataObject.UpdateObject
         /// <param name="basket">The basket which contains the request</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Thrown if the basket is null</exception>
-        public override async Task AddResponseAsync(IBasket<UpdateObjectRequest<T, TId>, UpdateObjectResponse> basket)
+        public override async Task AddResponseAsync(
+            IBasket<UpdateObjectRequest<T, TId>, UpdateObjectResponse<T, TId>> basket)
         {
             if (basket == null) throw new ArgumentNullException(nameof(basket));
 
@@ -36,7 +37,7 @@ namespace LogicMine.DataObject.UpdateObject
                 .UpdateAsync(basket.Request.ObjectId, basket.Request.ModifiedProperties)
                 .ConfigureAwait(false);
 
-            basket.Response = new UpdateObjectResponse(basket.Request, true);
+            basket.Response = new UpdateObjectResponse<T, TId>(basket.Request, true);
         }
     }
 }

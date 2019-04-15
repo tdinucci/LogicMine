@@ -19,7 +19,7 @@ namespace Test.LogicMine.DataObject.CreateCollection
             };
             
             var request = new CreateCollectionRequest<Frog<int>>(frogs);
-            var response = new CreateCollectionResponse(request, true);
+            var response = new CreateCollectionResponse<Frog<int>>(request, true);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);

@@ -12,7 +12,7 @@ namespace Test.LogicMine.DataObject.DeleteObject
         {
             var id = DateTime.Now.Millisecond;
             var request = new DeleteObjectRequest<Frog<int>, int>(id);
-            var response = new DeleteObjectResponse(request);
+            var response = new DeleteObjectResponse<Frog<int>, int>(request);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);
@@ -29,7 +29,7 @@ namespace Test.LogicMine.DataObject.DeleteObject
         {
             var id = DateTime.Now.Millisecond;
             var request = new DeleteObjectRequest<Frog<int>, int>(id);
-            var response = new DeleteObjectResponse(request, true);
+            var response = new DeleteObjectResponse<Frog<int>, int>(request, true);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);
@@ -47,7 +47,7 @@ namespace Test.LogicMine.DataObject.DeleteObject
             var error = Guid.NewGuid().ToString();
             var id = DateTime.Now.Millisecond;
             var request = new DeleteObjectRequest<Frog<int>, int>(id);
-            var response = new DeleteObjectResponse(request, false, error);
+            var response = new DeleteObjectResponse<Frog<int>, int>(request, false, error);
 
             Assert.Equal(error, response.Error);
             Assert.Equal(request.Id, response.RequestId);

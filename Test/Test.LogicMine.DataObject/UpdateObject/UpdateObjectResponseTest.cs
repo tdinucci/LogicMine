@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using LogicMine.DataObject.CreateObject;
 using LogicMine.DataObject.UpdateObject;
 using Test.Common.LogicMine.DataType;
 using Xunit;
@@ -19,7 +18,7 @@ namespace Test.LogicMine.DataObject.UpdateObject
                 {nameof(Frog<int>.DateOfBirth), DateTime.Now},
             };
             var request = new UpdateObjectRequest<Frog<int>, int>(id, props);
-            var response = new UpdateObjectResponse(request, true);
+            var response = new UpdateObjectResponse<Frog<int>, int>(request, true);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);
@@ -41,7 +40,7 @@ namespace Test.LogicMine.DataObject.UpdateObject
                 {nameof(Frog<int>.DateOfBirth), DateTime.Now},
             };
             var request = new UpdateObjectRequest<Frog<int>, int>(id, props);
-            var response = new UpdateObjectResponse(request);
+            var response = new UpdateObjectResponse<Frog<int>, int>(request);
 
             Assert.Null(response.Error);
             Assert.Equal(request.Id, response.RequestId);
@@ -64,7 +63,7 @@ namespace Test.LogicMine.DataObject.UpdateObject
                 {nameof(Frog<int>.DateOfBirth), DateTime.Now},
             };
             var request = new UpdateObjectRequest<Frog<int>, int>(id, props);
-            var response = new UpdateObjectResponse(request, false, error);
+            var response = new UpdateObjectResponse<Frog<int>, int>(request, false, error);
 
             Assert.Equal(error, response.Error);
             Assert.Equal(request.Id, response.RequestId);

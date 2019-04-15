@@ -30,7 +30,7 @@ namespace LogicMine
         /// <returns>The response</returns>
         Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IRequest
-            where TResponse : IResponse;
+            where TResponse : IResponse<TRequest>;
 
         /// <summary>
         /// Sends a basket into the mine, the mine will choose the correct shaft to dispatch it to

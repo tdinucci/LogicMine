@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using LogicMine;
-using LogicMine.DataObject.DeleteObject;
-using LogicMine.DataObject.GetCollection;
 using LogicMine.DataObject.GetObject;
 using LogicMine.DataObject.UpdateObject;
 using Test.Common.LogicMine.DataType;
@@ -30,7 +27,7 @@ namespace Test.LogicMine.DataObject.UpdateObject
             };
             
             var request = new UpdateObjectRequest<Frog<int>, int>(id, modifiedProperties);
-            var basket = new Basket<UpdateObjectRequest<Frog<int>, int>, UpdateObjectResponse>(request);
+            var basket = new Basket<UpdateObjectRequest<Frog<int>, int>, UpdateObjectResponse<Frog<int>, int>>(request);
 
             await terminal.AddResponseAsync(basket).ConfigureAwait(false);
 
@@ -40,7 +37,7 @@ namespace Test.LogicMine.DataObject.UpdateObject
             Assert.False(string.IsNullOrEmpty(basket.Response.RequestId.ToString()));
 
             var readRequest = new GetObjectRequest<Frog<int>, int>(id);
-            var readBasket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>>>(readRequest);
+            var readBasket = new Basket<GetObjectRequest<Frog<int>, int>, GetObjectResponse<Frog<int>, int>>(readRequest);
             var readTerminal = new GetObjectTerminal<Frog<int>, int>(store);
             await readTerminal.AddResponseAsync(readBasket).ConfigureAwait(false);
 

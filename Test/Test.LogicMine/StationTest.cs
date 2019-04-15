@@ -51,7 +51,7 @@ namespace Test.LogicMine
             Assert.True(basket.Request.Options["opt1"].ToString() == AscendOption);
         }
 
-        private class TestStation : Station<GetTimeRequest, GetTimeResponse>
+        private class TestStation : FlexibleStation<GetTimeRequest, GetTimeResponse>
         {
             public override Task DescendToAsync(IBasket<GetTimeRequest, GetTimeResponse> basket)
             {

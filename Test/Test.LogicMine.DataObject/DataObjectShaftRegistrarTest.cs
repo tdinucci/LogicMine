@@ -68,7 +68,7 @@ namespace Test.LogicMine.DataObject
             }
         }
         
-        private class MyDefaultStation : Station<IRequest, IResponse>
+        private class MyDefaultStation : FlexibleStation<IRequest, IResponse>
         {
             public override Task DescendToAsync(IBasket<IRequest, IResponse> basket)
             {
