@@ -10,7 +10,7 @@ namespace LogicMine.DataObject
     {
         private static IEnumerable<PropertyInfo> _readablePropertyNames;
         private static HashSet<string> _propertyNames;
-        
+
         protected DataObjectDescriptor(params string[] readOnlyPropertyNames) :
             base(typeof(T), typeof(TId), readOnlyPropertyNames)
         {
@@ -32,7 +32,7 @@ namespace LogicMine.DataObject
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(propertyName));
 
             if (_propertyNames == null)
-                _propertyNames = DataType.GetProperties().Select(p => p.Name.ToLower()).ToHashSet();
+                _propertyNames = new HashSet<string>(DataType.GetProperties().Select(p => p.Name.ToLower()));
 
             return _propertyNames.Contains(propertyName.ToLower());
         }

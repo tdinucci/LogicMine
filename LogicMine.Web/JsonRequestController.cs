@@ -25,7 +25,7 @@ namespace LogicMine.Web
         /// </summary>
         /// <param name="requestRouter">The router which takes raw requests and dispatches them to a mine</param>
         /// <param name="errorExporter">The error exporter to use when errors occur</param>
-        public JsonRequestController(IRequestRouter<JObject> requestRouter, IErrorExporter errorExporter) :
+        public JsonRequestController(IRequestRouter<JObject> requestRouter, IErrorExporter errorExporter = null) :
             base(requestRouter, errorExporter)
         {
         }
