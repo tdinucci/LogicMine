@@ -1,5 +1,5 @@
 ## Walkthrough 1 - Hello World
-This walkthrough will take you through the process of building a very simple service that will allow us to ask a it to say "hello" to you personally.  How exciting :D
+This walkthrough will take you through the process of building a very simple service that will allow you to ask it to say "hello" to you personally.  How exciting :D
 
 You may feel that you're doing a lot of work for such a feeble payout and you'd be correct, there are much easier ways to get a computer to say hello to you.  However, LogicMine has been designed with complex applications in mind that are liable to be actively worked on over years and probably by teams of developers.  In such cases putting in a little extra effort at the start can come with massive rewards.
 
@@ -26,12 +26,12 @@ using Newtonsoft.Json.Linq;
 namespace HelloWorld.Controllers
 {
     [Route("api")]
-	public class MyRequestController : JsonRequestController
-	{
-	    public MyRequestController(IRequestRouter<JObject> requestRouter) : base(requestRouter)
-	    {
-	    }
-	}
+    public class MyRequestController : JsonRequestController
+    {
+        public MyRequestController(IRequestRouter<JObject> requestRouter) : base(requestRouter)
+        {
+        }
+    }
 }
 ```
 
@@ -44,9 +44,9 @@ using LogicMine;
 namespace HelloWorld.Mine
 {
     public class HelloRequest : Request
-	{
-	    public string Name { get; set; }
-	}
+    {
+        public string Name { get; set; }
+    }
 }
 ```
 
@@ -59,13 +59,13 @@ using LogicMine;
 namespace HelloWorld.Mine
 {
     public class HelloResponse : Response<HelloRequest>
-	{
-	    public string Greeting { get; set; }
+    {
+        public string Greeting { get; set; }
 
-	    public HelloResponse(HelloRequest request) : base(request)
-	    {
-	    }
-	}
+        public HelloResponse(HelloRequest request) : base(request)
+        {
+        }
+    }
 }
 ```
 
@@ -83,12 +83,12 @@ using LogicMine;
 namespace HelloWorld.Mine
 {
     public class HelloTerminal : Terminal<HelloRequest, HelloResponse>
-	{
-	    public override Task AddResponseAsync(IBasket<HelloRequest, HelloResponse> basket)
-	    {
-	        basket.Response = new HelloResponse(basket.Request) {Greeting = "Hello " + basket.Request.Name};
-	        return Task.CompletedTask;
-	    }
+    {
+        public override Task AddResponseAsync(IBasket<HelloRequest, HelloResponse> basket)
+        {
+            basket.Response = new HelloResponse(basket.Request) {Greeting = "Hello " + basket.Request.Name};
+            return Task.CompletedTask;
+        }
     }
 }
 ```
@@ -104,12 +104,12 @@ using LogicMine;
 namespace HelloWorld.Mine
 {
     public class HelloShaftRegistrar : ShaftRegistrar
-	{
-	    public override void RegisterShafts(IMine mine)
-	    {
-	        mine.AddShaft(new Shaft<HelloRequest, HelloResponse>(new HelloTerminal()));
-	    }
-	}
+    {
+        public override void RegisterShafts(IMine mine)
+        {
+            mine.AddShaft(new Shaft<HelloRequest, HelloResponse>(new HelloTerminal()));
+        }
+    }
 }
 ```
 
@@ -136,22 +136,22 @@ using Newtonsoft.Json.Linq;
 namespace HelloWorld
 {
     public class Startup
-	{
-	    public void ConfigureServices(IServiceCollection services)
-	    {
-	        var requestRouter = new IntelligentJsonRequestRouter(GetType().Assembly, services);
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var requestRouter = new IntelligentJsonRequestRouter(GetType().Assembly, services);
 
-	        services
-	            .AddSingleton(services)
-	            .AddSingleton<IRequestRouter<JObject>>(requestRouter)
-	            .AddMvc();
+            services
+                .AddSingleton(services)
+                .AddSingleton<IRequestRouter<JObject>>(requestRouter)
+                .AddMvc();
         }
 
-	    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-	    {
-	        app.UseMvc();
-	    }
-	}
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseMvc();
+        }
+    }
 }
 ```
 
