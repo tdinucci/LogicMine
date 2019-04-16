@@ -6,7 +6,10 @@ namespace Stations.Mine
     {
         public override void RegisterShafts(IMine mine)
         {
-            mine.AddShaft(new Shaft<HelloRequest, HelloResponse>(new HelloTerminal()));
+            mine.AddShaft(new Shaft<HelloRequest, HelloResponse>(new HelloTerminal(),
+                new ReverseResponseStation(),
+                new MakeNameUppercaseStation(),
+                new SurroundNameWithStarsStation()));
         }
     }
 }
