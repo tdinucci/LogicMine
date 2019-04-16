@@ -47,7 +47,7 @@ The diagram below shows our Widget mine built using layers.  A layer is simply a
 
 Since the shaft structure is still preserved we can still easily add shaft specific waypoints where required.
 
-### Coupling is evil
+### Limiting Coupling
 
 A key concept that must be understood is that waypoints within a mine SHOULD be relatively small and as loosely coupled as possible.  What we are aiming for are shafts where you can add and remove waypoints with little fear of corrupting the shaft.  In an ideal world you'd never edit a waypoint (since each edit introduces risk) and by keeping waypoints small and to the point you reduce the likelihood of needing/wanting to do this.
 
