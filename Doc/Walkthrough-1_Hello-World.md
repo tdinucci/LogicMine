@@ -13,34 +13,7 @@ Now, onwards...
 
 ```dotnet add package LogicMine.Web```
 
-#### 3. Implement IErrorExporter
-
-LogicMine will gently guide you down the path of logging what goes on in your system.  At the very least it expects that you define a mechanism for logging errors.  For now we just want to log errors to the console.
-
-Create a class called *MyErrorExporter* and add the following:
-
-```csharp
-using System;
-using LogicMine;
-    
-namespace HelloWorld
-{
-    public class MyErrorExporter : IErrorExporter
-	{
-	    public void ExportError(Exception exception)
-	    {
-	        ExportError(exception.Message);
-	    }
-
-	    public void ExportError(string error)
-	    {
-	        Console.Error.WriteLine("Error: " + error);
-	    }
-	}
-}
-```
-
-#### 4. Create the application request Controller
+#### 3. Create the application request Controller
 All types of request come into a LogicMine service through a single Web API controller.  The LogicMine framework covers everything that's needed however you need to provide an access point.  Create a new class called *MyRequestController* and add the following:
 
 ```csharp
@@ -55,15 +28,14 @@ namespace HelloWorld.Controllers
     [Route("api")]
 	public class MyRequestController : JsonRequestController
 	{
-	    public MyRequestController(IRequestRouter<JObject> requestRouter, IErrorExporter errorExporter) :
-        base(requestRouter, errorExporter)
+	    public MyRequestController(IRequestRouter<JObject> requestRouter) : base(requestRouter)
 	    {
 	    }
 	}
 }
 ```
 
-#### 5. Define a request
+#### 4. Define a request
 LogicMine services are message based and we'll define our request as:
 
 ```csharp
@@ -78,7 +50,7 @@ namespace HelloWorld.Mine
 }
 ```
 
-#### 6. Define a response
+#### 5. Define a response
 The response to a *HelloRequest* will look like:
 
 ```csharp
@@ -97,7 +69,7 @@ namespace HelloWorld.Mine
 }
 ```
 
-#### 7. Define a terminal
+#### 6. Define a terminal
 Each request travels down a processing pipeline (in LogicMine parlance this is referred to as a *Shaft*).  At the bottom of every shaft is a terminal and this is where a response to a request is generated.
 
 You will notice that the request and response travel through the shaft in an *IBasket*.  We'll get into more details on baskets in a later walk-through. For now it is enough to know that this is where our request is held and where we'll put the response. 
@@ -121,7 +93,7 @@ namespace HelloWorld.Mine
 }
 ```
 
- #### 8. Define a shaft registrar 
+ #### 7. Define a shaft registrar 
 So far we've defined our request and response types and also the way in which a response will be generated from a request.  The next step is to stitch this stuff together so that when a *HelloRequest* comes into our service it can pass down an appropriate shaft so that it hits our *HelloTerminal*.  
  
 For this we'll create a *ShaftRegistrar* which allows us to define the structure of our shaft and inject it into our applications *Mine* (a mine is the complete set of shafts for an application). 
@@ -141,12 +113,12 @@ namespace HelloWorld.Mine
 }
 ```
 
-#### 9. Modify Startup.cs
+#### 8. Modify Startup.cs
 If you created the service with *dotnet new webapi* then you should already have a Startup.cs file.  This needs to be modified so that everything that's needed to run our mine is set up.
 
 There are many options here however we'll keep things simple for now.
 
-LogicMine makes heavy use of the dependency-injection pattern and the standard .Net DI container is perfectly fine for our current needs.  We will tell the DI container about the *IErrorExporter* we defined earlier and also an *IRequestRouter*.
+LogicMine makes heavy use of the dependency-injection pattern and the standard .Net DI container is perfectly fine for our current needs.  We will tell the DI container about the *IRequestRouter*.
 
 Request routers intercept requests and forward them to appropriate shafts.  You may have noticed that the *MyRequestController* class accepts such a construct.  Quite simply the code below is saying that an *IntelligentJsonRequestRouter* will get passed into this controller and this will then be used to route our requests.  
 
@@ -172,7 +144,6 @@ namespace HelloWorld
 	        services
 	            .AddSingleton(services)
 	            .AddSingleton<IRequestRouter<JObject>>(requestRouter)
-	            .AddSingleton<IErrorExporter, MyErrorExporter>()
 	            .AddMvc();
         }
 
@@ -184,7 +155,7 @@ namespace HelloWorld
 }
 ```
 
-#### 10. Use service
+#### 9. Use service
 All that's left now is to build and run the service and then use it.
 
 The screenshot below is of a request sent to the service with Postman (however you can use any client you wish).  The request is at the top half of the image, i.e. 
