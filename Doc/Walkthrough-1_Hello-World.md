@@ -184,7 +184,7 @@ namespace HelloWorld
 }
 ```
 
-#### 10. Enjoy the bounty!
+#### 10. Use service
 All that's left now is to build and run the service and then use it.
 
 The screenshot below is of a request sent to the service with Postman (however you can use any client you wish).  The request is at the top half of the image, i.e. 
