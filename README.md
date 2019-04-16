@@ -1,6 +1,6 @@
 # LogicMine (master)
 
-*Master is currently v2 (beta) - documentation will be updated once it's completely stable*
+*Master is currently v2 (beta)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/64lxchshfdgpxccp/branch/master?svg=true)](https://ci.appveyor.com/project/tdinucci/logicmine-aed8p/branch/master)
 
