@@ -51,11 +51,14 @@ namespace Security
         protected override void PreprocessRequest(IRequest request)
         {
             var authHeader = _httpContextAccessor.HttpContext.Request.Headers[AuthorisationHeaderName].FirstOrDefault();
-            var authHeaderVal = AuthenticationHeaderValue.Parse(authHeader);
-            if (authHeaderVal.Scheme.Equals(AuthorisationSchemeName, StringComparison.OrdinalIgnoreCase))
+            if (authHeader != null)
             {
-                var accessToken = Uri.UnescapeDataString(authHeaderVal.Parameter);
-                request.Options.Add(AccessTokenOption, accessToken);
+                var authHeaderVal = AuthenticationHeaderValue.Parse(authHeader);
+                if (authHeaderVal.Scheme.Equals(AuthorisationSchemeName, StringComparison.OrdinalIgnoreCase))
+                {
+                    var accessToken = Uri.UnescapeDataString(authHeaderVal.Parameter);
+                    request.Options.Add(AccessTokenOption, accessToken);
+                }
             }
         }
     }
