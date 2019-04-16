@@ -1,4 +1,4 @@
-## Hello World Walkthrough
+## Walkthrough 1 - Hello World
 This walkthrough will take you through the process of building a very simple service that will allow us to ask a it to say "hello" to you personally.  How exciting :D
 
 You may feel that you're doing a lot of work for such a feeble payout and you'd be correct, there are much easier ways to get a computer to say hello to you.  However, LogicMine has been designed with complex applications in mind that are liable to be actively worked on over years and probably by teams of developers.  In such cases putting in a little extra effort at the start can come with massive rewards.
@@ -126,7 +126,7 @@ So far we've defined our request and response types and also the way in which a 
  
 For this we'll create a *ShaftRegistrar* which allows us to define the structure of our shaft and inject it into our applications *Mine* (a mine is the complete set of shafts for an application). 
 
-```cshart
+```csharp
 using LogicMine;
     
 namespace HelloWorld.Mine
