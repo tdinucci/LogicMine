@@ -71,8 +71,21 @@ Generally speaking, message based API’s can be much more maintainable than pro
 * Making system wide changes is generally simpler and safer.  With message based API’s all messages can be funnelled through a small set of entry points.  For example, there may be a general *Get(TMessage)* entry point which is called whether you are requesting Car’s, People, Widgets, or whatever other type you can imagine.  This means that a change to this single entry point (adding logging for example) is effectively applied to every call to get something.  With procedure based API’s you end up with a very high number of entry points and therefore it can be much harder to apply system wide changes.
 
 ### Usage
+*N.B. These walkthroughs are a work in progress and almost certainly full of typos.*
 
-Coming soon...
+[1. Hello World](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-1_Hello-World.md)
+
+[2. Stations](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-2_Stations.md)
+
+[3. Cross Shaft](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-3_Cross-Shaft.md)
+
+[4. Security](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-4_Security.md)
+
+[5. Tracing](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-5_Tracing.md)
+
+[6. Inter-station Communication](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-6_Inter-Station-Communication.md)
+
+[7. Database](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-7_Database.md)
 
 ### Dependencies
 
