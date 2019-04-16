@@ -87,6 +87,32 @@ Generally speaking, message based API’s can be much more maintainable than pro
 
 [7. Database](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-7_Database.md)
 
+Code for all walkthroughs is in the *Walkthrough* directory
+
+There is a sample client and server in the *Sample* directory
+
+### NuGet
+
+[LogicMine](https://www.nuget.org/packages/LogicMine/)
+
+[LogicMine.DataObject](https://www.nuget.org/packages/LogicMine.DataObject/)
+
+[LogicMine.DataObject.Ado](https://www.nuget.org/packages/LogicMine.DataObject.Ado/)
+
+[LogicMine.DataObject.Ado.PostgreSql](https://www.nuget.org/packages/LogicMine.DataObject.Ado.PostgreSql/)
+
+[LogicMine.DataObject.Ado.Sqlite](https://www.nuget.org/packages/LogicMine.DataObject.Ado.Sqlite/)
+
+[LogicMine.DataObject.Salesforce](https://www.nuget.org/packages/LogicMine.DataObject.Salesforce/)
+
+[LogicMine.Routing](https://www.nuget.org/packages/LogicMine.Routing/)
+
+[LogicMine.Routing.Json](https://www.nuget.org/packages/LogicMine.Routing.Json/)
+
+[LogicMine.Trace](https://www.nuget.org/packages/LogicMine.Trace/)
+
+[LogicMine.Web](https://www.nuget.org/packages/LogicMine.Web/)
+
 ### Dependencies
 
 LogicMine.DataObject depends on https://github.com/mgravell/fast-member
