@@ -184,4 +184,30 @@ namespace HelloWorld
 }
 ```
 
+#### 10. Enjoy the bounty!
+All that's left now is to build and run the service and then use it.
+
+The screenshot below is of a request sent to the service with Postman (however you can use any client you wish).  The request is at the top half of the image, i.e. 
+
+**POST** to http://localhost:8080 
+```json
+{
+    "requestType": "hello",
+    "name": "Jim"
+}
+```
+
+Which leads to a response of:
+
+```json
+{
+    "greeting": "Hello Jim",
+    "requestId": "6ab1a651-21b2-47ef-8903-c52929ef8df3",
+    "date": "2019-04-16T12:34:30.4480137+01:00"
+}
+```
+
+![alt text](Images/Walkthrough/Hello-World_Postman.png)
+
+
 
