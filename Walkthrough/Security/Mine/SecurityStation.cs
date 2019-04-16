@@ -2,11 +2,8 @@ using System;
 using System.Threading.Tasks;
 using LogicMine;
 
-namespace Sample.LogicMine.Shop.Service.Mine
+namespace Security.Mine
 {
-    /// <summary>
-    /// This is a VERY basic station which just ensures that all requests contain a certain access token.
-    /// </summary>
     public class SecurityStation : FlexibleStation<IRequest, IResponse>
     {
         private const string AccessTokenKey = "AccessToken";
