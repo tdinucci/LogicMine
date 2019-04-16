@@ -208,17 +208,17 @@ There are a number of screenshots below showing various operations that we can n
 
 N.B. The current implementation is completely reliant on DB level validation which you obviously wouldn't want in a real application.  A later walkthrough will show what can be done here.
 
-** Create Object **
+**Create Object**
 ![alt text](Images/Walkthrough/Database_CreateObject_Postman.png)
 
-** Get Object **
+**Get Object**
 ![alt text](Images/Walkthrough/Database_GetObject_Postman.png)
 
-** Get Filtered and Paged Collection **
+**Get Filtered and Paged Collection**
 ![alt text](Images/Walkthrough/Database_GetCollection_Postman.png)
 
-** Update Object **
+**Update Object**
 ![alt text](Images/Walkthrough/Database_UpdateObject_Postman.png)
 
-** Delete Object **
+**Delete Object**
 ![alt text](Images/Walkthrough/Database_DeleteObject_Postman.png)
