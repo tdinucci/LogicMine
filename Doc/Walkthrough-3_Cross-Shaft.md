@@ -115,3 +115,10 @@ namespace CrossShaft.Mine.Hello
 The screenshot below shows our updated service being called with Postman
 
 ![alt text](Images/Walkthrough/Cross-Shaft_Postman.png)
+
+#### 8. Bonus!
+An added Brucie bonus is that we can also use the GetTime shaft independently, see the request below.
+
+N.B. If for whatever reason we didn't want this operation to be accessible to the outside world we can do this - details will be covered in the later security walkthrough.
+
+![alt text](Images/Walkthrough/Cross-Shaft_Postman_Bonus.png)
