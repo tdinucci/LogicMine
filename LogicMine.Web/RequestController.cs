@@ -20,10 +20,10 @@ namespace LogicMine.Web
         /// </summary>
         /// <param name="requestRouter">The router which takes raw requests and dispatches them to a mine</param>
         /// <param name="errorExporter">The error exporter to use when errors occur</param>
-        protected RequestController(IRequestRouter<TRawRequest> requestRouter, IErrorExporter errorExporter)
+        protected RequestController(IRequestRouter<TRawRequest> requestRouter, IErrorExporter errorExporter = null)
         {
             _requestRouter = requestRouter ?? throw new ArgumentNullException(nameof(requestRouter));
-            _errorExporter = errorExporter ?? throw new ArgumentNullException(nameof(errorExporter));
+            _errorExporter = errorExporter;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace LogicMine.Web
             }
             catch (Exception ex)
             {
-                _errorExporter.ExportError(ex);
+                _errorExporter?.ExportError(ex);
                 return new InternalServerErrorObjectResult(ex.Message);
             }
         }

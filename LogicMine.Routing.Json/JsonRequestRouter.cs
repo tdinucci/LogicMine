@@ -16,7 +16,7 @@ namespace LogicMine.Routing.Json
         /// </summary>
         /// <param name="mine">The mine to route requests to</param>
         /// <param name="errorExporter">The error exporter to use when errors are encountered</param>
-        protected JsonRequestRouter(IMine mine, IErrorExporter errorExporter) : base(mine, errorExporter)
+        protected JsonRequestRouter(IMine mine, IErrorExporter errorExporter = null) : base(mine, errorExporter)
         {
         }
 

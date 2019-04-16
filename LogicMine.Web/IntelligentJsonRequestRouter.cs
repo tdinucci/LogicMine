@@ -18,7 +18,7 @@ namespace LogicMine.Web
         private readonly IServiceCollection _serviceCollection;
 
         public IntelligentJsonRequestRouter(Assembly serviceAssembly, IServiceCollection serviceCollection,
-            ITraceExporter traceExporter) : base(new Mine(traceExporter), traceExporter)
+            ITraceExporter traceExporter = null) : base(new Mine(traceExporter), traceExporter)
         {
             _serviceAssembly = serviceAssembly ?? throw new ArgumentNullException(nameof(serviceAssembly));
             _serviceCollection = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));

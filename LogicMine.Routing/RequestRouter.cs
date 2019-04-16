@@ -29,7 +29,7 @@ namespace LogicMine.Routing
         /// </summary>
         /// <param name="mine">The mine to route requests to</param>
         /// <param name="errorExporter">The exporter to use when errors are encountered</param>
-        protected RequestRouter(IMine mine, IErrorExporter errorExporter)
+        protected RequestRouter(IMine mine, IErrorExporter errorExporter = null)
         {
             _mine = mine ?? throw new ArgumentNullException(nameof(mine));
             _errorExporter = errorExporter;

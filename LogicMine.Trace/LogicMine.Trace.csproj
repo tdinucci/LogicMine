@@ -3,21 +3,21 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
 
-        <Version>2.0.5</Version>
+        <Version>2.0.0</Version>
         <Authors>Tony Di Nucci</Authors>
-        <AssemblyTitle>LogicMine.Routing</AssemblyTitle>
-        <Description>Types which facilitate the routing of requests through a LogicMine</Description>
+        <AssemblyTitle>LogicMine.Trace</AssemblyTitle>
+        <Description>Assorted trace exporters for LogicMine</Description>
         <Copyright>Tony Di Nucci 2019</Copyright>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LogicMine.DataObject\LogicMine.DataObject.csproj" />
       <ProjectReference Include="..\LogicMine\LogicMine.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
 </Project>
+
