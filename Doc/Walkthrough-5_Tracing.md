@@ -4,9 +4,7 @@ Please make sure you have followed the second walkthrough (Stations) as this one
 In a real application you would most likely send log files to some central store or service.  For the purposes of this walkthrough though we are just going to log our traces to file.
 
 #### 1. Open your Stations walkthrough project
-That's all.
-
-*N.B. The code for these walkthroughs is included in the source respository, as a project per walkthrough.  The code within this walkthrough is taken from these projects and the namespaces will be slightly different to yours if you're following along with your own project.*
+N.B. The code for these walkthroughs is included in the source respository, as a project per walkthrough.  The code within this walkthrough is taken from these projects and the namespaces will be slightly different to yours if you're following along with your own project.*
 
 #### 2. Add a reference to [LogicMine.Trace](https://www.nuget.org/packages/LogicMine.Trace/)
 
