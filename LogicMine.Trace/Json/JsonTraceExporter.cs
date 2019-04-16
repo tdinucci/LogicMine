@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LogicMine.Trace.Json
 {
+    /// <inheritdoc />
     public abstract class JsonTraceExporter : ITraceExporter
     {
         private readonly string _serviceName;
@@ -14,8 +15,13 @@ namespace LogicMine.Trace.Json
             _serviceName = serviceName ?? throw new ArgumentNullException(nameof(serviceName));
         }
 
+        /// <summary>
+        /// Saves the log message
+        /// </summary>
+        /// <param name="message"></param>
         protected abstract void ExportLogMessage(string message);
 
+        /// <inheritdoc />
         public void Export(IBasket basket)
         {
             Task.Run(() =>
@@ -25,6 +31,7 @@ namespace LogicMine.Trace.Json
             });
         }
 
+        /// <inheritdoc />
         public void ExportError(Exception exception)
         {
             var message = new StringBuilder();
@@ -41,6 +48,7 @@ namespace LogicMine.Trace.Json
             ExportError(message.ToString());
         }
 
+        /// <inheritdoc />
         public void ExportError(string error)
         {
             var log = new JObject

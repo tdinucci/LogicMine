@@ -3,7 +3,7 @@ using LogicMine.Web;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace Stations.Controllers
+namespace InterStationComms.Controllers
 {
     [Route("api")]
     public class MyRequestController : JsonRequestController

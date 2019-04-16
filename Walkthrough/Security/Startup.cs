@@ -1,5 +1,4 @@
-﻿using LogicMine;
-using LogicMine.Routing;
+﻿using LogicMine.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +14,6 @@ namespace Security
             services
                 .AddSingleton(services)
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
-                .AddSingleton<IErrorExporter, MyErrorExporter>()
 
                 .AddSingleton<IRequestRouter<JObject>>(s =>
                     new MyIntelligentJsonRequestRouter(GetType().Assembly, services,

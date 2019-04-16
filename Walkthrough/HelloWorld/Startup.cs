@@ -1,5 +1,4 @@
-﻿using LogicMine;
-using LogicMine.Routing;
+﻿using LogicMine.Routing;
 using LogicMine.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +16,6 @@ namespace HelloWorld
             services
                 .AddSingleton(services)
                 .AddSingleton<IRequestRouter<JObject>>(requestRouter)
-                .AddSingleton<IErrorExporter, MyErrorExporter>()
                 .AddMvc();
         }
 

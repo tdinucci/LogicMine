@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LogicMine.Trace\LogicMine.Trace.csproj" />
     <ProjectReference Include="..\..\LogicMine.Web\LogicMine.Web.csproj" />
   </ItemGroup>
 

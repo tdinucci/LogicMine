@@ -1,20 +1,24 @@
-﻿using LogicMine.Routing;
+﻿using LogicMine;
+using LogicMine.Routing;
 using LogicMine.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 
-namespace CrossShaft
+namespace Trace
 {
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var requestRouter = new IntelligentJsonRequestRouter(GetType().Assembly, services);
-
+            var traceExporter = new MyTraceExporter("MyService");
+            var requestRouter = new IntelligentJsonRequestRouter(GetType().Assembly, services, traceExporter);
+            
             services
                 .AddSingleton(services)
+                .AddSingleton<ITraceExporter>(traceExporter)
+                .AddSingleton<IErrorExporter>(traceExporter)
                 .AddSingleton<IRequestRouter<JObject>>(requestRouter)
                 .AddMvc();
         }
