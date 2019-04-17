@@ -75,9 +75,9 @@ namespace Database.Mine.Car
 ```
 
 #### 6. Create a descriptor for our persistent data type
-We don't want leaky abstractions which make us to pollute our data types with information that that isn't relevant to they application layer we are operating at - allowing the Car type is a simple POCO.  However we're going to have to have knowledge encoded somewhere of how our .Net types maps the the underlying database.  This is the role of an *IDataObjectDescriptor*.
+We don't want leaky abstractions which make us to pollute our data types with information that that isn't relevant to the application layer we are operating at - allowing the Car type to be a simple POCO.  However we're going to have to have knowledge encoded somewhere of how our .Net types maps to the underlying database.  This is the role of an *IDataObjectDescriptor*.
 
-The descriptor shown below is almost as simple as it gets because we'll have a very clear mapping between the Car class and the underlying Car table. It basically say, the Car type maps to a table called Car with a primary key called Id and the database field that maps to the Car types Id property is read-only.
+The descriptor shown below is almost as simple as it gets because we'll have a very clear mapping between the Car class and the underlying Car table. It basically says, the Car type maps to a table called Car with a primary key called Id and the database field that maps to the Car types Id property is read-only.
 
 There are many things you can do with descriptors, such as; define which fields are read/write-only, specify property/field mappings where they don't match the default convention, cooerce values as they are read/written, etc.  The class documentation should help you work things out. 
 
