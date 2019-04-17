@@ -23,12 +23,12 @@ using Newtonsoft.Json.Linq;
 namespace Database.Controllers
 {
     [Route("api")]
-	public class MyRequestController : JsonRequestController
-	{
-	    public MyRequestController(IRequestRouter<JObject> requestRouter) : base(requestRouter)
-	    {
-	    }
-	}
+    public class MyRequestController : JsonRequestController
+    {
+        public MyRequestController(IRequestRouter<JObject> requestRouter) : base(requestRouter)
+        {
+        }
+    }
 }
 ```
 
