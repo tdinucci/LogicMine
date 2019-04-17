@@ -14,7 +14,7 @@ We have some options if we find we want to make one station dependant on the pro
 In this walkthrough we'll try out option 2).
 
 #### 1. Open your Stations walkthrough project
-N.B. The code for these walkthroughs is included in the source respository, as a project per walkthrough.  The code within this walkthrough is taken from these projects and the namespaces will be slightly different to yours if you're following along with your own project.*
+*N.B. The code for these walkthroughs is included in the source respository, as a project per walkthrough.  The code within this walkthrough is taken from these projects and the namespaces will be slightly different to yours if you're following along with your own project.*
 
 #### 2. Delete the current stations
 Delete the files; *ReverseResponseStation.cs*, *MakeNameUppercaseStation.cs* and *SurroundNameWithStarsStation.cs*.
