@@ -9,7 +9,7 @@ In this walkthrough we'll build our own, very primitive fault tolerance into the
 #### 2. Implement an ITransientErrorAwareExecutor
 Operations in LogicMine which are liable to fail transiently (e.g. calls to a datastore) can be passed through an implementation of *ITransientErrorAwareExecutor*.  Implementations of this interface can be as simple or complex as you wish, however chances are your best bet is to use it as a wrapper around something like [Polly](https://github.com/App-vNext/Polly).
 
-Here we're just going to do the bare minimum to demonstrate the concept.  Create a class called *MyTransientErrorAwareExecutor* with the following code.  Whenever calls are made to the database with LogicMine and *ITransientErrorAwareExecutor* is available then these database calls will be passed into the version of *ExecuteAsync* which has been implemented.  Our implementation will quite simply retry the operation if an exception occurs up to 3 times, with a pause of 0.75 seconds between each attempt.
+Here we're just going to do the bare minimum to demonstrate the concept.  Create a class called *MyTransientErrorAwareExecutor* with the following code.  Whenever calls are made to the database with LogicMine and an *ITransientErrorAwareExecutor* is available then these database calls will be passed into the version of *ExecuteAsync* which has been implemented.  Our implementation will quite simply retry the operation if an exception occurs up to 3 times, with a pause of 0.75 seconds between each attempt.
 
 ```csharp
 using System;
