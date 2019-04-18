@@ -187,4 +187,52 @@ CREATE TABLE Car
 }
 ```
 
-#### 4. Use the service
+#### 4. Inject the fault handler into the object store
+Finally, open the existing *CarShaftRegistrar* and add an *ITransientErrorAwareExecutor* parameter to the constructor, capture this and then inject it into the *SqliteMappedObjectStore<,>* in the *GetDataObjectStore* method.  An instance of our fault handler will be automatically injected into our registrar by the DI container.
+
+```csharp
+using System;
+using LogicMine;
+using LogicMine.DataObject;
+using LogicMine.DataObject.Ado.Sqlite;
+
+namespace Resilience.Mine.Car
+{
+    public class CarShaftRegistrar : DataObjectShaftRegistrar<Car, int>
+    {
+        private readonly DbConnectionString _connectionString;
+        private readonly ITransientErrorAwareExecutor _transientErrorAwareExecutor;
+
+        public CarShaftRegistrar(DbConnectionString connectionString,
+            ITransientErrorAwareExecutor transientErrorAwareExecutor)
+        {
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _transientErrorAwareExecutor = transientErrorAwareExecutor;
+        }
+
+        protected override IDataObjectStore<Car, int> GetDataObjectStore()
+        {
+            return new SqliteMappedObjectStore<Car, int>(_connectionString.Value, new CarDescriptor(), null,
+                _transientErrorAwareExecutor);
+        }
+
+        protected override IShaft<TRequest, TResponse> GetBasicShaft<TRequest, TResponse>(
+            ITerminal<TRequest, TResponse> terminal)
+        {
+            return new Shaft<TRequest, TResponse>(terminal);
+        }
+    }
+}
+```
+
+#### 5. Use the service
+Below is a couple of screenshots of Postman. The first was issued when there was no underlying error and you will see at the bottom right of the image that the time this took to complete was 40ms (remember this is SQLite and transactions are a little slow).  The second was issued when the database schema was erroneous and this took 804ms to complete because a retry was required.
+
+**No Retry**
+
+![alt text](Images/Walkthrough/Resilience_NoError_Postman.png)
+
+
+**With Retry**
+
+![alt text](Images/Walkthrough/Resilience_Error_Postman.png)
