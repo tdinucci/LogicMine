@@ -241,16 +241,21 @@ protected override IShaft<UpdateObjectRequest<Car, int>, UpdateObjectResponse<Ca
 There are a number of screenshots below showing various operations that we can now perform on Cars.
 
 **Create Object**
+
 ![alt text](Images/Walkthrough/Database2_CreateObject_Postman.png)
 
 **Get Object**
+
 ![alt text](Images/Walkthrough/Database2_GetObject_Postman.png)
 
 **Get Filtered**
+
 ![alt text](Images/Walkthrough/Database2_GetCollection_Postman.png)
 
 **Update Object**
+
 ![alt text](Images/Walkthrough/Database2_UpdateObject_Postman.png)
 
 **Delete Object**
+
 ![alt text](Images/Walkthrough/Database2_DeleteObject_Postman.png)
