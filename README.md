@@ -73,6 +73,8 @@ Generally speaking, message based API’s can be much more maintainable than pro
 ### Usage
 *N.B. These walkthroughs are a work in progress and almost certainly full of typos.*
 
+The code to accompany all walkthroughs is located in the repos *Walkthrough* directory
+
 [1. Hello World](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-1_Hello-World.md)
 
 [2. Stations](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-2_Stations.md)
@@ -86,6 +88,10 @@ Generally speaking, message based API’s can be much more maintainable than pro
 [6. Inter-station Communication](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-6_Inter-Station-Communication.md)
 
 [7. Database](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-7_Database.md)
+
+[8. Database 2](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-8_Database2.md)
+
+[9. Resilience](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-9_Resilience.md)
 
 Code for all walkthroughs is in the *Walkthrough* directory
 
