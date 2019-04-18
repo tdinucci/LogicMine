@@ -6,8 +6,6 @@ There are a huge number of ways we could tackle security but in this walkthrough
 In order for a request to be authorised it must contain a secret token in it's HTTP Authorization header.
 
 #### 1. Open your Hello World walkthrough project
-That's all.
-
 *N.B. The code for these walkthroughs is included in the source respository, as a project per walkthrough.  The code within this walkthrough is taken from these projects and the namespaces will be slightly different to yours if you're following along with your own project.*
 
 #### 2. Specialise the request router
