@@ -65,7 +65,7 @@ namespace Resilience
 #### 3. Simulate a transient error and hook up our fault handler
 One way we can cause our own transient errors to occur is by cycling between having a valid and invalid database schema.  For this we'll create a timer that fires every 1.5 seconds and on each execution it will rename the *Car* table.  The end result will be that we've an invalid schema for the application 50% of the time...which is hopefully much worse than you're used to!
 
-Since our retry strategy is to retry every 0.75 seconds this should mean that all of our calls succeed.  However the calls that are made when the schema is invalid will be considerably slower to return.
+Since our retry strategy is to retry every 0.75 seconds up to 3 times this should mean that all of our calls succeed.  However the calls that are made when the schema is invalid will be considerably slower to return.
 
 We'll add this code to Startup.cs and while we're at it hook up our fault handler with the DI container.
 
