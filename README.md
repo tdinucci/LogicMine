@@ -73,8 +73,6 @@ Generally speaking, message based API’s can be much more maintainable than pro
 ### Usage
 *N.B. These walkthroughs are a work in progress and almost certainly full of typos.*
 
-The code to accompany all walkthroughs is located in the repos *Walkthrough* directory
-
 [1. Hello World](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-1_Hello-World.md)
 
 [2. Stations](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-2_Stations.md)
