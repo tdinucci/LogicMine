@@ -64,6 +64,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database2", "Walkthrough\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resilience", "Walkthrough\Resilience\Resilience.csproj", "{8AF9C778-DC3C-4DCD-BDD1-B5A62D794CA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicMine.DataObject.MongoDb", "LogicMine.DataObject.MongoDb\LogicMine.DataObject.MongoDb.csproj", "{FF06751B-7BD4-44C3-8783-170ABF273EC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LogicMine.DataObject.MongoDb", "Test\Test.LogicMine.DataObject.MongoDb\Test.LogicMine.DataObject.MongoDb.csproj", "{62F13C55-AA97-4EB0-8D09-F58B43E79821}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -186,6 +190,14 @@ Global
 		{8AF9C778-DC3C-4DCD-BDD1-B5A62D794CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF9C778-DC3C-4DCD-BDD1-B5A62D794CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF9C778-DC3C-4DCD-BDD1-B5A62D794CA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF06751B-7BD4-44C3-8783-170ABF273EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF06751B-7BD4-44C3-8783-170ABF273EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF06751B-7BD4-44C3-8783-170ABF273EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF06751B-7BD4-44C3-8783-170ABF273EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F13C55-AA97-4EB0-8D09-F58B43E79821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F13C55-AA97-4EB0-8D09-F58B43E79821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F13C55-AA97-4EB0-8D09-F58B43E79821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F13C55-AA97-4EB0-8D09-F58B43E79821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{43FBC8AA-9772-4DDC-9ECF-CAEF12BAE2FF} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
@@ -207,5 +219,6 @@ Global
 		{2694032E-E299-4867-BAA5-FE1E51DBC757} = {A622A3D5-7011-49D0-ABC0-5514371C97C0}
 		{A34020B3-D68D-409F-A0BF-C5D24AFDA220} = {A622A3D5-7011-49D0-ABC0-5514371C97C0}
 		{8AF9C778-DC3C-4DCD-BDD1-B5A62D794CA0} = {A622A3D5-7011-49D0-ABC0-5514371C97C0}
+		{62F13C55-AA97-4EB0-8D09-F58B43E79821} = {D470A95A-BF7F-4EF7-BCC0-F24CADAF5BF2}
 	EndGlobalSection
 EndGlobal
