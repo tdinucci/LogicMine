@@ -200,8 +200,12 @@ namespace LogicMine.DataObject.Salesforce
             var jobj = new JObject();
             foreach (var modifiedProperty in modifiedProperties)
             {
-                var mappedPropertyName = Descriptor.GetMappedColumnName(modifiedProperty.Key);
-                jobj.Add(mappedPropertyName, JToken.FromObject(modifiedProperty.Value));
+                var mappedColumnName = Descriptor.GetMappedColumnName(modifiedProperty.Key);
+                var mappedColumnValue =
+                    Descriptor.ProjectPropertyValue(modifiedProperty.Value, modifiedProperty.Key) ??
+                    DBNull.Value;
+
+                jobj.Add(mappedColumnName, JToken.FromObject(mappedColumnValue));
             }
 
             if (TransientErrorAwareExecutor == null)
