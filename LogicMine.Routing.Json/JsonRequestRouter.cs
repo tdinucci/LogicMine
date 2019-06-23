@@ -39,6 +39,7 @@ namespace LogicMine.Routing.Json
                 .Register(new GetObjectRequestJsonParser(DataObjectDescriptorRegistry))
                 .Register(new GetCollectionRequestJsonParser(DataObjectDescriptorRegistry))
                 .Register(new CreateObjectRequestJsonParser(DataObjectDescriptorRegistry))
+                .Register(new CreateCollectionRequestJsonParser(DataObjectDescriptorRegistry))
                 .Register(new UpdateObjectRequestJsonParser(DataObjectDescriptorRegistry))
                 .Register(new DeleteObjectRequestJsonParser(DataObjectDescriptorRegistry))
                 .Register(new DeleteCollectionRequestJsonParser(DataObjectDescriptorRegistry));
