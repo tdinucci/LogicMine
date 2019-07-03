@@ -143,11 +143,11 @@ namespace LogicMine
                 basket = new Basket<TRequest, TResponse>(request);
 
                 await DescendAsync(ref basket).ConfigureAwait(false);
-                if (basket.IsFlagForRetrieval)
+                if (basket.IsFlaggedForRetrieval)
                     return basket.Response;
 
                 await VisitTerminal(basket).ConfigureAwait(false);
-                if (basket.IsFlagForRetrieval)
+                if (basket.IsFlaggedForRetrieval)
                     return basket.Response;
 
                 await AscendAsync(ref basket).ConfigureAwait(false);
@@ -203,7 +203,7 @@ namespace LogicMine
                     visit.Duration = stopwatch.Elapsed;
                     stopwatch.Reset();
 
-                    if (basket.IsFlagForRetrieval)
+                    if (basket.IsFlaggedForRetrieval)
                         return Task.CompletedTask;
                 }
                 catch (Exception ex)
@@ -236,7 +236,7 @@ namespace LogicMine
                     visit.Duration = stopwatch.Elapsed;
                     stopwatch.Reset();
 
-                    if (basket.IsFlagForRetrieval)
+                    if (basket.IsFlaggedForRetrieval)
                         return Task.CompletedTask;
                 }
                 catch (Exception ex)

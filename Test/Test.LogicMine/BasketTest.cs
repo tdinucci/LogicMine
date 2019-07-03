@@ -21,7 +21,7 @@ namespace Test.LogicMine
             Assert.Null(basket.CurrentVisit);
             Assert.Null(basket.Error);
             Assert.Equal(request, basket.Request);
-            Assert.False(basket.IsFlagForRetrieval);
+            Assert.False(basket.IsFlaggedForRetrieval);
         }
 
         [Fact]

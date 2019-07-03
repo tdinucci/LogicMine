@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace LogicMine
-{   
+{
     /// <inheritdoc />
     /// <typeparam name="TRequest">The type of request contained in the basket</typeparam>
     /// <typeparam name="TResponse">The type of response contained in the basket</typeparam>
@@ -14,7 +14,7 @@ namespace LogicMine
         /// The request that is travelling within the basket
         /// </summary>
         new TRequest Request { get; }
-        
+
         /// <summary>
         /// The response that is travelling within the basket
         /// </summary>
@@ -51,13 +51,13 @@ namespace LogicMine
         /// <summary>
         /// If true then the basket should be pulled up it's shaft immediately
         /// </summary>
-        bool IsFlagForRetrieval { get; }
+        bool IsFlaggedForRetrieval { get; }
 
         /// <summary>
         /// The request that is travelling within the basket
         /// </summary>
         IRequest Request { get; }
-        
+
         /// <summary>
         /// The response that is travelling within the basket
         /// </summary>
@@ -73,5 +73,10 @@ namespace LogicMine
         /// </summary>
         /// <param name="visit">The visit to add</param>
         void AddVisit(IVisit visit);
+
+        /// <summary>
+        /// Call if you want the basket to end it's journey in the shaft and to be pulled back up early
+        /// </summary>
+        void FlagForRetrieval();
     }
 }

@@ -24,7 +24,7 @@ namespace LogicMine
         public IReadOnlyCollection<IVisit> Visits => new ReadOnlyCollection<IVisit>(_visits);
 
         /// <inheritdoc />
-        public bool IsFlagForRetrieval { get; internal set; }
+        public bool IsFlaggedForRetrieval { get; internal set; }
 
         /// <inheritdoc />
         public TRequest Request { get; private set; }
@@ -59,7 +59,7 @@ namespace LogicMine
             destination.CurrentVisit = source.CurrentVisit;
             destination.StartedAt = source.StartedAt;
             destination.JourneyDuration = source.JourneyDuration;
-            destination.IsFlagForRetrieval = source.IsFlagForRetrieval;
+            destination.IsFlaggedForRetrieval = source.IsFlaggedForRetrieval;
             destination.Error = source.Error;
 
             if (!(source.Request is TRequest request))
@@ -99,6 +99,12 @@ namespace LogicMine
         {
             CurrentVisit = visit ?? throw new ArgumentNullException(nameof(visit));
             _visits.Add(visit);
+        }
+
+        /// <inheritdoc />
+        public void FlagForRetrieval()
+        {
+            IsFlaggedForRetrieval = true;
         }
     }
 }
