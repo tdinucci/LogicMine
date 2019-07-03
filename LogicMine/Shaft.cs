@@ -203,7 +203,7 @@ namespace LogicMine
                     visit.Duration = stopwatch.Elapsed;
                     stopwatch.Reset();
 
-                    if (basket.IsFlaggedForRetrieval)
+                    if (basketRef.IsFlaggedForRetrieval)
                         return Task.CompletedTask;
                 }
                 catch (Exception ex)
@@ -236,7 +236,7 @@ namespace LogicMine
                     visit.Duration = stopwatch.Elapsed;
                     stopwatch.Reset();
 
-                    if (basket.IsFlaggedForRetrieval)
+                    if (basketRef.IsFlaggedForRetrieval)
                         return Task.CompletedTask;
                 }
                 catch (Exception ex)
