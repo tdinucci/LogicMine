@@ -95,7 +95,7 @@ namespace LogicMine
                 {
                     EnsureCompatible(station);
                     _stations.Add(station);
-                    
+
                     if (station is IInternalStation internalStation)
                         internalStation.Within = this;
                 }
@@ -204,7 +204,10 @@ namespace LogicMine
                     stopwatch.Reset();
 
                     if (basketRef.IsFlaggedForRetrieval)
+                    {
+                        basket.IsFlaggedForRetrieval = true;
                         return Task.CompletedTask;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -237,7 +240,10 @@ namespace LogicMine
                     stopwatch.Reset();
 
                     if (basketRef.IsFlaggedForRetrieval)
+                    {
+                        basket.IsFlaggedForRetrieval = true;
                         return Task.CompletedTask;
+                    }
                 }
                 catch (Exception ex)
                 {
