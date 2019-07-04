@@ -206,6 +206,13 @@ namespace LogicMine
                     if (basketRef.IsFlaggedForRetrieval)
                     {
                         basket.IsFlaggedForRetrieval = true;
+                        if (!(basketRef.Response is TResponse))
+                        {
+                            throw new InvalidOperationException(
+                                "The station flagged the basket for retrieval but didn't add an appropriate response");
+                        }
+
+                        basket.Response = (TResponse)basketRef.Response;
                         return Task.CompletedTask;
                     }
                 }
@@ -242,6 +249,13 @@ namespace LogicMine
                     if (basketRef.IsFlaggedForRetrieval)
                     {
                         basket.IsFlaggedForRetrieval = true;
+                        if (!(basketRef.Response is TResponse))
+                        {
+                            throw new InvalidOperationException(
+                                "The station flagged the basket for retrieval but there isn't an appropriate response");
+                        }
+
+                        basket.Response = (TResponse) basketRef.Response;
                         return Task.CompletedTask;
                     }
                 }
