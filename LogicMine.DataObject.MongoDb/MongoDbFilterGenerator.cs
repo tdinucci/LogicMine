@@ -125,9 +125,6 @@ namespace LogicMine.DataObject.MongoDb
             if (value == null)
                 return "null";
 
-            if (value is string)
-                return $"'{value}'";
-
             if (value is DateTime time)
                 return $"ISODate('{time:yyyy-MM-ddTHH:mm:ssZ}')";
 
