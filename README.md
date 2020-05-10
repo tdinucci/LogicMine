@@ -70,6 +70,19 @@ Generally speaking, message based API’s can be much more maintainable than pro
  
 * Making system wide changes is generally simpler and safer.  With message based API’s all messages can be funnelled through a small set of entry points.  For example, there may be a general *Get(TMessage)* entry point which is called whether you are requesting Car’s, People, Widgets, or whatever other type you can imagine.  This means that a change to this single entry point (adding logging for example) is effectively applied to every call to get something.  With procedure based API’s you end up with a very high number of entry points and therefore it can be much harder to apply system wide changes.
 
+### Observability 
+
+It is very hard to get application logging and/or tracing nailed.  
+
+When it comes to logs, developers typically must decide on the places of interest to log information and quite often subtle bugs will arise in areas which are not adequately covered.  Also, logs are often unnecessarily verbose and difficult to follow, especially in the case of multi-threaded systems.
+
+While tracing is very useful it's not suited to truly understand what is going on in the system.  For instance, you may be able to see that every so often a certain section lags, however the trace itself quite likely won't be able to tell you why.
+
+A LogicMine application essentially consists of a collection of pipelines and each pipeline is by design fully observable.  As a basket travels through a shaft (pipeline) the values in this basket are recorded at each transition (i.e. waypoint) and timings between every waypoint are measured.  What this means is that after a basket emerges from a shaft its entire life has been recorded, to the point where it is trivial to go back in time and replay its complete journey.
+
+In a nutshell, by default it is possible to ask (and answer) practically any question about how a LogicMine system has been operating and developers do not have to try an anticipate how the software may break and which log messages _might_ be useful.
+
+
 ### Usage
 
 [1. Hello World](https://github.com/tdinucci/LogicMine/blob/master/Doc/Walkthrough-1_Hello-World.md)
